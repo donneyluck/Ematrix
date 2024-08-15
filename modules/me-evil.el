@@ -87,8 +87,7 @@
 
 (use-package evil-surround
   :straight t
-  :config
-  (global-evil-surround-mode 1))
+  :hook (evil-mode . global-evil-surround-mode))
 
 (use-package evil-numbers
   :straight t
@@ -1004,6 +1003,8 @@
   ;; Open
   "o-" #'dirvish
   "oq" #'dirvish-quick-access
+  ;; sid
+  "op" #dirvish-side
   ;; Search
   "sd" #'dirvish-fd)
 
