@@ -134,7 +134,7 @@ Compiled from the `system-configuration-features'.")
   :group 'minemacs-keybinding
   :type 'string)
 
-(defcustom minemacs-theme 'doom-one-light
+(defcustom minemacs-theme 'doom-one
   "The theme of MinEmacs."
   :group 'minemacs-ui
   :type 'symbol)

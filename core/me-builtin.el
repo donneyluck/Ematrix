@@ -310,6 +310,7 @@ or file path may exist now."
      "requirements.txt" ; Python
      "package.json" ; Node.js
      "pom.xml" ; Apache Maven (Java/Kotlin)
+     "client" "tools" "configs" ;future
      "Cargo.toml")) ; Cargo (Rust)
   :bind (("C-x p a" . +project-add-project))
   :config

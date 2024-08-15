@@ -1,18 +1,18 @@
 ;; init.el --- MinEmacs core initialization file -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022-2024  Abdelhak Bougouffa
+;;; Copyright (C) 2022-2024  Machine Sudio
 
-;; Author: Abdelhak Bougouffa (rot13 "nobhtbhssn@srqbencebwrpg.bet")
+;;; Author: donneyluck@gmail.com
 
-;;     __  __ _         ______
-;;    |  \/  (_)       |  ____|
-;;    | \  / |_ _ __   | |__   _ __ ___   __ _  ___ ___
-;;    | |\/| | | '_ \  |  __| | '_ ` _ \ / _` |/ __/ __|
-;;    | |  | | | | | | | |____| | | | | | (_| | (__\__ \
-;;    |_|  |_|_|_| |_| |______|_| |_| |_|\__,_|\___|___/
-;;
-;;  MINIMALIST & LIGHTWEIGHT EMACS CONFIGURATION FRAMEWORK
-;;                           abougouffa.github.io/minemacs
+;;; ___________               __         .__
+;;; \_   _____/ _____ _____ _/  |________|__|__  ___
+;;;  |    __)_ /     \\__  \\   __\_  __ \  \  \/  /
+;;;  |        \  Y Y  \/ __ \|  |  |  | \/  |>    <
+;;; /_______  /__|_|  (____  /__|  |__|  |__/__/\_ \
+;;;         \/      \/     \/                     \/
+;;;
+;;;  EMATRIX & LIGHTWEIGHT EMACS CONFIGURATION FRAMEWORK
+;;;                        donneyluck.github.io/ematrix
 
 ;;; Commentary:
 

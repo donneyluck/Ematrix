@@ -85,6 +85,11 @@
   (evil-snipe-smart-case t)
   (evil-snipe-auto-scroll t))
 
+(use-package evil-surround
+  :straight t
+  :config
+  (global-evil-surround-mode 1))
+
 (use-package evil-numbers
   :straight t
   :unless (+package-disabled-p 'evil 'me-evil)

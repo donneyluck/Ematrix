@@ -49,6 +49,7 @@
     me-org
     me-prog
     me-project
+    me-dashboard
     ;; me-robot
     ;; me-rss
     ;; me-scheme

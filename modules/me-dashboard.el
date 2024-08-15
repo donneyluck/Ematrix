@@ -1,18 +1,8 @@
 ;;; me-dashboard.el --- Dashboard for Emacs -*- lexical-binding: t; -*-
 
-;;; Copyright (C) 2022-2024  Machine Sudio
+;; Copyright (C) 2022-2024  Abdelhak Bougouffa
 
-;;; Author: donneyluck@gmail.com
-
-;;; ___________               __         .__
-;;; \_   _____/ _____ _____ _/  |________|__|__  ___
-;;;  |    __)_ /     \\__  \\   __\_  __ \  \  \/  /
-;;;  |        \  Y Y  \/ __ \|  |  |  | \/  |>    <
-;;; /_______  /__|_|  (____  /__|  |__|  |__/__/\_ \
-;;;         \/      \/     \/                     \/
-;;;
-;;;  EMATRIX & LIGHTWEIGHT EMACS CONFIGURATION FRAMEWORK
-;;;                        donneyluck.github.io/ematrix
+;; Author: Abdelhak Bougouffa (rot13 "nobhtbhssn@srqbencebwrpg.bet")
 
 ;;; Commentary:
 
@@ -30,12 +20,12 @@
   (dashboard-set-heading-icons t)
   (dashboard-set-file-icons t)
   (dashboard-center-content t)
-  (dashboard-banner-ascii "MinEmacs")
-  (dashboard-banner-logo-title "Welcome to MinEmacs!")
+  (dashboard-banner-ascii "Ematrix")
+  (dashboard-banner-logo-title "Welcome to Ematrix!")
   (dashboard-items '((recents . 5) (projects . 5) (bookmarks . 5)))
   (dashboard-image-banner-max-width 600)
   (dashboard-projects-backend 'project-el)
-  (dashboard-startup-banner (concat minemacs-assets-dir "images/minemacs.png"))
+  (dashboard-startup-banner (concat minemacs-assets-dir "images/banner.txt"))
   :config
   ;; Ensure setting the keybindings before opening the dashboard
   (with-eval-after-load 'evil (evil-collection-dashboard-setup))

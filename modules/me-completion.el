@@ -179,7 +179,8 @@
 
          ;; Minibuffer history
          :map minibuffer-local-map
-         ("M-i" . +consult-insert-thing-at-point)
+         ("C-s" . +consult-insert-thing-at-point)
+         ("C-S-v" . consult-yank-pop)
          ([remap next-matching-history-element] . consult-history) ; M-s
          ([remap previous-matching-history-element] . consult-history)) ; M-r
   :custom
