@@ -90,7 +90,6 @@
  ("emacs-kv" . "721148475bce38a70e0b678ba8aa923652e8900e")
  ("emacs-libvterm" . "df057b1af2bb89a1deb288086f13be296af42090")
  ("emacs-mips-mode" . "98795cdc81979821ac35d9f94ce354cd99780c67")
- ("emacs-neotree" . "b87c00dcb4d8144cb99d982ab99e60bfced14f28")
  ("emacs-pet" . "c23dea50711bb906bc0d972e3a49af008310e3a2")
  ("emacs-purpose" . "776c5ef8fe2f0da0f9885526e3556af0f5736600")
  ("emacs-reformatter" . "0d29a04d69d47599e2cb7f1a8f8e897a2b592921")

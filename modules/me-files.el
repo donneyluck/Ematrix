@@ -30,11 +30,6 @@
                                         (format " %s " (nerd-icons-faicon "nf-fa-angle_right")))))
   (dirvish-override-dired-mode 1))
 
-(use-package neotree
-  :straight (:host github :repo "abougouffa/emacs-neotree" :branch "feat/nerd-icons")
-  :custom
-  (neo-theme 'nerd-icons))
-
 (use-package sr-speedbar
   :straight t)
 
