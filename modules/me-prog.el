@@ -296,6 +296,8 @@
        (concat " " (if-let ((file buffer-file-name))
                        (nerd-icons-icon-for-file file)
                      (nerd-icons-icon-for-mode major-mode)))))))
+(use-package sproto-mode
+  :straight t)
 
 (use-package protobuf-mode
   :straight t)
