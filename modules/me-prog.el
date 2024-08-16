@@ -1,8 +1,17 @@
 ;;; me-prog.el --- Programming stuff -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022-2024  Abdelhak Bougouffa
-
-;; Author: Abdelhak Bougouffa (rot13 "nobhtbhssn@srqbencebwrpg.bet")
+;;; ___________               __         .__
+;;; \_   _____/ _____ _____ _/  |________|__|__  ___
+;;;  |    __)_ /     \\__  \\   __\_  __ \  \  \/  /
+;;;  |        \  Y Y  \/ __ \|  |  |  | \/  |>    <
+;;; /_______  /__|_|  (____  /__|  |__|  |__/__/\_ \
+;;;         \/      \/     \/                     \/
+;;;
+;;;  EMATRIX & LIGHTWEIGHT EMACS CONFIGURATION FRAMEWORK
+;;;                        donneyluck.github.io/ematrix
+;;;
+;;; Author: donneyluck@gmail.com
+;;; Copyright (C) 2022-2024  Machine Sudio
 
 ;;; Commentary:
 
@@ -101,55 +110,55 @@
 (when (+emacs-features-p 'tree-sitter)
   (push 'treesit straight-built-in-pseudo-packages)) ; ts-movement depends on it
 
-(use-package ts-movement
-  :straight (:host github :repo "haritkapadia/ts-movement")
-  :when (+emacs-features-p 'tree-sitter)
-  :hook ((prog-mode conf-mode) . +ts-movement-maybe)
-  :init
-  (defun +ts-movement-maybe ()
-    "Enable `ts-movement-mode' when if `major-mode' is a trees-sitter mode."
-    (run-with-timer 1.0 nil (lambda () (when (treesit-parser-list) (ts-movement-mode 1)))))
-  :config
-  (transient-define-prefix +ts-movement-transient ()
-    "Transient for ts-movement."
-    [[("d" "delete-overlay-at-point" tsm/delete-overlay-at-point :transient t)
-      ("D" "clear-overlays-of-type" tsm/clear-overlays-of-type :transient t)
-      ("C-b" "backward-overlay" tsm/backward-overlay :transient t)
-      ("C-f" "forward-overlay" tsm/forward-overlay :transient t)
-      ("c" "tsm/mc/mark-all-overlays" tsm/mc/mark-all-overlays :transient t)]
-     [("a" "node-start" tsm/node-start :transient t)
-      ("e" "node-end" tsm/node-end :transient t)
-      ("b" "node-prev" tsm/node-prev :transient t)
-      ("f" "node-next" tsm/node-next :transient t)]
-     [("p" "node-parent" tsm/node-parent :transient t)
-      ("n" "node-child" tsm/node-child :transient t)
-      ("N" "node-children" tsm/node-children :transient t)
-      ("s" "node-children-of-type" tsm/node-children-of-type :transient t)
-      ("m" "node-mark" tsm/node-mark :transient t)]]
-    [("Q" "Quit" ignore :transient t)]))
+;; (use-package ts-movement
+;;   :straight (:host github :repo "haritkapadia/ts-movement")
+;;   :when (+emacs-features-p 'tree-sitter)
+;;   :hook ((prog-mode conf-mode) . +ts-movement-maybe)
+;;   :init
+;;   (defun +ts-movement-maybe ()
+;;     "Enable `ts-movement-mode' when if `major-mode' is a trees-sitter mode."
+;;     (run-with-timer 1.0 nil (lambda () (when (treesit-parser-list) (ts-movement-mode 1)))))
+;;   :config
+;;   (transient-define-prefix +ts-movement-transient ()
+;;     "Transient for ts-movement."
+;;     [[("d" "delete-overlay-at-point" tsm/delete-overlay-at-point :transient t)
+;;       ("D" "clear-overlays-of-type" tsm/clear-overlays-of-type :transient t)
+;;       ("C-b" "backward-overlay" tsm/backward-overlay :transient t)
+;;       ("C-f" "forward-overlay" tsm/forward-overlay :transient t)
+;;       ("c" "tsm/mc/mark-all-overlays" tsm/mc/mark-all-overlays :transient t)]
+;;      [("a" "node-start" tsm/node-start :transient t)
+;;       ("e" "node-end" tsm/node-end :transient t)
+;;       ("b" "node-prev" tsm/node-prev :transient t)
+;;       ("f" "node-next" tsm/node-next :transient t)]
+;;      [("p" "node-parent" tsm/node-parent :transient t)
+;;       ("n" "node-child" tsm/node-child :transient t)
+;;       ("N" "node-children" tsm/node-children :transient t)
+;;       ("s" "node-children-of-type" tsm/node-children-of-type :transient t)
+;;       ("m" "node-mark" tsm/node-mark :transient t)]]
+;;     [("Q" "Quit" ignore :transient t)]))
 
-(use-package awk-ts-mode
-  :straight t
-  :when (+emacs-features-p 'tree-sitter))
+;; (use-package awk-ts-mode
+;;   :straight t
+;;   :when (+emacs-features-p 'tree-sitter))
 
 (use-package html-ts-mode
   :straight (:host github :repo "mickeynp/html-ts-mode")
   :when (+emacs-features-p 'tree-sitter))
 
-(use-package combobulate
-  :straight (:host github :repo "mickeynp/combobulate" :nonrecursive t) ; Cloning the `html-ts-mode' submodule causes problems
-  :when (and (not os/win) (+emacs-features-p 'tree-sitter)) ; TEMP: disable on Windows
-  :hook ((python-ts-mode js-ts-mode css-ts-mode yaml-ts-mode typescript-ts-mode tsx-ts-mode html-ts-mode) . combobulate-mode)
-  :custom
-  (combobulate-key-prefix "C-c o")
-  :config
-  ;; The "M-<up/down/left/right>" keys are used globally by `drag-stuff', lets
-  ;; unset them for `combobulate' and use "M-S-<up/down/left/right>" instead.
-  (mapc (lambda (k) (keymap-unset combobulate-key-map k 'remove)) '("M-<up>" "M-<down>" "M-<left>" "M-<right>"))
-  (keymap-set combobulate-key-map "M-S-<up>" #'combobulate-splice-up)
-  (keymap-set combobulate-key-map "M-S-<down>" #'combobulate-splice-down)
-  (keymap-set combobulate-key-map "M-S-<left>" #'combobulate-yeet-forward)
-  (keymap-set combobulate-key-map "M-S-<down>" #'combobulate-yoink-forward))
+;; (use-package combobulate
+;;   :straight (:host github :repo "mickeynp/combobulate" :nonrecursive t) ; Cloning the `html-ts-mode' submodule causes problems
+;;   :when (and (not os/win) (+emacs-features-p 'tree-sitter)) ; TEMP: disable on Windows
+;;   :hook ((python-ts-mode js-ts-mode css-ts-mode yaml-ts-mode typescript-ts-mode tsx-ts-mode html-ts-mode) . combobulate-mode)
+;;   :custom
+;;   (combobulate-key-prefix "C-c o")
+;;   :config
+;;   ;; The "M-<up/down/left/right>" keys are used globally by `drag-stuff', lets
+;;   ;; unset them for `combobulate' and use "M-S-<up/down/left/right>" instead.
+;;   (mapc (lambda (k) (keymap-unset combobulate-key-map k 'remove)) '("M-<up>" "M-<down>" "M-<left>" "M-<right>"))
+;;   (keymap-set combobulate-key-map "M-S-<up>" #'combobulate-splice-up)
+;;   (keymap-set combobulate-key-map "M-S-<down>" #'combobulate-splice-down)
+;;   (keymap-set combobulate-key-map "M-S-<left>" #'combobulate-yeet-forward)
+;;   (keymap-set combobulate-key-map "M-S-<down>" #'combobulate-yoink-forward))
 
 (use-package consult-eglot
   :straight t
@@ -169,9 +178,10 @@
     (when (display-graphic-p)
       (eldoc-box-hover-at-point-mode arg))))
 
-(use-package reformatter
-  :straight t)
+;; (use-package reformatter
+;;   :straight t)
 
+;; format code package press spc c f f
 (use-package apheleia
   :straight t
   :custom
@@ -196,6 +206,7 @@
 (use-package vimrc-mode
   :straight t)
 
+
 (use-package rust-mode
   :straight t
   :custom
@@ -210,26 +221,27 @@
 
 (cl-callf2 remove 'flycheck straight-built-in-pseudo-packages)
 
+;;rust package management
 (use-package cargo
   :straight t)
 
-(use-package cuda-mode
-  :straight t
-  :hook (cuda-mode . display-line-numbers-mode)
-  :hook (cuda-mode . hs-minor-mode))
+;; (use-package cuda-mode
+;;   :straight t
+;;   :hook (cuda-mode . display-line-numbers-mode)
+;;   :hook (cuda-mode . hs-minor-mode))
 
-(use-package opencl-mode
-  :straight t
-  :mode "\\.cl\\'")
+;; (use-package opencl-mode
+;;   :straight t
+;;   :mode "\\.cl\\'")
 
-(use-package dumb-jump
-  :straight t
-  :after xref
-  :custom
-  (dumb-jump-selector 'completing-read)
-  :init
-  ;; Use `dumb-jump' as `xref' backend
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
+;; (use-package dumb-jump
+;;   :straight t
+;;   :after xref
+;;   :custom
+;;   (dumb-jump-selector 'completing-read)
+;;   :init
+;;   ;; Use `dumb-jump' as `xref' backend
+;;   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (use-package hl-todo
   :straight (:host github :repo "tarsius/hl-todo")
@@ -252,19 +264,19 @@
   :custom
   (lua-indent-level 2))
 
-(use-package fb-mode
-  :straight (:host github :repo "rversteegen/fb-mode")
-  :commands fb-mode
-  :mode "\\.b\\(i\\|as\\)\\'")
+;; (use-package fb-mode
+;;   :straight (:host github :repo "rversteegen/fb-mode")
+;;   :commands fb-mode
+;;   :mode "\\.b\\(i\\|as\\)\\'")
 
-(use-package zig-mode
-  :straight t)
+;; (use-package zig-mode
+;;   :straight t)
 
-(use-package franca-idl
-  :straight (:host github :repo "zeph1e/franca-idl.el"))
+;; (use-package franca-idl
+;;   :straight (:host github :repo "zeph1e/franca-idl.el"))
 
-(use-package just-mode
-  :straight t)
+;; (use-package just-mode
+;;   :straight t)
 
 (use-package cmake-mode
   :straight (:host github :repo "emacsmirror/cmake-mode" :files (:defaults "*")))
@@ -274,28 +286,30 @@
   :custom
   (cmake-font-lock-modes '(cmake-mode cmake-ts-mode)))
 
-(use-package web-mode
-  :straight t)
+;; (use-package web-mode
+;;   :straight t)
 
-(use-package python-docstring
-  :straight t
-  :hook ((python-mode python-ts-mode) . python-docstring-mode))
+;; (use-package python-docstring
+;;   :straight t
+;;   :hook ((python-mode python-ts-mode) . python-docstring-mode))
 
 (use-package eglot-booster
-  :straight (:host github :repo "jdtsmith/eglot-booster"))
+  :straight (:host github :repo "jdtsmith/eglot-booster")
+  :hook (eglot-managed-mode-hook eglot-booster-mode))
 
-(use-package breadcrumb
-  :straight t
-  :hook ((c-mode c++-mode c-ts-mode c++-ts-mode python-mode python-ts-mode rust-mode rust-ts-mode sh-mode bash-ts-mode) . breadcrumb-local-mode)
-  :config
-  ;; Don't show the project/file name in the header by just a file icon
-  (with-eval-after-load 'nerd-icons
-    (advice-add
-     'breadcrumb-project-crumbs :override
-     (satch-defun +breadcrumb--project:override-a ()
-       (concat " " (if-let ((file buffer-file-name))
-                       (nerd-icons-icon-for-file file)
-                     (nerd-icons-icon-for-mode major-mode)))))))
+;; (use-package breadcrumb
+;;   :straight t
+;;   :hook ((c-mode c++-mode c-ts-mode c++-ts-mode python-mode python-ts-mode rust-mode rust-ts-mode sh-mode bash-ts-mode lua-mode) . breadcrumb-local-mode)
+;;   :config
+;;   ;; Don't show the project/file name in the header by just a file icon
+;;   (with-eval-after-load 'nerd-icons
+;;     (advice-add
+;;      'breadcrumb-project-crumbs :override
+;;      (satch-defun +breadcrumb--project:override-a ()
+;;        (concat " " (if-let ((file buffer-file-name))
+;;                        (nerd-icons-icon-for-file file)
+;;                      (nerd-icons-icon-for-mode major-mode)))))))
+
 (use-package sproto-mode
   :straight t)
 
@@ -306,20 +320,20 @@
   :straight (:host github :repo "emacsattic/protobuf-ts-mode")
   :when (+emacs-features-p 'tree-sitter))
 
-(use-package llvm-ts-mode
-  :straight t
-  :when (+emacs-features-p 'tree-sitter))
+;; (use-package llvm-ts-mode
+;;   :straight t
+;;   :when (+emacs-features-p 'tree-sitter))
 
 (use-package devdocs
   :straight t
   :when (+emacs-features-p 'libxml2))
 
-(use-package add-node-modules-path
-  :straight t
-  :hook ((js-mode js-ts-mode js2-mode) . add-node-modules-path)
-  :config
-  (when (executable-find "pnpm")
-    (setopt add-node-modules-path-command '("pnpm bin" "pnpm bin -w"))))
+;; (use-package add-node-modules-path
+;;   :straight t
+;;   :hook ((js-mode js-ts-mode js2-mode) . add-node-modules-path)
+;;   :config
+;;   (when (executable-find "pnpm")
+;;     (setopt add-node-modules-path-command '("pnpm bin" "pnpm bin -w"))))
 
 
 (provide 'me-prog)

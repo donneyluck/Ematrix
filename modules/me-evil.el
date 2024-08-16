@@ -1004,7 +1004,7 @@
   "o-" #'dirvish
   "oq" #'dirvish-quick-access
   ;; sid
-  "op" #dirvish-side
+  "op" #'dirvish-side
   ;; Search
   "sd" #'dirvish-fd)
 

@@ -1,8 +1,4 @@
-;; init.el --- MinEmacs core initialization file -*- lexical-binding: t; -*-
-
-;;; Copyright (C) 2022-2024  Machine Sudio
-
-;;; Author: donneyluck@gmail.com
+;; init.el --- Ematrix core initialization file -*- lexical-binding: t; -*-
 
 ;;; ___________               __         .__
 ;;; \_   _____/ _____ _____ _/  |________|__|__  ___
@@ -13,6 +9,9 @@
 ;;;
 ;;;  EMATRIX & LIGHTWEIGHT EMACS CONFIGURATION FRAMEWORK
 ;;;                        donneyluck.github.io/ematrix
+;;;
+;;; Author: donneyluck@gmail.com
+;;; Copyright (C) 2022-2024  Machine Sudio
 
 ;;; Commentary:
 
