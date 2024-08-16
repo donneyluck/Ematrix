@@ -1,8 +1,17 @@
 ;;; me-editor.el --- Editing stuff -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022-2024  Abdelhak Bougouffa
-
-;; Author: Abdelhak Bougouffa (rot13 "nobhtbhssn@srqbencebwrpg.bet")
+;;; ___________               __         .__
+;;; \_   _____/ _____ _____ _/  |________|__|__  ___
+;;;  |    __)_ /     \\__  \\   __\_  __ \  \  \/  /
+;;;  |        \  Y Y  \/ __ \|  |  |  | \/  |>    <
+;;; /_______  /__|_|  (____  /__|  |__|  |__/__/\_ \
+;;;         \/      \/     \/                     \/
+;;;
+;;;  EMATRIX & LIGHTWEIGHT EMACS CONFIGURATION FRAMEWORK
+;;;                        donneyluck.github.io/ematrix
+;;;
+;;; Author: donneyluck@gmail.com
+;;; Copyright (C) 2022-2024  Machine Sudio
 
 ;;; Commentary:
 
@@ -97,8 +106,8 @@
          ("S-C-M-SPC" . expreg-contract)))
 
 ;; Fallback to `expand-region' if `expreg' cannot be used
-(unless (+emacs-features-p 'tree-sitter)
-  (+load minemacs-obsolete-modules-dir "me-expand-region.el"))
+;; (unless (+emacs-features-p 'tree-sitter)
+;;   (+load minemacs-obsolete-modules-dir "me-expand-region.el"))
 
 (use-package drag-stuff
   :straight t

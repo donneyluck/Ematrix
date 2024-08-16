@@ -1,8 +1,17 @@
 ;; me-evil.el --- Emacs as Vim! -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022-2024  Abdelhak Bougouffa
-
-;; Author: Abdelhak Bougouffa (rot13 "nobhtbhssn@srqbencebwrpg.bet")
+;;; ___________               __         .__
+;;; \_   _____/ _____ _____ _/  |________|__|__  ___
+;;;  |    __)_ /     \\__  \\   __\_  __ \  \  \/  /
+;;;  |        \  Y Y  \/ __ \|  |  |  | \/  |>    <
+;;; /_______  /__|_|  (____  /__|  |__|  |__/__/\_ \
+;;;         \/      \/     \/                     \/
+;;;
+;;;  EMATRIX & LIGHTWEIGHT EMACS CONFIGURATION FRAMEWORK
+;;;                        donneyluck.github.io/ematrix
+;;;
+;;; Author: donneyluck@gmail.com
+;;; Copyright (C) 2022-2024  Machine Sudio
 
 ;;; Commentary:
 
@@ -1008,8 +1017,8 @@
   ;; Search
   "sd" #'dirvish-fd)
 
-(+map! :package neotree :module me-files
-  "op" #'neotree-toggle)
+;; (+map! :package neotree :module me-files
+;;   "op" #'neotree-toggle)
 
 (+map! :package sudo-edit :module me-files
   "fF" #'sudo-edit-find-file

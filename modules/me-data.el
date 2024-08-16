@@ -121,11 +121,12 @@
    'org-babel-load-languages
    (append org-babel-load-languages '((d2 . t)))))
 
-(use-package gnuplot
-  :straight t
-  :mode ("\\.gnuplot\\'" . gnuplot-mode)
-  :hook (gnuplot-mode . display-line-numbers-mode)
-  :hook (gnuplot-mode . visual-line-mode))
+;; NOT USE
+;; (use-package gnuplot
+;;   :straight t
+;;   :mode ("\\.gnuplot\\'" . gnuplot-mode)
+;;   :hook (gnuplot-mode . display-line-numbers-mode)
+;;   :hook (gnuplot-mode . visual-line-mode))
 
 
 (provide 'me-data)

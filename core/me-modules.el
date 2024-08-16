@@ -1,17 +1,26 @@
 ;;; me-modules.el -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022-2024 Abdelhak Bougouffa
+;;; ___________               __         .__
+;;; \_   _____/ _____ _____ _/  |________|__|__  ___
+;;;  |    __)_ /     \\__  \\   __\_  __ \  \  \/  /
+;;;  |        \  Y Y  \/ __ \|  |  |  | \/  |>    <
+;;; /_______  /__|_|  (____  /__|  |__|  |__/__/\_ \
+;;;         \/      \/     \/                     \/
+;;;
+;;;  EMATRIX & LIGHTWEIGHT EMACS CONFIGURATION FRAMEWORK
+;;;                        donneyluck.github.io/ematrix
+;;;
+;;; Author: donneyluck@gmail.com
+;;; Copyright (C) 2022-2024  Machine Sudio
 
 ;;; Commentary:
 
 ;;; Code:
 
 (defcustom minemacs-core-modules '()
-  "MinEmacs enabled core modules."
+  "Ematrix enabled core modules."
   :group 'minemacs-core
   :type '(repeat symbol))
-
-(make-obsolete-variable 'minemacs-core-modules 'minemacs-modules "MinEmacs v7.0.0")
 
 (defcustom minemacs-modules
   '(;; me-ai
@@ -21,7 +30,7 @@
     ;; me-clojure
     ;; me-common-lisp
     me-completion
-    me-daemon
+    ;; me-daemon
     me-data
     me-debug
     me-docs
