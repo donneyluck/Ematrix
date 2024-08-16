@@ -67,6 +67,14 @@
                  :revision "v0.22.0"
                  :ext "\\.cpp\\'")
                 (make-treesit-auto-recipe
+                 :lang 'csharp
+                 :ts-mode 'csharp-ts-mode
+                 :remap 'csharp-mode
+                 :requires 'c
+                 :url "https://github.com/tree-sitter/tree-sitter-csharp"
+                 :revision "v0.22.0"
+                 :ext "\\.cs\\'")
+                (make-treesit-auto-recipe
                  :lang 'llvm
                  :ts-mode 'llvm-ts-mode
                  :remap 'llvm-mode

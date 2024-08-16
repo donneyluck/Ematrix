@@ -1,8 +1,17 @@
 ;;; me-ui.el --- UI stuff -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2022-2024  Abdelhak Bougouffa
-
-;; Author: Abdelhak Bougouffa (rot13 "nobhtbhssn@srqbencebwrpg.bet")
+;;; ___________               __         .__
+;;; \_   _____/ _____ _____ _/  |________|__|__  ___
+;;;  |    __)_ /     \\__  \\   __\_  __ \  \  \/  /
+;;;  |        \  Y Y  \/ __ \|  |  |  | \/  |>    <
+;;; /_______  /__|_|  (____  /__|  |__|  |__/__/\_ \
+;;;         \/      \/     \/                     \/
+;;;
+;;;  EMATRIX & LIGHTWEIGHT EMACS CONFIGURATION FRAMEWORK
+;;;                        donneyluck.github.io/ematrix
+;;;
+;;; Author: donneyluck@gmail.com
+;;; Copyright (C) 2022-2024  Machine Sudio
 
 ;;; Commentary:
 
@@ -39,6 +48,7 @@
   (doom-modeline-bar ((t (:inherit mode-line :background unspecified))))
   (doom-modeline-bar-inactive ((t (:inherit mode-line :background unspecified)))))
 
+;; NOT USE
 ;; (use-package enlight
 ;;   :straight (:host github :repo "ichernyshovvv/enlight")
 ;;   :when (>= emacs-major-version 29) ; TEMP+BUG: There is an issue with Emacs 28
@@ -54,9 +64,9 @@
 ;;       (enlight-open)
 ;;     (setq initial-buffer-choice #'enlight)))
 
-(use-package lacarte
-  :straight t
-  :bind ([f10] . lacarte-execute-menu-command))
+;; (use-package lacarte
+;;   :straight t
+;;   :bind ([f10] . lacarte-execute-menu-command))
 
 (use-package svg-lib
   :straight t
@@ -95,12 +105,13 @@
   :straight t
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 
-(use-package casual-lib
-  :straight (:host github :repo "kickingvegas/casual-lib"))
+;; NOT USE
+;; (use-package casual-lib
+;;   :straight (:host github :repo "kickingvegas/casual-lib"))
 
-(use-package casual-isearch
-  :straight (:host github :repo "kickingvegas/casual-isearch")
-  :bind (:package isearch :map isearch-mode-map ([f2] . casual-isearch-tmenu)))
+;; (use-package casual-isearch
+;;   :straight (:host github :repo "kickingvegas/casual-isearch")
+;;   :bind (:package isearch :map isearch-mode-map ([f2] . casual-isearch-tmenu)))
 
 
 (provide 'me-ui)

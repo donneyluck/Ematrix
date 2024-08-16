@@ -17,7 +17,7 @@
   '(;; me-ai
     ;; me-biblio
     ;; me-calendar
-    me-checkers
+    ;; me-checkers
     ;; me-clojure
     ;; me-common-lisp
     me-completion
