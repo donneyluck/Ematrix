@@ -8,6 +8,15 @@
 
 ;;; Code:
 
+;; (use-package lsp-bridge
+;;   :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge" :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources") :build (:not compile))
+;;   :after minemacs-first-file
+;;   :init
+;;   (global-lsp-bridge-mode)
+;;   :config
+;;   (setq lsp-bridge-enable-log nil)
+;;   (setq lsp-bridge-python-command "/home/donney/.venvs/myenv/bin/python3"))
+
 (use-package cape
   :straight t
   :after minemacs-first-file
