@@ -57,6 +57,7 @@
     me-notes
     me-org
     me-prog
+    me-blog
     me-project
     me-dashboard
     ;; me-robot

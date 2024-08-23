@@ -1,5 +1,4 @@
 ;;; me-prog.el --- Programming stuff -*- lexical-binding: t; -*-
-
 ;;; ___________               __         .__
 ;;; \_   _____/ _____ _____ _/  |________|__|__  ___
 ;;;  |    __)_ /     \\__  \\   __\_  __ \  \  \/  /
@@ -319,7 +318,8 @@
 ;;                      (nerd-icons-icon-for-mode major-mode)))))))
 
 (use-package sproto-mode
-  :straight t)
+  :straight t
+  :mode "\\.sproto")
 
 (use-package protobuf-mode
   :straight t)
