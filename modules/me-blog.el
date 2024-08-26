@@ -104,7 +104,7 @@ the published file, PUB-DIR the publishing directory."
   "Return format string for each ENTRY in PROJECT."
   (if (and (s-starts-with? "posts/" entry) (not (equal "disclaimer.org" (file-name-nondirectory entry))))
    (format "@@html:<span class=\"archive-item\"><span class=\"archive-date\">@@ %s @@html:</span>@@ [[file:%s][%s]]@@html:<div class=\"description\">@@ %s @@html:</div>@@ @@html:<div class=\"filetags\">@@ %s @@html:</div>@@ @@html:</span>@@"
-            (format-time-string "[%d.%m.%Y, %R %Z]"
+            (format-time-string "[%d.%m.%Y %R %Z]"
                                 (my-org-publish-get-date-from-keyword entry project))
             entry
             (org-publish-find-title entry project)
