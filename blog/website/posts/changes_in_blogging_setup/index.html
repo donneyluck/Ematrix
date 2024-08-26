@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" type="text/css" href="../../css/style.css" >
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" type="text/css" href="css/style.css">
 <title>Changes in Blogging Setup</title>
 </head>
 <body><input type="checkbox" class="theme-switch" id="theme-switch"/>
-<div id="page"><div><nav class="navbar"> <a href="../../index.html"> home </a> <a href="../../archive.html"> stuff </a> <a href="../../about.html"> about </a><a href="#"> <label for="theme-switch" class="switch-label"></label></a></nav><div id="content"><h1>Changes in Blogging Setup</h1><div class="tldr">[TL;DR] A few things bothered me in my blogging setup, here's a summary of what I changed.
+<div id="page"><div><nav class="navbar"><a href="index.html"> home </a><a href="archive.html"> stuff </a><a href="about.html"> about </a><a href="#"> <label for="theme-switch" class="switch-label"></label></a></nav><div id="content"><h1>Changes in Blogging Setup</h1><div class="tldr">[TL;DR] A few things bothered me in my blogging setup, here's a summary of what I changed.
 And: I still have no idea about web development <kbd>¯\_(ツ)_/¯</kbd>
 </div>
 
@@ -52,7 +52,6 @@ disrespect your privacy</li>
 
 <p>And here are some details about some of the changes:
 </p>
-
 <h2>Switch themes with CSS and html only (no JavaScript)</h2><p><em>Spoiler: Because of my lack of CSS and html knowledge (and my stubborness not
 to use JavaScript) this was a huge PITA.</em>
 </p>
@@ -81,7 +80,6 @@ what I want:
 <p>I can really recommend Daniela's fantastic medium article: <a href="https://medium.com/better-programming/dark-mode-and-css-variables-ed6dc250232c">Dark Mode and CSS variables</a>,
 and <a href="https://alexandersandberg.com/theme-switcher/">this guide</a> was also very useful!
 </p>
-
 <h3>HTML</h3><p>First I needed a checkbox in the html code. I wanted the label to be part of my
 navbar so it looks somewhat like this now:
 </p>
@@ -90,10 +88,10 @@ navbar so it looks somewhat like this now:
   &lt;<span class="org-function-name">input</span> <span class="org-variable-name">type</span>=<span class="org-string">"checkbox"</span> <span class="org-variable-name">class</span>=<span class="org-string">"theme-switch"</span> <span class="org-variable-name">id</span>=<span class="org-string">"theme-switch"</span>/&gt;
   &lt;<span class="org-function-name">div</span> <span class="org-variable-name">id</span>=<span class="org-string">"page"</span>&gt;
     &lt;<span class="org-function-name">div</span>&gt;
-      &lt;<span class="org-function-name">nav</span> <span class="org-variable-name">class</span>=<span class="org-string">"navbar"</span>&gt; ... &lt;<span class="org-function-name">a</span> <span class="org-variable-name">href</span>=<span class="org-string">"#"</span>&gt; &lt;<span class="org-function-name">label</span> <span class="org-variable-name">for</span>=<span class="org-string">"theme-switch"</span> <span class="org-variable-name">class</span>=<span class="org-string">"switch-label"</span>&gt;&lt;/<span class="org-function-name">label</span>&gt;&lt;/<span class="org-function-name">a</span>&gt;&lt;/<span class="org-function-name">nav</span>&gt;
-      &lt;<span class="org-function-name">div</span> <span class="org-variable-name">id</span>=<span class="org-string">"content"</span>&gt;
-        ...
-      &lt;/<span class="org-function-name">div</span>&gt;
+  &lt;<span class="org-function-name">nav</span> <span class="org-variable-name">class</span>=<span class="org-string">"navbar"</span>&gt; ... &lt;<span class="org-function-name">a</span> <span class="org-variable-name">href</span>=<span class="org-string">"#"</span>&gt; &lt;<span class="org-function-name">label</span> <span class="org-variable-name">for</span>=<span class="org-string">"theme-switch"</span> <span class="org-variable-name">class</span>=<span class="org-string">"switch-label"</span>&gt;&lt;/<span class="org-function-name">label</span>&gt;&lt;/<span class="org-function-name">a</span>&gt;&lt;/<span class="org-function-name">nav</span>&gt;
+  &lt;<span class="org-function-name">div</span> <span class="org-variable-name">id</span>=<span class="org-string">"content"</span>&gt;
+    ...
+  &lt;/<span class="org-function-name">div</span>&gt;
 &lt;/<span class="org-function-name">body</span>&gt;
 </code></pre>
 
@@ -103,40 +101,39 @@ navbar so it looks somewhat like this now:
 <p>(To get org-mode/ox-slimthml to export the html code like this I modified the export-
 function, more about this in the next section)
 </p>
-
 <h3>CSS</h3><p>And here's what the combination of <em>:checked</em>, CSS variables and the <em>~ sibling
 thing</em> looks like:
 </p>
 
-<pre><code class="css"><span class="org-css-selector">:root</span> {
-    <span class="org-comment-delimiter">/* </span><span class="org-comment">Light mode </span><span class="org-comment-delimiter">*/</span>
+<pre><code class="css"><span class="org-css-selector">:root</span> <span class="org-rainbow-delimiters-depth-1">{</span>
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">Light mode</span><span class="org-comment-delimiter"> */</span>
     <span class="org-variable-name">--light-switch-text</span>: <span class="org-string">"dark mode"</span>;
     <span class="org-variable-name">--light-text</span>: <span class="custom-3">#273136</span>;
     <span class="org-variable-name">--light-bg</span>: <span class="custom-2">#e3e5e6</span>;
 
     ...
 
-    <span class="org-comment-delimiter">/* </span><span class="org-comment">Dark mode </span><span class="org-comment-delimiter">*/</span>
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">Dark mode</span><span class="org-comment-delimiter"> */</span>
     <span class="org-variable-name">--dark-switch-text</span>: <span class="org-string">"light mode"</span>;
     <span class="org-variable-name">--dark-text</span>: <span class="custom-1">#95b1be</span>;
     <span class="org-variable-name">--dark-bg</span>: <span class="custom">#14191a</span>;
 
     ...
 
-   <span class="org-comment-delimiter">/* </span><span class="org-comment">Default mode </span><span class="org-comment-delimiter">*/</span>
-   <span class="org-variable-name">--switch-text</span>: var(<span class="org-variable-name">--dark-switch-text</span>);
-   <span class="org-variable-name">--text-color</span>: var(<span class="org-variable-name">--dark-text</span>);
-   <span class="org-variable-name">--bg-color</span>: var(<span class="org-variable-name">--dark-bg</span>);
-   <span class="org-variable-name">--theme-color</span>: var(<span class="org-variable-name">--dark-theme</span>);
+   <span class="org-comment-delimiter">/* </span><span class="org-comment">Default mode</span><span class="org-comment-delimiter"> */</span>
+   <span class="org-variable-name">--switch-text</span>: var<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-variable-name">--dark-switch-text</span><span class="org-rainbow-delimiters-depth-2">)</span>;
+   <span class="org-variable-name">--text-color</span>: var<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-variable-name">--dark-text</span><span class="org-rainbow-delimiters-depth-2">)</span>;
+   <span class="org-variable-name">--bg-color</span>: var<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-variable-name">--dark-bg</span><span class="org-rainbow-delimiters-depth-2">)</span>;
+   <span class="org-variable-name">--theme-color</span>: var<span class="org-rainbow-delimiters-depth-2">(</span><span class="org-variable-name">--dark-theme</span><span class="org-rainbow-delimiters-depth-2">)</span>;
 
-    <span class="org-css-selector">...</span>
+    ...
 
-<span class="org-css-selector">    </span><span class="org-comment-delimiter">/* </span><span class="org-comment">Switched mode </span><span class="org-comment-delimiter">*/</span>
-<span class="org-css-selector">.theme-switch:checked ~ #page </span>{
-    <span class="org-variable-name">--switch-text</span>: var(<span class="org-variable-name">--light-switch-text</span>);
-    <span class="org-variable-name">--text-color</span>: var(<span class="org-variable-name">--light-text</span>);
-    <span class="org-variable-name">--bg-color</span>: var(<span class="org-variable-name">--light-bg</span>);
-    <span class="org-variable-name">--theme-color</span>: var(<span class="org-variable-name">--light-theme</span>);
+    <span class="org-comment-delimiter">/* </span><span class="org-comment">Switched mode</span><span class="org-comment-delimiter"> */</span>
+<span class="org-css-selector">.theme-switch:checked ~ #page</span> <span class="org-rainbow-delimiters-depth-2">{</span>
+    <span class="org-variable-name">--switch-text</span>: var<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-variable-name">--light-switch-text</span><span class="org-rainbow-delimiters-depth-3">)</span>;
+    <span class="org-variable-name">--text-color</span>: var<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-variable-name">--light-text</span><span class="org-rainbow-delimiters-depth-3">)</span>;
+    <span class="org-variable-name">--bg-color</span>: var<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-variable-name">--light-bg</span><span class="org-rainbow-delimiters-depth-3">)</span>;
+    <span class="org-variable-name">--theme-color</span>: var<span class="org-rainbow-delimiters-depth-3">(</span><span class="org-variable-name">--light-theme</span><span class="org-rainbow-delimiters-depth-3">)</span>;
 
     ...
 
@@ -157,7 +154,6 @@ CSS gives me headaches.
 <p><em>Side note: I tried to use css-csslint in Emacs but it doesn't seem to like
 CSS variables so I'm using css-stylelint now...</em>
 </p>
-
 <h2>Minimize exported html with ox-slimhtml</h2><p>This isn't exactly a huge issue that needs fixing but it somehow bothered me (a lot):
 </p>
 
@@ -193,21 +189,21 @@ I always want in my html, I slightly changed the export function to include
 the theme-switch:
 </p>
 
-<pre><code class="elisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my-ox-slimhtml-publish-to-html</span> (plist filename pub-dir)
-  (<span class="org-keyword">let</span> ((file-path (ox-slimhtml-publish-to-html plist filename pub-dir)))
-    (<span class="org-keyword">with-current-buffer</span> (find-file-noselect file-path)
-  (goto-char (point-min))
-      (search-forward <span class="org-string">"&lt;body&gt;"</span>)
-      (insert (mapconcat 'identity
-                         '(<span class="org-string">"&lt;input type=\"checkbox\" class=\"theme-switch\" id=\"theme-switch\"/&gt;"</span>
-                           <span class="org-string">"&lt;div id=\"page\"&gt;"</span>)
-                           <span class="org-string">"\n"</span>))
-      (goto-char (point-max))
-      (search-backward <span class="org-string">"&lt;/body&gt;"</span>)
-      (insert <span class="org-string">"&lt;/div&gt;&lt;/div&gt;"</span>)
-      (save-buffer)
-      (kill-buffer))
-    file-path))
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">my-ox-slimhtml-publish-to-html</span> <span class="org-rainbow-delimiters-depth-2">(</span>plist filename pub-dir<span class="org-rainbow-delimiters-depth-2">)</span>
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>file-path <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-constant">ox-slimhtml-publish-to-html</span> plist filename pub-dir<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">with-current-buffer</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">find-file-noselect</span> file-path<span class="org-rainbow-delimiters-depth-4">)</span>
+  <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">goto-char</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-constant">point-min</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">search-forward</span> <span class="org-string">"&lt;body&gt;"</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">insert</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-constant">mapconcat</span> 'identity
+             '<span class="org-rainbow-delimiters-depth-6">(</span><span class="org-string">"&lt;input type=\"checkbox\" class=\"theme-switch\" id=\"theme-switch\"/&gt;"</span>
+               <span class="org-string">"&lt;div id=\"page\"&gt;"</span><span class="org-rainbow-delimiters-depth-6">)</span>
+               <span class="org-string">"\n"</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">goto-char</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-constant">point-max</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">search-backward</span> <span class="org-string">"&lt;/body&gt;"</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">insert</span> <span class="org-string">"&lt;/div&gt;&lt;/div&gt;"</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">save-buffer</span><span class="org-rainbow-delimiters-depth-4">)</span>
+      <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">kill-buffer</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+    file-path<span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </code></pre>
 
 <p>For everything else that's specific to certain files I use templates (eg. to add
@@ -222,7 +218,6 @@ publishing function.
 with ox-slimhtml. Currently I'm using a template (YASnippet) for images as well as a workaround,
 but it would be nice to find out how to do this without extra steps.
 </p>
-
 <h2>Other changes</h2><h3>Directory structure</h3><p>I slightly changed the directory structure into something like this:
 </p>
 
@@ -241,7 +236,7 @@ but it would be nice to find out how to do this without extra steps.
     ├── post_2
     │   ├── index.org
     └── post_3
-	└── index.org
+        └── index.org
 </code></pre>
 <p><em>("entwuerfe" = "drafts")</em>
 </p>
@@ -249,11 +244,11 @@ but it would be nice to find out how to do this without extra steps.
 you get the following:
 </p>
 
-<p>/Find the date of FILE in PROJECT.
+<p><em>Find the date of FILE in PROJECT.
 This function assumes FILE is either a directory or an Org file.
 <strong>If FILE is an Org file and provides a DATE keyword use it.  In
 any other case use the file system’s modification time.</strong>  Return
-time in ‘current-time’ format./
+time in ‘current-time’ format.</em>
 </p>
 
 <p>So according to this definition I'd expect it to...well, do what it says it does.
@@ -269,31 +264,31 @@ why <em>org-publish-find-date</em> ignores the keyword, so I wrote a function
 for that (and again, it would be nice if I didn't need extra steps but hey <kbd>¯\_(ツ)_/¯)</kbd>.
 </p>
 
-<pre><code class="elisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my-org-publish-get-date-from-keyword</span> (file project)
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">my-org-publish-get-date-from-keyword</span> <span class="org-rainbow-delimiters-depth-2">(</span>file project<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-doc">"Get date keyword from FILE in PROJECT and parse it to internal format."</span>
-           (<span class="org-keyword">let</span> ((date (org-publish-find-property file <span class="org-builtin">:date</span> project)))
-             (<span class="org-keyword">cond</span> ((<span class="org-keyword">let</span> ((ts (<span class="org-keyword">and</span> (consp date) (assq 'timestamp date))))
-                      (<span class="org-keyword">and</span> ts
-                           (<span class="org-keyword">let</span> ((value (org-element-interpret-data ts)))
-                             (<span class="org-keyword">and</span> (org-string-nw-p value)
-                                  (org-time-string-to-time value))))))
-                   (t (<span class="org-warning">error</span> <span class="org-string">"No timestamp in file \"%s\""</span> file)))))
+       <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-rainbow-delimiters-depth-4">(</span>date <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-constant">org-publish-find-property</span> file <span class="org-builtin">:date</span> project<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+         <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">cond</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-rainbow-delimiters-depth-5">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-rainbow-delimiters-depth-7">(</span>ts <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-keyword">and</span> <span class="org-rainbow-delimiters-depth-9">(</span><span class="org-constant">consp</span> date<span class="org-rainbow-delimiters-depth-9">)</span> <span class="org-rainbow-delimiters-depth-9">(</span><span class="org-constant">assq</span> 'timestamp date<span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span>
+              <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-keyword">and</span> ts
+               <span class="org-rainbow-delimiters-depth-7">(</span><span class="org-keyword">let</span> <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-rainbow-delimiters-depth-9">(</span>value <span class="org-rainbow-delimiters-depth-1">(</span><span class="org-constant">org-element-interpret-data</span> ts<span class="org-rainbow-delimiters-depth-1">)</span><span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">)</span>
+                 <span class="org-rainbow-delimiters-depth-8">(</span><span class="org-keyword">and</span> <span class="org-rainbow-delimiters-depth-9">(</span><span class="org-constant">org-string-nw-p</span> value<span class="org-rainbow-delimiters-depth-9">)</span>
+                  <span class="org-rainbow-delimiters-depth-9">(</span><span class="org-constant">org-time-string-to-time</span> value<span class="org-rainbow-delimiters-depth-9">)</span><span class="org-rainbow-delimiters-depth-8">)</span><span class="org-rainbow-delimiters-depth-7">)</span><span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+           <span class="org-rainbow-delimiters-depth-4">(</span>t <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-constant">error</span> <span class="org-string">"No timestamp in file \"%s\""</span> file<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 </code></pre>
 
 <p>And the actual reason why I want the date from the DATE keyword in the first place,
 for the sitemap format function:
 </p>
 
-<pre><code class="elisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my-org-blog-sitemap-format-entry</span> (entry _style project)
+<pre><code class="elisp"><span class="org-rainbow-delimiters-depth-1">(</span><span class="org-keyword">defun</span> <span class="org-function-name">my-org-blog-sitemap-format-entry</span> <span class="org-rainbow-delimiters-depth-2">(</span>entry _style project<span class="org-rainbow-delimiters-depth-2">)</span>
   <span class="org-doc">"Return format string for each ENTRY in PROJECT."</span>
-  (<span class="org-keyword">if</span> (<span class="org-keyword">and</span> (s-starts-with? <span class="org-string">"posts/"</span> entry) (not (equal <span class="org-string">"disclaimer.org"</span> (file-name-nondirectory entry))))
-   (format <span class="org-string">"@@html:&lt;span class=\"archive-item\"&gt;&lt;span class=\"archive-date\"&gt;@@ %s @@html:&lt;/span&gt;@@ [[file:%s][%s]]@@html:&lt;div class=\"description\"&gt;@@ %s @@html:&lt;/div&gt;@@ @@html:&lt;div class=\"keywords\"&gt;@@ %s @@html:&lt;/div&gt;@@ @@html:&lt;/span&gt;@@"</span>
-            (format-time-string <span class="org-string">"[%d.%m.%Y, %R %Z]"</span>
-                                (my-org-publish-get-date-from-keyword entry project))
-            entry
-            (org-publish-find-title entry project)
-            (org-publish-find-property entry <span class="org-builtin">:description</span> project 'html)
-            (org-publish-find-property entry <span class="org-builtin">:keywords</span> project 'html))))
+  <span class="org-rainbow-delimiters-depth-2">(</span><span class="org-keyword">if</span> <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-keyword">and</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">s-starts-with?</span> <span class="org-string">"posts/"</span> entry<span class="org-rainbow-delimiters-depth-4">)</span> <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">not</span> <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-constant">equal</span> <span class="org-string">"disclaimer.org"</span> <span class="org-rainbow-delimiters-depth-6">(</span><span class="org-constant">file-name-nondirectory</span> entry<span class="org-rainbow-delimiters-depth-6">)</span><span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span>
+   <span class="org-rainbow-delimiters-depth-3">(</span><span class="org-constant">format</span> <span class="org-string">"@@html:&lt;span class=\"archive-item\"&gt;&lt;span class=\"archive-date\"&gt;@@ %s @@html:&lt;/span&gt;@@ [[file:%s][%s]]@@html:&lt;div class=\"description\"&gt;@@ %s @@html:&lt;/div&gt;@@ @@html:&lt;div class=\"keywords\"&gt;@@ %s @@html:&lt;/div&gt;@@ @@html:&lt;/span&gt;@@"</span>
+            <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">format-time-string</span> <span class="org-string">"[%d.%m.%Y, %R %Z]"</span>
+                                <span class="org-rainbow-delimiters-depth-5">(</span><span class="org-function-name">my-org-publish-get-date-from-keyword</span> entry project<span class="org-rainbow-delimiters-depth-5">)</span><span class="org-rainbow-delimiters-depth-4">)</span>
+        entry
+            <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">org-publish-find-title</span> entry project<span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">org-publish-find-property</span> entry <span class="org-builtin">:description</span> project 'html<span class="org-rainbow-delimiters-depth-4">)</span>
+        <span class="org-rainbow-delimiters-depth-4">(</span><span class="org-constant">org-publish-find-property</span> entry <span class="org-builtin">:keywords</span> project 'html<span class="org-rainbow-delimiters-depth-4">)</span><span class="org-rainbow-delimiters-depth-3">)</span><span class="org-rainbow-delimiters-depth-2">)</span><span class="org-rainbow-delimiters-depth-1">)</span>
 
 </code></pre>
 

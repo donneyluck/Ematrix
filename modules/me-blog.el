@@ -24,6 +24,9 @@
 (use-package ox-slimhtml
   :straight (:host github :repo "balddotcat/ox-slimhtml"))
 
+(use-package citeproc
+  :straight (:host github :repo "andras-simonyi/citeproc-el"))
+
 (setq org-link-file-path-type 'relative)
 (setq org-html-htmlize-output-type 'css)
 
@@ -103,16 +106,19 @@ the published file, PUB-DIR the publishing directory."
                      "\n")
           "\n#+END_DIV\n"))
 
+(defconst ematrix-blog-source-dir (concat ematrix-blog-dir "src/"))
+(defconst ematrix-blog-website-dir (concat ematrix-blog-dir "website/"))
+(defconst ematrix-blog-posts-dir (concat ematrix-blog-dir "src/posts/"))
 
 (setq org-publish-project-alist
       `(("pages"
-         :base-directory "blog/src/"
+         :base-directory ,ematrix-blog-source-dir
 	 :exclude ".*drafts/.*"
 	 :html-doctype "html5"
 	 :html-head ,my-org-blog-head
 	 :html-postamble ,my-org-postamble
 	 :html-preamble ,my-org-preamble
-	 :publishing-directory "blog/website/"
+	 :publishing-directory ,ematrix-blog-website-dir
 	 :publishing-function my-ox-slimhtml-publish-to-html
          :recursive t
 
@@ -126,21 +132,21 @@ the published file, PUB-DIR the publishing directory."
 	 :sitemap-sort-files anti-chronologically)
 
 	("posts"
-	 :base-directory "blog/src/posts/"
+	 :base-directory ,ematrix-blog-posts-dir
 	 :exclude ".*drafts/.*"
 	 :html-doctype "html5"
 	 :html-head ,my-org-blog-head
 	 :html-postamble ,my-org-postamble
 	 :html-preamble ,my-org-preamble
-	 :publishing-directory "blog/website/posts"
+	 :publishing-directory ,ematrix-blog-posts-dir
 	 :publishing-function my-ox-slimhtml-publish-to-html
          :recursive t)
 
 	("assets"
-	 :base-directory "blog/src/"
+	 :base-directory ,ematrix-blog-source-dir 
 	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
 	 :exclude ".*drafts/.*"
-	 :publishing-directory "blog/website/"
+	 :publishing-directory ,ematrix-blog-website-dir
 	 :publishing-function org-publish-attachment
 	 :recursive t)
 
