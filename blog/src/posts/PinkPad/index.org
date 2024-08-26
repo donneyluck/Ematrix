@@ -1,5 +1,5 @@
+#+html_head: <link rel="stylesheet" type="text/css" href="../../css/style.css">
 
-#+setupfile: ~/.emacs.d/org-templates/level1-slim.org
 #+title: The PinkPad v1 2020 Lockdown Edition
 #+date: "<2020-11-18 Sun 20:00>"
 #+keywords: raspberry pi, linux, arch linux, coding
@@ -8,21 +8,21 @@
 * The PinkPad v1 2020 Lockdown Edition
 
 #+attr_html: :class tldr 
-#+BEGIN_DIV
+#+begin_div
 [TL;DR] I've always been jealous about those hot little mini-laptops.
 So I built my own one with a Raspberry Pi and a toy laptop. Here's why and how
-I did that. (It uses Arch btw.)
-#+END_DIV  
+I did that. (It uses Arch btw.) aa
+#+end_div  
 
 ** A very special Raspberry Pi case
 
-        #+BEGIN_EXPORT html
+        #+begin_export html
 <figure>
 <img src="../../assets/PinkPad_wide.jpg" alt="The PinkPad: a very special Raspberry Pi case" title="a very special raspberry pi case" width="650px">
 
 <figcaption><span class="figure-number">Figure 1: </span>A very special Raspberry Pi case</figcaption>
 </figure>
-     #+END_EXPORT       
+     #+end_export       
     
 Every time I saw someone with one of those unnecessarily cute mini-laptops, I got
 extremely jealous. But most of them are a bit too expensive for something
@@ -40,13 +40,13 @@ But I'm not ;)
 
 As a Black Metal fan I need something a little more...brutal.
 
-        #+BEGIN_EXPORT html
+        #+begin_export html
 <figure>
 <img src="../../assets/PinkPad_hail_satan.jpg" alt="satanic pinkpad" title="how to chmod 666" width="650px">
 
 <figcaption><span class="figure-number">Figure 1: </span>How to chmod 666</figcaption>
 </figure>
-     #+END_EXPORT       
+     #+end_export       
 
 Luckily I found the perfect model on eBay. Something that looks just as evil and
 badass as I feel. The perfect match: the Schlaubärchen Laptop.
@@ -204,13 +204,13 @@ if you already have most of the stuff. (It's still awesome tho)
 
 *** 3D printed parts
 
-        #+BEGIN_EXPORT html
+        #+begin_export html
 <figure>
 <img src="../../assets/vtech_lern_und_musik_laptop.jpg" alt="the VTech Lern- und Musiklaptop" title="VTech Lern- und Musiklaptop" width="400px">
 
 <figcaption><span class="figure-number">Figure 1: </span> VTech Lern- und Musiklaptop</figcaption>
 </figure>
-     #+END_EXPORT     
+     #+end_export     
 
 As you can see from the picture of the VTech laptop, there's not really
 enough space for a display or a keyboard with a reasonable size.
@@ -229,22 +229,22 @@ And to give you an idea of what they're supposed to do/where they're supposed to
 here's what they look like:
 
    1. The part for the LCD:
-     #+BEGIN_EXPORT html
+     #+begin_export html
 <figure>
 <img src="../../assets/pinkpad_display.png" alt="a screenshot of the STL for the display part" title="the part for the display" width="400px">
 
 <figcaption><span class="figure-number">Figure 1: </span> </figcaption>
 </figure>
-     #+END_EXPORT     
+     #+end_export     
 
    2. The middle part:
-     #+BEGIN_EXPORT html
+     #+begin_export html
 <figure>
 <img src="../../assets/pinkpad_middle.png" alt="a screenshot of the STL for the middle part" title="the middle part" width="400px">
 
 <figcaption><span class="figure-number">Figure 1: </span> </figcaption>
 </figure>
-     #+END_EXPORT             
+     #+end_export             
 
      You need this part if you use hardware (eg. an other Raspberry Pi than the Zero)
      to have more space in the top part.
@@ -252,13 +252,13 @@ here's what they look like:
      on it.
 
    3. The part for the keyboard:
-     #+BEGIN_EXPORT html
+     #+begin_export html
 <figure>
 <img src="../../assets/pinkpad_keyboard.png" alt="a screenshot of the STL for the keyboard part" title="the part for the keyboard" width="400px">
 
 <figcaption><span class="figure-number">Figure 1: </span> </figcaption>
 </figure>
-     #+END_EXPORT             
+     #+end_export             
      
 **** Print Settings
 
@@ -290,30 +290,30 @@ As root:
      - create two partitions, the first with type W95 FAT32
    2. Create filesystems:
       - FAT filesystem for the first partition
-     #+BEGIN_SRC shell
+     #+begin_src shell
   mkfs.vfat /dev/sdX1
-     #+END_SRC
+     #+end_src
       - ext4 for the second 
-     #+BEGIN_SRC bash
+     #+begin_src bash
   mkfs.ext4 /dev/sdX2
-     #+END_SRC
+     #+end_src
    3. Mount the filesystems
-     #+BEGIN_SRC bash
+     #+begin_src bash
   mkdir boot root
   mount /dev/sdX1 boot
   mount /dev/sdX2 root
-     #+END_SRC
+     #+end_src
    4. Download and extract the image
-     #+BEGIN_SRC bash
+     #+begin_src bash
   wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-latest.tar.gz
   bsdtar -C root -xpf ArchLinuxARM-rpi-latest.tar.gz
   sync
   mv root/boot/* boot
      #+END_SRC	
    5. Unmount the partitions
-     #+BEGIN_SRC bash
+     #+begin_src bash
 umount boot root
-     #+END_SRC
+     #+end_src
 
 Now put the SD card into your Pi, power up, log in (default user and password
 are /alarm/ and /alarm/ or /root/ and /root/ for roo, so better change that
@@ -321,10 +321,10 @@ immediately ;))
 
 Then initialise the pacman keyring and populate the package signing keys
 
-#+BEGIN_SRC bash
+#+begin_src bash
   pacman-key --init
   pacman-key --populate archlinuxarm
-#+END_SRC
+#+end_src
 
 Yeah well, I said I wouldn't write a detailed guide but...there's actually not
 much more detail needed, that's basically it =¯\_(ツ)_/¯=
@@ -334,37 +334,37 @@ much more detail needed, that's basically it =¯\_(ツ)_/¯=
 And if you're planning to connect to WiFi (I guess you do):
 
   1. Create/ /etc/systemd/network/wlan0.network// with:
-    #+BEGIN_SRC bash
+    #+begin_src bash
   [Match]
   Name=wlan0
 
   [Network]
   DHCP=yes
-    #+END_SRC
+    #+end_src
 
   2. Generate a basic configuration file with /wpa_passphrase/
-    #+BEGIN_SRC bash
+    #+begin_src bash
   wpa_passphrase SSID PASSPHRASE > /etc/wpa_supplicant/wpa_supplicant-wlan0.conf
-    #+END_SRC
+    #+end_src
 
   3. Enable and start wpa, restart networkd
-    #+BEGIN_SRC bash
+    #+begin_src bash
   systemctl enable wpa_supplicant@wlan0
   systemctl start wpa_supplicant@wlan0
   systemctl restart systemd-networkd.service
-    #+END_SRC
+    #+end_src
 
 **** Get the LCD touchscreen to work
 
 Add these lines to //boot/config.txt/:
 
-    #+BEGIN_SRC
+    #+begin_src
 max_usb_current=1
 hdmi_group=2
 hdmi_mode=87
 hdmi_cvt 800 480 60 6 0 0 0
 hdmi_drive=1
-    #+END_SRC
+    #+end_src
 
 This should be enough, but depending on your LCD touchscreen model it could be
 that you have to add some lines in /99-fbturbo.conf/, some also need drivers installed.
@@ -387,13 +387,13 @@ you know what software you want to have on it.
 
 *** Manicure for the keyboard
 
-#+BEGIN_EXPORT html
+#+begin_export html
 <figure>
 <img src="../../assets/pinkpad_manicure_evolution.jpg" alt="before and after pic of the keyboard" title="From crumbling rose to bright pink" width="500px">
 
 <figcaption><span class="figure-number">Figure 1: </span>The evolution of a keyboard</figcaption>
 </figure>
-#+END_EXPORT   
+#+end_export   
 
 As you might have noticed the Rii keyboard is black. And unfortunately
 that ruins the hardcore, badass aesthetic of my soft pink PinkPad.
@@ -416,13 +416,13 @@ The corresponding research paper is not yet published but I can already tell
 you the results: the best option is a strong covering (not creamy or pearly) pink
 nail polish by Essie together with a clear top coat.
 
-#+BEGIN_EXPORT html
+#+begin_export html
 <figure>
 <img src="../../assets/pinkpad_manicure.jpg" alt="PinkPad keyboard and nail polish" title="manicure for the keyboard" width="400px">
 
 <figcaption><span class="figure-number">Figure 1: </span>Manicure for the keyboard</figcaption>
 </figure>
-#+END_EXPORT
+#+end_export
 
 Different from the other things I tried, the nail polish still lasts without
 a scratch (and different from the other things I can use it for my nails as well)
@@ -461,26 +461,26 @@ Basically this can be summarized in a few steps:
   1. Brute force the parts of the case away where the display and the keyboard
      are supposed to go. Don't be gentle. It won't be gentle with you either.
 
-     #+BEGIN_EXPORT html
+     #+begin_export html
 <figure>
 <img src="../../assets/ouch.jpg" alt="my injured finger" title="My battle wounds." width="400px">
 
 <figcaption><span class="figure-number">Figure 1: </span> My battle wounds.</figcaption>
 </figure>
-     #+END_EXPORT
+     #+end_export
 
   2. Glue...everything: glue the middle part well...to the middle, the keyboard
      part to the bottom of the laptop and yourself to basically everything that
      gets in your way. The part for the display is screwed onto the back part
      of the cover later.
      
-     #+BEGIN_EXPORT html
+     #+begin_export html
 <figure>
 <img src="../../assets/pinkpad_mutilated.jpg" alt="a mutilated pinkpad with slaughter tools" title="the battleground" width="400px">
 
 <figcaption><span class="figure-number">Figure 1: </span> The battleground. </figcaption>
 </figure>
-     #+END_EXPORT     
+     #+end_export     
 
   3. Raspberry Pi, USB hub and display are supposed to go into the top part,
      keyboard and battery into the bottom.
@@ -490,7 +490,7 @@ Basically this can be summarized in a few steps:
       - the connection for the charger is on the side of charger hole
       - the cable for the battery finds its way through the little hole
 	in the middle down to the bottom part
-     #+BEGIN_EXPORT html
+     #+begin_export html
 <figure>
 <img src="../../assets/pinkpad_intestines.jpg" alt="the top part of the pinkpad" title="Pinkad intestines." width="400px">
 
@@ -503,24 +503,24 @@ Basically this can be summarized in a few steps:
      should be enough room in the bottom part.
      Otherwise repeat step 1.
 
-     #+BEGIN_EXPORT html
+     #+begin_export html
 <figure>
 <img src="../../assets/pinkpad_keyboard.jpg" alt="the bottom part of the pinkpad" title="more PinkPad guts." width="400px">
 
 <figcaption><span class="figure-number">Figure 1: </span> More PinkPad guts.</figcaption>
 </figure>
-     #+END_EXPORT
+     #+end_export
   
      If everything is in place (or at least inside), close the laptop
      and screw in some screws (3 is the minimum, I tried)
 
-     #+BEGIN_EXPORT html
+     #+begin_export html
 <figure>
 <img src="../../assets/pinkpad_sloth.jpg" alt="a sloth and a PinkPad" title="black metal sloth and PinkPad." width="400px">
 
 <figcaption><span class="figure-number">Figure 1: </span> Black Metal Sloth and PinkPad.</figcaption>
 </figure>
-     #+END_EXPORT     
+     #+end_export     
 
 And if you have no idea what I was talking about, just look at the pics, it should
 make some sense then.
@@ -551,10 +551,10 @@ There are some things I'd like to improve:
 
 But for now I'm happy with my brutal-hardcore-black-metal-badass PinkPad. 
 
-        #+BEGIN_EXPORT html
+        #+begin_export html
 <figure>
 <img src="../../assets/PinkPad_front_close.jpg" alt="PinkPad in front of screens" title="The PinkPad in flex mode" width="650px">
 
 <figcaption><span class="figure-number">Figure 1: </span>PinkPad in flex mode</figcaption>
 </figure>
-     #+END_EXPORT       
+     #+end_export       

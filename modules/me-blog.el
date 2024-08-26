@@ -36,12 +36,28 @@
    "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
    "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/style.css\">"))
 
+(defvar my-org-blog-posts-head
+  (concat
+   "<meta charset=\"utf-8\">"
+   "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+   "<link rel=\"stylesheet\" type=\"text/css\" href=\"../../css/style.css\">"))
+
 (defvar my-org-preamble
   (concat
    "<nav class=\"navbar\">"
      "<a href=\"index.html\"> home </a>"
      "<a href=\"archive.html\"> stuff </a>"
      "<a href=\"about.html\"> about </a>"
+     "<a href=\"#\"> <label for=\"theme-switch\" class=\"switch-label\"></label></a>"
+     "</nav>"
+     "<div id=\"content\">"))
+
+(defvar my-org-blog-posts-preamble
+  (concat
+   "<nav class=\"navbar\">"
+     "<a href=\"../../index.html\"> home </a>"
+     "<a href=\"../../archive.html\"> stuff </a>"
+     "<a href=\"../../about.html\"> about </a>"
      "<a href=\"#\"> <label for=\"theme-switch\" class=\"switch-label\"></label></a>"
      "</nav>"
      "<div id=\"content\">"))
@@ -109,6 +125,7 @@ the published file, PUB-DIR the publishing directory."
 (defconst ematrix-blog-source-dir (concat ematrix-blog-dir "src/"))
 (defconst ematrix-blog-website-dir (concat ematrix-blog-dir "website/"))
 (defconst ematrix-blog-posts-dir (concat ematrix-blog-dir "src/posts/"))
+(defconst ematrix-blog-posts-publish-dir (concat ematrix-blog-dir "website/posts/"))
 
 (setq org-publish-project-alist
       `(("pages"
@@ -135,10 +152,10 @@ the published file, PUB-DIR the publishing directory."
 	 :base-directory ,ematrix-blog-posts-dir
 	 :exclude ".*drafts/.*"
 	 :html-doctype "html5"
-	 :html-head ,my-org-blog-head
+	 :html-head ,my-org-blog-posts-head
 	 :html-postamble ,my-org-postamble
-	 :html-preamble ,my-org-preamble
-	 :publishing-directory ,ematrix-blog-posts-dir
+	 :html-preamble ,my-org-blog-posts-preamble
+	 :publishing-directory ,ematrix-blog-posts-publish-dir
 	 :publishing-function my-ox-slimhtml-publish-to-html
          :recursive t)
 
