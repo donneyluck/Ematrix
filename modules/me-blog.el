@@ -55,9 +55,9 @@
 (defvar my-org-blog-posts-preamble
   (concat
    "<nav class=\"navbar\">"
-     "<a href=\"../../index.html\"> home </a>"
-     "<a href=\"../../archive.html\"> stuff </a>"
-     "<a href=\"../../about.html\"> about </a>"
+     "<a href=\"../index.html\"> home </a>"
+     "<a href=\"../archive.html\"> stuff </a>"
+     "<a href=\"../about.html\"> about </a>"
      "<a href=\"#\"> <label for=\"theme-switch\" class=\"switch-label\"></label></a>"
      "</nav>"
      "<div id=\"content\">"))
@@ -104,12 +104,12 @@ the published file, PUB-DIR the publishing directory."
   "Return format string for each ENTRY in PROJECT."
   (if (and (s-starts-with? "posts/" entry) (not (equal "disclaimer.org" (file-name-nondirectory entry))))
    (format "@@html:<span class=\"archive-item\"><span class=\"archive-date\">@@ %s @@html:</span>@@ [[file:%s][%s]]@@html:<div class=\"description\">@@ %s @@html:</div>@@ @@html:<div class=\"keywords\">@@ %s @@html:</div>@@ @@html:</span>@@"
-            (format-time-string "[%d.%m.%Y, %R %Z]"
+            (format-time-string "[%d.%m.%Y]"
                                 (my-org-publish-get-date-from-keyword entry project))
 	    entry
             (org-publish-find-title entry project)
 	    (org-publish-find-property entry :description project 'html)
-	    (org-publish-find-property entry :keywords project 'html))))
+	    (org-publish-find-property entry :filetags project 'html))))
 
 (defun my-org-blog-sitemap-function (title list)
   "Return sitemap using TITLE and LIST returned by `my-org-blog-sitemap-format-entry'."

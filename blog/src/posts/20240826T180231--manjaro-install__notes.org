@@ -1,6 +1,7 @@
-#+title: Manjaro Install
-#+date: "<2024-08-25 Mon 20:00>"
-#+keywords: linux, arch linux, system
+#+title:      Manjaro Install
+#+date:       [2024-08-26 Mon 18:02]
+#+filetags:   :notes:
+#+identifier: 20240826T180231
 #+description: How to build your linux work environment from scratch
 * Manjaro-i3wm
 ** download =manjaro-i3wm.iso=
