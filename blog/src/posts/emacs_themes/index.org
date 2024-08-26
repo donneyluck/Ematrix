@@ -1,17 +1,15 @@
-
-#+setupfile: ~/.emacs.d/org-templates/level1-slim.org
 #+title: Emacs Themes
-#+date: "<2019-12-21 Sun 20:00>"
+#+date: "<2024-08-25 Sun 20:00>"
 #+keywords: emacs, beginner-friendly, themes
 #+description: It's important to feel at home in your beloved editor, so this post is about creating custom themes in Emacs.
 * Creating Emacs custom themes
 
 
 #+attr_html: :class tldr
-#+BEGIN_DIV
-[TL;DR] It's important to feel at home in your beloved editor, so this post is
+#+begin_div
+[TLDR] It's important to feel at home in your beloved editor, so this post is
 about creating custom themes in Emacs.
-#+END_DIV
+#+end_div
  
 ** Why?
 
@@ -32,13 +30,13 @@ for your new theme:
 
 \\
 
-#+BEGIN_EXPORT html
+#+begin_export html
 <figure>
 <img src="../../assets/customtheme.png" alt="create theme screenshot" title="The customize theme buffer" width="600px">
 
 <figcaption><span class="figure-number">Figure 1: </span>A screenshot of the customize theme buffer</figcaption>
 </figure>
-#+END_EXPORT
+#+end_export
 \\
 Probably you also want to add additional faces for the modes you use, 
 you can do so with the "Insert Additional Face" option close to the 
@@ -46,13 +44,13 @@ end of the buffer:
 
 \\
 
-#+BEGIN_EXPORT html
+#+begin_export html
 <figure>
 <img src="../../assets/customtheme3.png" alt="create theme screenshot" title="The customize theme buffer" width="600px">
 
 <figcaption><span class="figure-number">Figure 1: </span>A screenshot of the customize theme buffer</figcaption>
 </figure>
-#+END_EXPORT
+#+end_export
 
 
 Themes don't only contain faces but also variables, you can set them in 
@@ -83,13 +81,13 @@ Save the theme(s) with the "Save Theme Settings" button or by typing C-x C-s.
 
 \\
 
-#+BEGIN_EXPORT html
+#+begin_export html
 <figure>
 <img src="../../assets/customtheme4.png" alt="create theme screenshot" title="The customize theme buffer" width="600px">
 
 <figcaption><span class="figure-number">Figure 1: </span>A screenshot of the customize theme buffer</figcaption>
 </figure>
-#+END_EXPORT
+#+end_export
 
 
 \\
@@ -109,13 +107,13 @@ use the Emacs Theme Creator by Martin Haesler:
 
 \\
 
-#+BEGIN_EXPORT html
+#+begin_export html
 <figure>
 <img src="../../assets/themecreator.png" alt="create theme screenshot" title="The customize theme buffer" width="600px">
 
 <figcaption><span class="figure-number">Figure 1: </span>A screenshot of the customize theme buffer</figcaption>
 </figure>
-#+END_EXPORT
+#+end_export
 
 
 \\
@@ -136,7 +134,7 @@ have custom variables you can set them in custom-theme-set-variables.
 As an example, here's my cactus-theme (feel free to use it and add the faces you
 need):
 
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (deftheme cactus
   "Cactus Theme")
 
@@ -274,5 +272,5 @@ need):
 
 (provide-theme 'cactus)
 
-#+END_SRC
+#+end_src
 \\
