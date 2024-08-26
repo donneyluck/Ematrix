@@ -1,6 +1,6 @@
 #+title:      LogLevel
 #+date:       [2024-08-26 Mon 17:47]
-#+filetags:   :program:
+#+filetags:   :notes:
 #+identifier: 20240826T174745
 #+description: Teach you how to use log levels correctly
 * 正确的选择 log 级别

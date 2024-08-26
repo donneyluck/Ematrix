@@ -1,6 +1,6 @@
 #+title:  Game server interview questions
 #+date:       [2024-08-26 Mon 17:58]
-#+keywords: linux, game server, interview
+#+filetags:   :notes:
 #+description: Common server interview questions and answers collections very helpful
 * 游戏服务器面试题合集
 ** TCP 的核心意涵是什么？
