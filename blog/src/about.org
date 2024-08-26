@@ -6,6 +6,7 @@
    <div class="about-column">DONNEY(6)</div>
 </div>
 #+end_export
+@@html:<hr>@@
 *NAME*
        #+attr_html: :class about-indented
        #+begin_div
@@ -90,7 +91,7 @@
        changes and redistribution of *donney* are prohibited by law
        #+end_div
 
-
+@@html:<hr>@@
 #+begin_export html
 <div class="about">
    <div class="about-column">DONNEY(6)</div>
