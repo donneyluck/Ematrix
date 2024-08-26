@@ -23,6 +23,7 @@
 (defgroup minemacs-project nil "MinEmacs project stuff." :group 'minemacs)
 (defgroup minemacs-ui nil "MinEmacs UI tweaks." :group 'minemacs)
 (defgroup minemacs-utils nil "MinEmacs utility functions." :group 'minemacs)
+(defgroup ematrix-blog nil "Ematrix blog stuff" :group 'ematrix)
 
 ;;; MinEmacs directories
 
@@ -96,6 +97,7 @@ environment variable \"$MINEMACS_IGNORE_USER_CONFIG\".")
                                (or (getenv "MINEMACS_DIR") (getenv "MINEMACSDIR")
                                    (if (file-directory-p "~/.minemacs.d/") "~/.minemacs.d/" (concat minemacs-root-dir "user-config/"))))
   "MinEmacs user customization directory.")
+(defconst ematrix-blog-dir (concat minemacs-root-dir "blog/"))
 
 (defconst minemacs-started-with-extra-args-p (and (cdr command-line-args) t) "Has Emacs been started with extras arguments? like a file name or so.")
 (defconst os/linux (eq system-type 'gnu/linux) "Non-nil on GNU/Linux systems.")

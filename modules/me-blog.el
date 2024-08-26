@@ -106,13 +106,13 @@ the published file, PUB-DIR the publishing directory."
 
 (setq org-publish-project-alist
       `(("pages"
-         :base-directory "src/"
+         :base-directory "blog/src/"
 	 :exclude ".*drafts/.*"
 	 :html-doctype "html5"
 	 :html-head ,my-org-blog-head
 	 :html-postamble ,my-org-postamble
 	 :html-preamble ,my-org-preamble
-	 :publishing-directory "website/"
+	 :publishing-directory "blog/website/"
 	 :publishing-function my-ox-slimhtml-publish-to-html
          :recursive t
 
@@ -126,21 +126,21 @@ the published file, PUB-DIR the publishing directory."
 	 :sitemap-sort-files anti-chronologically)
 
 	("posts"
-	 :base-directory "src/posts/"
+	 :base-directory "blog/src/posts/"
 	 :exclude ".*drafts/.*"
 	 :html-doctype "html5"
 	 :html-head ,my-org-blog-head
 	 :html-postamble ,my-org-postamble
 	 :html-preamble ,my-org-preamble
-	 :publishing-directory "website/posts"
+	 :publishing-directory "blog/website/posts"
 	 :publishing-function my-ox-slimhtml-publish-to-html
          :recursive t)
 
 	("assets"
-	 :base-directory "src/"
+	 :base-directory "blog/src/"
 	 :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
 	 :exclude ".*drafts/.*"
-	 :publishing-directory "website/"
+	 :publishing-directory "blog/website/"
 	 :publishing-function org-publish-attachment
 	 :recursive t)
 
