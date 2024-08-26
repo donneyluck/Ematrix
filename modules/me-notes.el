@@ -22,6 +22,7 @@
   (denote-file-type 'org) ; I love org-mode format; reading ahead I'm setting this
   (denote-date-prompt-use-org-read-date t) ; And `org-read-date' is an amazing bit of tech
   :config
+  (setq denote-directory ematrix-blog-posts-dir)
   (denote-rename-buffer-mode 1))
 
 (use-package consult-notes
