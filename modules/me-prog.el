@@ -27,95 +27,87 @@
   :hook (minemacs-lazy . global-treesit-auto-mode)
   :custom
   (treesit-auto-install 'prompt)
-  :config
-  ;; Add extra grammars
-  ;; BUG+FIX: Remove the C++ grammar to force using v0.22.0, newer versions
-  ;; cause problems with syntax highlighting in `c++-ts-mode' buffers (abougouffa/minemacs#135)
-  ;; BUG+FIX: Remove the Markdown grammar to install it correctly (renzmann/treesit-auto#102)
-  (let* ((extra-recipes
-          (list (make-treesit-auto-recipe
-                 :lang 'xml
-                 :ts-mode 'xml-ts-mode
-                 :remap '(nxml-mode xml-mode)
-                 :url "https://github.com/tree-sitter-grammars/tree-sitter-xml"
-                 :source-dir "xml/src"
-                 :ext "\\.xml\\'")
-                (make-treesit-auto-recipe
-                 :lang 'markdown
-                 :ts-mode 'markdown-ts-mode
-                 :remap '(poly-markdown-mode markdown-mode)
-                 :requires 'markdown-inline
-                 :url "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
-                 :revision "split_parser"
-                 :source-dir "tree-sitter-markdown/src"
-                 :ext "\\.md\\'")
-                (make-treesit-auto-recipe
-                 :lang 'markdown-inline
-                 :ts-mode 'markdown-inline-mode ; Fake mode to make `treesit-auto' happy
-                 :remap 'markdown-inline-ts-mode
-                 :requires 'markdown
-                 :url "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
-                 :revision "split_parser"
-                 :source-dir "tree-sitter-markdown-inline/src")
-                (make-treesit-auto-recipe
-                 :lang 'cpp
-                 :ts-mode 'c++-ts-mode
-                 :remap 'c++-mode
-                 :requires 'c
-                 :url "https://github.com/tree-sitter/tree-sitter-cpp"
-                 :revision "v0.22.0"
-                 :ext "\\.cpp\\'")
-                (make-treesit-auto-recipe
-                 :lang 'csharp
-                 :ts-mode 'csharp-ts-mode
-                 :remap 'csharp-mode
-                 :requires 'c
-                 :url "https://github.com/tree-sitter/tree-sitter-csharp"
-                 :revision "v0.22.0"
-                 :ext "\\.cs\\'")
-                (make-treesit-auto-recipe
-                 :lang 'llvm
-                 :ts-mode 'llvm-ts-mode
-                 :remap 'llvm-mode
-                 :url "https://github.com/benwilliamgraham/tree-sitter-llvm"
-                 :ext "\\.ll\\'")
-                (make-treesit-auto-recipe
-                 :lang 'zig
-                 :ts-mode 'zig-ts-mode
-                 :remap 'zig-mode
-                 :url "https://github.com/GrayJack/tree-sitter-zig"
-                 :ext "\\.\\(zig\\|zon\\)\\'"))))
-    ;; First, delete the duplicate recipes already present in the list, if any
-    (cl-callf2 cl-delete-if
-        (lambda (lang) (memq (treesit-auto-recipe-lang lang) (mapcar #'treesit-auto-recipe-lang extra-recipes)))
-        treesit-auto-recipe-list)
-    ;; Then, add the extra recipes to the list
-    (cl-callf append treesit-auto-recipe-list extra-recipes)
-    (setq treesit-auto-langs (mapcar #'treesit-auto-recipe-lang treesit-auto-recipe-list)))
+;;   :config
+;;   ;; Add extra grammars
+;;   ;; BUG+FIX: Remove the C++ grammar to force using v0.22.0, newer versions
+;;   ;; cause problems with syntax highlighting in `c++-ts-mode' buffers (abougouffa/minemacs#135)
+;;   ;; BUG+FIX: Remove the Markdown grammar to install it correctly (renzmann/treesit-auto#102)
+;;   (let* ((extra-recipes
+;;           (list (make-treesit-auto-recipe
+;;                  :lang 'xml
+;;                  :ts-mode 'xml-ts-mode
+;;                  :remap '(nxml-mode xml-mode)
+;;                  :url "https://github.com/tree-sitter-grammars/tree-sitter-xml"
+;;                  :source-dir "xml/src"
+;;                  :ext "\\.xml\\'")
+;;                 (make-treesit-auto-recipe
+;;                  :lang 'markdown
+;;                  :ts-mode 'markdown-ts-mode
+;;                  :remap '(poly-markdown-mode markdown-mode)
+;;                  :requires 'markdown-inline
+;;                  :url "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+;;                  :revision "split_parser"
+;;                  :source-dir "tree-sitter-markdown/src"
+;;                  :ext "\\.md\\'")
+;;                 (make-treesit-auto-recipe
+;;                  :lang 'markdown-inline
+;;                  :ts-mode 'markdown-inline-mode ; Fake mode to make `treesit-auto' happy
+;;                  :remap 'markdown-inline-ts-mode
+;;                  :requires 'markdown
+;;                  :url "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+;;                  :revision "split_parser"
+;;                  :source-dir "tree-sitter-markdown-inline/src")
+;;                 (make-treesit-auto-recipe
+;;                  :lang 'cpp
+;;                  :ts-mode 'c++-ts-mode
+;;                  :remap 'c++-mode
+;;                  :requires 'c
+;;                  :url "https://github.com/tree-sitter/tree-sitter-cpp"
+;;                  :revision "v0.22.0"
+;;                  :ext "\\.cpp\\'")
+;;                 (make-treesit-auto-recipe
+;;                  :lang 'llvm
+;;                  :ts-mode 'llvm-ts-mode
+;;                  :remap 'llvm-mode
+;;                  :url "https://github.com/benwilliamgraham/tree-sitter-llvm"
+;;                  :ext "\\.ll\\'")
+;;                 (make-treesit-auto-recipe
+;;                  :lang 'zig
+;;                  :ts-mode 'zig-ts-mode
+;;                  :remap 'zig-mode
+;;                  :url "https://github.com/GrayJack/tree-sitter-zig"
+;;                  :ext "\\.\\(zig\\|zon\\)\\'"))))
+;;     ;; First, delete the duplicate recipes already present in the list, if any
+;;     (cl-callf2 cl-delete-if
+;;         (lambda (lang) (memq (treesit-auto-recipe-lang lang) (mapcar #'treesit-auto-recipe-lang extra-recipes)))
+;;         treesit-auto-recipe-list)
+;;     ;; Then, add the extra recipes to the list
+;;     (cl-callf append treesit-auto-recipe-list extra-recipes)
+;;     (setq treesit-auto-langs (mapcar #'treesit-auto-recipe-lang treesit-auto-recipe-list)))
 
-  ;; Ensure that installed tree-sitter languages have their corresponding `x-ts-mode' added to `auto-mode-alist'
-  (treesit-auto-add-to-auto-mode-alist 'all)
+;;   ;; Ensure that installed tree-sitter languages have their corresponding `x-ts-mode' added to `auto-mode-alist'
+  (treesit-auto-add-to-auto-mode-alist 'all))
 
-  ;; Create `treesit' parsers when they are available even in non-treesit modes.
-  ;; This is useful for packages like `expreg' and `ts-movement'.
-  ;; BUG: Adding the Elisp grammar and creating it seems to interfere with `parinfer-rust-mode'
-  (defun +treesit-enable-available-grammars-on-normal-modes ()
-    "Enable `treesit' parses in non-treesit modes."
-    (dolist (recipe treesit-auto-recipe-list)
-      (let ((lang (treesit-auto-recipe-lang recipe)))
-        (unless (fboundp (treesit-auto-recipe-ts-mode recipe)) ; When the `xxx-ts-mode' is not available
-          (dolist (remap-mode (ensure-list (treesit-auto-recipe-remap recipe))) ; Get the basic mode name (non-ts)
-            (let ((fn-name (intern (format "+treesit--enable-on-%s-h" remap-mode)))
-                  (hook-name (intern (format "%s-hook" remap-mode))))
-              (defalias fn-name (lambda () ; Create the parser if the grammar fot the language is available
-                                  (when (and (treesit-available-p) (treesit-language-available-p lang))
-                                    (treesit-parser-create lang))))
-              (add-hook hook-name fn-name)))))))
+;;   ;; Create `treesit' parsers when they are available even in non-treesit modes.
+;;   ;; This is useful for packages like `expreg' and `ts-movement'.
+;;   ;; BUG: Adding the Elisp grammar and creating it seems to interfere with `parinfer-rust-mode'
+;;   (defun +treesit-enable-available-grammars-on-normal-modes ()
+;;     "Enable `treesit' parses in non-treesit modes."
+;;     (dolist (recipe treesit-auto-recipe-list)
+;;       (let ((lang (treesit-auto-recipe-lang recipe)))
+;;         (unless (fboundp (treesit-auto-recipe-ts-mode recipe)) ; When the `xxx-ts-mode' is not available
+;;           (dolist (remap-mode (ensure-list (treesit-auto-recipe-remap recipe))) ; Get the basic mode name (non-ts)
+;;             (let ((fn-name (intern (format "+treesit--enable-on-%s-h" remap-mode)))
+;;                   (hook-name (intern (format "%s-hook" remap-mode))))
+;;               (defalias fn-name (lambda () ; Create the parser if the grammar fot the language is available
+;;                                   (when (and (treesit-available-p) (treesit-language-available-p lang))
+;;                                     (treesit-parser-create lang))))
+;;               (add-hook hook-name fn-name)))))))
 
-  (+treesit-enable-available-grammars-on-normal-modes))
+;;   (+treesit-enable-available-grammars-on-normal-modes))
 
-(when (+emacs-features-p 'tree-sitter)
-  (push 'treesit straight-built-in-pseudo-packages)) ; ts-movement depends on it
+;; (when (+emacs-features-p 'tree-sitter)
+;;   (push 'treesit straight-built-in-pseudo-packages)) ; ts-movement depends on it
 
 ;; (use-package ts-movement
 ;;   :straight (:host github :repo "haritkapadia/ts-movement")
@@ -320,6 +312,9 @@
 (use-package sproto-mode
   :straight t
   :mode "\\.sproto")
+
+(use-package csharp-mode
+  :mode "\\.cs")
 
 (use-package protobuf-mode
   :straight t)
