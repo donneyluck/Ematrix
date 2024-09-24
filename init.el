@@ -253,3 +253,4 @@ the packages loaded with `:after minemacs-lazy' can be loaded."
 (+log! "Loaded init.el")
 
 ;;; init.el ends here
+(put 'dired-find-alternate-file 'disabled nil)
