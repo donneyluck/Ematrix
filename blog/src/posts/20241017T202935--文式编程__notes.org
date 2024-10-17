@@ -2,6 +2,7 @@
 #+date:       [2024-10-17 Thu 20:29]
 #+filetags:   :notes:
 #+identifier: 20241017T202935
+#+description: 认识并了解什么是文式编程
 * 文式编程
 ** 文学编程
 文学编程 （Literate programming） 的一些概念，上个世纪 70 年代就有人提出来了。
