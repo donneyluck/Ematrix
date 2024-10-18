@@ -33,7 +33,7 @@ for your new theme:
 
 #+begin_export html
 <figure>
-<img src="../../assets/customtheme.png" alt="create theme screenshot" title="The customize theme buffer" width="600px">
+<img src="../assets/customtheme.png" alt="create theme screenshot" title="The customize theme buffer" width="600px">
 
 <figcaption><span class="figure-number">Figure 1: </span>A screenshot of the customize theme buffer</figcaption>
 </figure>
