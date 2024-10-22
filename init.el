@@ -19,23 +19,23 @@
 
 ;; Load and hooks order:
 ;; - `~/.emacs.d/early-init.el`
-;; - `$MINEMACSDIR/early-config.el` (unless disabled in `$MINEMACS_IGNORE_USER_CONFIG`)
-;; - `$MINEMACSDIR/local/early-config.el` (unless disabled)
+;; - `$EMATRIXDIR/early-config.el` (unless disabled in `$EMATRIX_IGNORE_USER_CONFIG`)
+;; - `$EMATRIXDIR/local/early-config.el` (unless disabled)
 ;; - `~/.emacs.d/init.el`
 ;;   * `before-init-hook'
 ;;   * `~/.emacs.d/core/me-vars.el`
 ;;   * `~/.emacs.d/core/backports/*.el` (when Emacs < 29)
 ;;   * `~/.emacs.d/core/me-loaddefs.el`
-;;   * `$MINEMACSDIR/init-tweaks.el` (unless disabled)
-;;   * `$MINEMACSDIR/local/init-tweaks.el` (unless disabled)
-;;   * `$MINEMACSDIR/modules.el` (unless disabled)
-;;   * `$MINEMACSDIR/local/modules.el` (unless disabled)
+;;   * `$EMATRIXDIR/init-tweaks.el` (unless disabled)
+;;   * `$EMATRIXDIR/local/init-tweaks.el` (unless disabled)
+;;   * `$EMATRIXDIR/modules.el` (unless disabled)
+;;   * `$EMATRIXDIR/local/modules.el` (unless disabled)
 ;;   * `~/.emacs.d/core/<module>.el`
 ;;   * `~/.emacs.d/modules/<module>.el` (for module in `minemacs-modules')
 ;;   * `minemacs-after-loading-modules-hook'
-;;   * `$MINEMACSDIR/custom-vars.el`
-;;   * `$MINEMACSDIR/config.el` (unless disabled)
-;;   * `$MINEMACSDIR/local/config.el` (unless disabled)
+;;   * `$EMATRIXDIR/custom-vars.el`
+;;   * `$EMATRIXDIR/config.el` (unless disabled)
+;;   * `$EMATRIXDIR/local/config.el` (unless disabled)
 ;;   * `after-init-hook'
 ;;   * `emacs-startup-hook'
 ;;   * `minemacs-after-startup-hook'
