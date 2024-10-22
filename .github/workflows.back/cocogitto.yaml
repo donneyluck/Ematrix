@@ -1,0 +1,19 @@
+name: Conventional Commits Compliance
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  cog_check_job:
+    runs-on: ubuntu-latest
+    name: cocogitto
+    steps:
+      - uses: actions/checkout@v4.1.0
+        with:
+          fetch-depth: 0
+
+      - name: Conventional commit check
+        uses: cocogitto/cocogitto-action@v3.5
+        with:
+          check-latest-tag-only: true
