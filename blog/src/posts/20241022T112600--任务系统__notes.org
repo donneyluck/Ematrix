@@ -1,4 +1,4 @@
-#+title:      任务系统(未完)
+#+title:      任务系统
 #+date:       [2024-10-22 Tue 11:26]
 #+filetags:   :notes:
 #+identifier: 20241022T112600
@@ -6,12 +6,28 @@
 * 任务系统
 定义: 完成一些列条件获得奖励
 直接根据任务id划分任务类型
+
 ** 主线任务
+- ~TaskGroup1~
+- 可以主动接 也可以创建账号时自动接
+- ~同一时间只能存在 1 个~
+- 存档: 维护一个当前正在进行的主线任务ID
 ** 支线任务
+- ~TaskGroup2~
+- 可以主动接 也可以自动接
+- ~同一时间存在 1-N 个~
+- 存档: 维护一个已经完成支线任务的列表 以及一个全局计数器(这样任务可以追溯)
 ** 章节任务
+- ~TaskGroup3~
+- 完成所有的本章所有任务后 接取下一章的任务
+- 存档: 维护一个已经完成章节任务的列表
 ** 每日任务
+- ~TaskGroup4~
+- 每天登陆后接取 跨天刷新全部日常任务 也可以手动刷新(消耗)
+- 存档: 维护一个日常任务列表的存档
+
 * 类图设计
-使用mermaid设置并生成类图
+使用 ~mermaid~ 设置并生成类图
 
 #+begin_src mermaid :file ../assets/task.png
 classDiagram
@@ -96,3 +112,10 @@ classDiagram
 <figcaption><span class="figure-number">Figure 1: </span>任务系统类图</figcaption>
 </figure>
 #+end_export
+
+* 任务表格
+- 每一个任务组对应一个任务表
+- TaskMain.xlsm 主线任务
+- TaskSide.xlsm 支线任务
+- TaskChapter.xlsm 章节任务
+- TaskDaily.xlsm 每日任务
