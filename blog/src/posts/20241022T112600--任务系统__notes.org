@@ -1,38 +1,98 @@
-#+title:      任务系统
+#+title:      任务系统(未完)
 #+date:       [2024-10-22 Tue 11:26]
 #+filetags:   :notes:
 #+identifier: 20241022T112600
 #+description: 如何设计一个游戏中的任务系统
 * 任务系统
 定义: 完成一些列条件获得奖励
+直接根据任务id划分任务类型
 ** 主线任务
 ** 支线任务
 ** 章节任务
 ** 每日任务
 * 类图设计
 使用mermaid设置并生成类图
-直接根据任务id划分任务类型
-100000 主线
-200000 支线
-300000 章节
-400000 每日
-#+begin_src mermaid :file task.png
- classDiagram
+
+#+begin_src mermaid :file ../assets/task.png
+classDiagram
     Task <|-- MainTask
     Task <|-- SideLineTask
     Task <|-- ChapterTask
     Task <|-- DailyTask
-    Task : +int Id
-
+    MainTask <|-- MainTask.xlsx
+    SideLineTask <|-- SideLineTask.xlsx
+    ChapterTask <|-- ChapterTask.xlsx
+    DailyTask <|-- DailyTask.xlsx
+    TaskGroup <-- Task
+    TaskType <-- Task
+    TaskCompoentSystem<--TaskCompoent
     class MainTask {
+        同一时间只有一个主线
+        做完一个自动接取下一个
     }
+
     class SideLineTask {
+        支线可以有多个
     }
-    class ChapterTask{
+
+    class DailyTask {
+        每日天
     }
-    class DailyTask{
+
+
+    class TaskGroup {
+        <<Enum>>
+        MainTask = 1
+        SideLineTask = 2
+        ChapterTask = 3
+        DailyTask = 4
+    }
+
+    class TaskType {
+        <<Enum>>
+        FinishGame = 1 //完成对局 p1 类型  p2 nil require 局数
+        SetName = 2    //设置昵称
+        OpenCard = 3   //开牌     p1 开牌类型 p2 分数  require 次数
+        //TODO: 按需求增加类型和触发器即可
+
+    }
+
+    class Task {
+
+    }
+
+    class TaskCompoentSystem {
+        + void ResetDaliyTask() 跨天调用 刷新每日任务
+        + void ChangeTask(int taskId) 更换任务 需要消耗
+        + config GetTaskConfig(int taskId)
+        + TaskType GetTaskType(int taskId)
+        + void TaskAccept(int taskId) 接任务(如果需要接)
+        + bool CheckTaskFinish(taskStatistics, type, p1, p2, require) 检查任务是否完成
+        + int GetStatisticsNum(taskStatistics, type, arg) 获取完成次数
+        + void TaskFinish(int taskId)
+        - void finishMainLineTask(int taskId)  完成主线任务
+        - void finishSideLineTask(int taskId)  完成支线任务
+        - void finishChapterLineTask(int taskId) 完成章节任务
+        - void finishDailyLineTask(int taskId)   完成日常任务
+    }
+
+    class TaskSchedule {
+        + bool finish = false 是否已经完成
+        + int p1
+        + int taskSchedule
+
+    }
+
+    class TaskCompoent {
+        static List<TaskId> finishTasks 已经完成的任务
+        static Dictionary<TaskType, Dictionary<p, count>> taskStatistics 计数器
+        static Dictionary<TaskType, Dictionary<TaskId, TaskSchedule>> daliyTaskSchedule 每日任务进度
     }
 #+end_src
 
-#+results:
-[[file:task.png]]
+#+begin_export html
+<figure>
+<img src="../assets/task.png" alt="lost" title="任务系统类图" width="600px">
+<figcaption><span class="figure-number">Figure 1: </span>任务系统类图</figcaption>
+</figure>
+#+end_export
