@@ -121,7 +121,8 @@ classDiagram
 - TaskDaily.xlsm 每日任务
 
 * 每日任务为例子设计表格格式
-
+#+begin_example
 | TaskId | #Name    | #Desc | Type | Param1 | Param2 | Require | Reward | ReqLvMin | ReqLvMax | Score |
 |--------+----------+-------+------+--------+--------+---------+--------+----------+----------+-------|
 |  40001 | playGame | 10001 |    1 |      0 |      0 |    1    |  10001 |     1    |     5    |       |
+#+end_example
