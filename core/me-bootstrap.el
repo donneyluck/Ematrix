@@ -16,7 +16,9 @@
  ;; Use the "develop" branch on straight.el's repo.
  straight-repository-branch "develop"
  ;; Do not slow startup by checking for package modifs, check only on demand
- straight-check-for-modifications '(check-on-save find-when-checking))
+ straight-check-for-modifications '(check-on-save find-when-checking)
+ ;; Disable symlinks to avoid modifying git repos during rebuild
+ straight-use-symlinks nil)
 
 ;; Bootstrapping straight.el
 ;; See: github.com/radian-software/straight.el#bootstrapping-straightel
