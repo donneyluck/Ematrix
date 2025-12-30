@@ -22,12 +22,12 @@
 (use-package virtual-dts-mode
   :straight (:host github :repo "connorfeeley/virtual-dts-mode"))
 
-(use-package bitbake
-  :straight (bitbake-modes :host bitbucket :repo "olanilsson/bitbake-modes")
-  :hook (bitbake-mode . bitbake-electric-mode)
-  :config
-  (require 'bitbake-insert)
-  (require 'bitbake-electric))
+;;(use-package bitbake
+;;  :straight (bitbake-modes :host bitbucket :repo "olanilsson/bitbake-modes")
+;;  :hook (bitbake-mode . bitbake-electric-mode)
+;;  :config
+;;  (require 'bitbake-insert)
+;;  (require 'bitbake-electric))
 
 (use-package mips-mode
   :straight t)

@@ -8,12 +8,12 @@
 
 ;;; Code:
 
-(use-package flymake-collection
-  :straight (:host github :repo "abougouffa/flymake-collection" :branch "additional-checkers")
-  :init
-  (satch-add-hook 'prog-mode-hook #'flymake-collection-hook-setup nil nil :transient t)
-  :custom
-  (flymake-collection-hook-inherit-config t))
+;;(use-package flymake-collection
+;;  :straight (:host github :repo "abougouffa/flymake-collection" :branch "additional-checkers")
+;;  :init
+;;  (satch-add-hook 'prog-mode-hook #'flymake-collection-hook-setup nil nil :transient t)
+;;  :custom
+;;  (flymake-collection-hook-inherit-config t))
 
 (use-package flymake-cppcheck
   :straight (:host github :repo "shaohme/flymake-cppcheck")

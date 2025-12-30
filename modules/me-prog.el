@@ -211,12 +211,12 @@
   :custom
   (rust-mode-treesitter-derive (+emacs-features-p 'tree-sitter)))
 
-(push 'flycheck straight-built-in-pseudo-packages) ; `rustic' depends on `flycheck' but it should be optional
+;;(push 'flycheck straight-built-in-pseudo-packages) ; `rustic' depends on `flycheck' but it should be optional
 
-(use-package rustic
-  :straight t
-  :custom
-  (rustic-lsp-client 'eglot))
+;;(use-package rustic
+;;  :straight t
+;;  :custom
+;;  (rustic-lsp-client 'eglot))
 
 (cl-callf2 remove 'flycheck straight-built-in-pseudo-packages)
 

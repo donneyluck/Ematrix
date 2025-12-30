@@ -139,22 +139,22 @@
     (when-let ((server (assoc 'nix-mode eglot-server-programs)))
       (setcar server '(nix-mode nix-ts-mode)))))
 
-(use-package envrc
-  :straight t
-  :hook (minemacs-first-file . envrc-global-mode)
-  :when (and (not os/win) (executable-find "direnv"))
-  :custom
-  (envrc-debug minemacs-debug-p)
-  :config
-  ;; Ensure loading envrc for babel source blocks
-  (advice-add #'org-babel-execute-src-block :around #'envrc-propagate-environment))
+;; (use-package envrc
+;;   :straight t
+;;   :hook (minemacs-first-file . envrc-global-mode)
+;;   :when (and (not os/win) (executable-find "direnv"))
+;;   :custom
+;;   (envrc-debug minemacs-debug-p)
+;;   :config
+;;   ;; Ensure loading envrc for babel source blocks
+;;   (advice-add #'org-babel-execute-src-block :around #'envrc-propagate-environment))
 
-(use-package pet
-  :straight t
-  :when (and (or (executable-find "dasel") (executable-find "yq"))
-             (or (+emacs-features-p 'sqlite3) (executable-find "sqlite3")))
-  :init
-  (add-hook (if (< emacs-major-version 29) 'python-mode-hook 'python-base-mode-hook) #'pet-mode))
+;; (use-package pet
+;;   :straight t
+;;   :when (and (or (executable-find "dasel") (executable-find "yq"))
+;;              (or (+emacs-features-p 'sqlite3) (executable-find "sqlite3")))
+;;   :init
+;;   (add-hook (if (< emacs-major-version 29) 'python-mode-hook 'python-base-mode-hook) #'pet-mode))
 
 (use-package verb
   :straight t

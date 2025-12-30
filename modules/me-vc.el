@@ -8,38 +8,40 @@
 
 ;;; Code:
 
+;; (use-package magit
+;;   :straight t
+;;   :custom
+;;   (magit-diff-refine-hunk t)
+;;   (magit-revision-show-gravatars t)
+;;   (magit-save-repository-buffers nil)
+;;   (magit-display-buffer-function #'magit-display-buffer-fullcolumn-most-v1) ; Show in new window
+;;   :init
+;;   ;; Replace the `project-vc-dir' by `magit-project-status' in project prefix and switch commands
+;;   (with-eval-after-load 'project
+;;     (keymap-set project-prefix-map "v" 'magit-project-status)
+;;     (when-let ((vc (assoc 'project-vc-dir project-switch-commands)))
+;;       (setcar vc 'magit-project-status)
+;;       (setcdr vc '("Magit project status"))))
+;;   :config
+;;   ;; Automatically refresh Magit after save
+;;   (add-hook 'after-save-hook 'magit-after-save-refresh-status))
 (use-package magit
-  :straight t
-  :custom
-  (magit-diff-refine-hunk t)
-  (magit-revision-show-gravatars t)
-  (magit-save-repository-buffers nil)
-  (magit-display-buffer-function #'magit-display-buffer-fullcolumn-most-v1) ; Show in new window
-  :init
-  ;; Replace the `project-vc-dir' by `magit-project-status' in project prefix and switch commands
-  (with-eval-after-load 'project
-    (keymap-set project-prefix-map "v" 'magit-project-status)
-    (when-let ((vc (assoc 'project-vc-dir project-switch-commands)))
-      (setcar vc 'magit-project-status)
-      (setcdr vc '("Magit project status"))))
-  :config
-  ;; Automatically refresh Magit after save
-  (add-hook 'after-save-hook 'magit-after-save-refresh-status))
+  :straight t)
 
 (use-package magit-todos
   :straight t)
 
-(use-package magit-file-icons
-  :straight t
-  :after magit-status
-  :init
-  (magit-file-icons-mode 1))
+;; (use-package magit-file-icons
+;;   :straight t
+;;   :after magit-status
+;;   :init
+;;   (magit-file-icons-mode 1))
 
-(use-package magit-imerge
-  :straight t
-  :after magit
-  :init
-  (transient-append-suffix 'magit-merge "m" '("M" "magit-imerge" magit-imerge)))
+;; (use-package magit-imerge
+;;   :straight t
+;;   :after magit
+;;   :init
+;;   (transient-append-suffix 'magit-merge "m" '("M" "magit-imerge" magit-imerge)))
 
 (use-package closql
   :straight t)
