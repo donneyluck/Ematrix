@@ -43,39 +43,39 @@
   :custom
   (tldr-enabled-categories '("common" "linux" "osx")))
 
-(use-package vterm
-  :straight t
-  :when (and (not os/win) (+emacs-features-p 'modules))
-  :hook (minemacs-build-functions . vterm-module-compile)
-  :hook (vterm-mode . compilation-shell-minor-mode)
-  :bind (:map vterm-mode-map ([return] . vterm-send-return))
-  :init
-  ;; Hide vterm install window
-  (add-to-list 'display-buffer-alist
-               `(" \\*Install vterm\\*"
-                 (display-buffer-no-window)
-                 (allow-no-window . t)))
-  (+def-dedicated-tab! vterm :exit-hook vterm-exit-functions)
-  :custom
-  (vterm-always-compile-module t)
-  (vterm-max-scrollback 5000)
-  (vterm-tramp-shells '(("docker" "/bin/bash"))))
+;; (use-package vterm
+;;   :straight t
+;;   :when (and (not os/win) (+emacs-features-p 'modules))
+;;   :hook (minemacs-build-functions . vterm-module-compile)
+;;   :hook (vterm-mode . compilation-shell-minor-mode)
+;;   :bind (:map vterm-mode-map ([return] . vterm-send-return))
+;;   :init
+;;   ;; Hide vterm install window
+;;   (add-to-list 'display-buffer-alist
+;;                `(" \\*Install vterm\\*"
+;;                  (display-buffer-no-window)
+;;                  (allow-no-window . t)))
+;;   (+def-dedicated-tab! vterm :exit-hook vterm-exit-functions)
+;;   :custom
+;;   (vterm-always-compile-module t)
+;;   (vterm-max-scrollback 5000)
+;;   (vterm-tramp-shells '(("docker" "/bin/bash"))))
 
-(use-package multi-vterm
-  :straight t
-  :when (and (not os/win) (+emacs-features-p 'modules))
-  :bind (([remap project-shell] . multi-vterm-project)
-         ([f1] . multi-vterm-project))
-  :custom
-  (multi-vterm-dedicated-window-height-percent 30)
-  :config
-  ;; If a dedicated terminal is run on a remote machine, it seems that
-  ;; `multi-vterm' don't get the working directory right, lets fix it!
-  (advice-add
-   'multi-vterm-dedicated-open :after
-   (satch-defun +multi-vterm--remote-change-working-directory:after-a (&rest _)
-     (when-let ((dir (file-remote-p default-directory 'localname)))
-       (vterm-send-string (format "cd %S\n" dir))))))
+;; (use-package multi-vterm
+;;   :straight t
+;;   :when (and (not os/win) (+emacs-features-p 'modules))
+;;   :bind (([remap project-shell] . multi-vterm-project)
+;;          ([f1] . multi-vterm-project))
+;;   :custom
+;;   (multi-vterm-dedicated-window-height-percent 30)
+;;   :config
+;;   ;; If a dedicated terminal is run on a remote machine, it seems that
+;;   ;; `multi-vterm' don't get the working directory right, lets fix it!
+;;   (advice-add
+;;    'multi-vterm-dedicated-open :after
+;;    (satch-defun +multi-vterm--remote-change-working-directory:after-a (&rest _)
+;;      (when-let ((dir (file-remote-p default-directory 'localname)))
+;;        (vterm-send-string (format "cd %S\n" dir))))))
 
 (use-package docker
   :straight t
