@@ -12,9 +12,9 @@
 
 (defconst +mu4e-load-path "/usr/share/emacs/site-lisp/mu4e/")
 
-(defgroup minemacs-mu4e nil
-  "MinEmacs mu4e tweaks."
-  :group 'minemacs-apps)
+(defgroup ematrix-mu4e nil
+  "Ematrix mu4e tweaks."
+  :group 'ematrix-apps)
 
 (defconst +mu4e-available-p
   (and (executable-find "mu") (executable-find "msmtp") (executable-find "mbsync") (file-directory-p +mu4e-load-path)))
@@ -33,7 +33,7 @@
   :init
   (defcustom +mu4e-auto-start t
     "Automatically start `mu4e' in background in `me-daemon'."
-    :group 'minemacs-mu4e
+    :group 'ematrix-mu4e
     :type 'boolean)
   ;; Make `+mu4e' dedicated tab for `mu4e'
   (+def-dedicated-tab! mu4e :exit-func mu4e-quit)
@@ -119,7 +119,7 @@
   :after mu4e
   :demand
   :config
-  ;; Enable MinEmacs's mu4e extra features, including:
+  ;; Enable Ematrix's mu4e extra features, including:
   ;; - Auto BCC the `+mu4e-auto-bcc-address';
   ;; - Prompt for the "From" address from the account aliases `+mu4e-account-aliases';
   ;; - Check for the subject before sending;
@@ -134,7 +134,7 @@
 
 ;; TEMP: Disabled until mu 1.12.0 related issues are fixed
 ;; https://github.com/jeremy-compostella/org-msg/issues/182
-(push 'org-msg minemacs-disabled-packages)
+(push 'org-msg ematrix-disabled-packages)
 
 (use-package org-msg
   :straight t
@@ -192,7 +192,7 @@
     (when (or os/linux os/bsd)
       '("paplay" . "/usr/share/sounds/freedesktop/stereo/message.oga"))
     "A cons list of the command and arguments to play the notification bell."
-    :group 'minemacs-mu4e
+    :group 'ematrix-mu4e
     :type '(cons string string))
   :config
   ;; Enable `mu4e' segment in `doom-modeline'

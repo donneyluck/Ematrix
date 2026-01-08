@@ -17,23 +17,23 @@
 (require 'epg)
 (autoload 'cl-every "cl-extras")
 
-(defgroup minemacs-ecryptfs nil
-  "MinEmacs eCryptfs."
-  :group 'minemacs-utils)
+(defgroup ematrix-ecryptfs nil
+  "Ematrix eCryptfs."
+  :group 'ematrix-utils)
 
 (defcustom ecryptfs-private-dir-name "Private"
   "The eCryptfs private directory name."
-  :group 'minemacs-ecryptfs
+  :group 'ematrix-ecryptfs
   :type 'string)
 
 (defcustom ecryptfs-root-dir "~/.ecryptfs/"
   "eCryptfs root configuration directory."
-  :group 'minemacs-ecryptfs
+  :group 'ematrix-ecryptfs
   :type 'directory)
 
 (defcustom ecryptfs-passphrase-file (concat ecryptfs-root-dir "password.gpg")
   "GPG encrypted file containing eCryptfs password."
-  :group 'minemacs-ecryptfs
+  :group 'ematrix-ecryptfs
   :type 'file)
 
 (defvar ecryptfs-buffer-name " *emacs-ecryptfs*")

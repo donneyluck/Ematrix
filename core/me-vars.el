@@ -1,4 +1,4 @@
-;; me-vars.el --- MinEmacs -*- lexical-binding: t; -*-
+;; me-vars.el --- Ematrix -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022-2024  Abdelhak Bougouffa
 
@@ -8,27 +8,27 @@
 
 ;;; Code:
 
-;;; MinEmacs groups
+;;; Ematrix groups
 
-(defgroup minemacs nil "MinEmacs specific functionalities." :group 'emacs)
-(defgroup minemacs-apps nil "MinEmacs applications." :group 'minemacs)
-(defgroup minemacs-binary nil "MinEmacs binary files." :group 'minemacs)
-(defgroup minemacs-buffer nil "MinEmacs buffer stuff." :group 'minemacs)
-(defgroup minemacs-completion nil "Completion related stuff." :group 'minemacs)
-(defgroup minemacs-core nil "MinEmacs core tweaks." :group 'minemacs)
-(defgroup minemacs-edit nil "MinEmacs editor tweaks." :group 'minemacs)
-(defgroup minemacs-keybinding nil "MinEmacs keybinding." :group 'minemacs)
-(defgroup minemacs-org nil "MinEmacs org-mode tweaks." :group 'minemacs)
-(defgroup minemacs-prog nil "MinEmacs programming stuff." :group 'minemacs)
-(defgroup minemacs-project nil "MinEmacs project stuff." :group 'minemacs)
-(defgroup minemacs-ui nil "MinEmacs UI tweaks." :group 'minemacs)
-(defgroup minemacs-utils nil "MinEmacs utility functions." :group 'minemacs)
+(defgroup ematrix nil "Ematrix specific functionalities." :group 'emacs)
+(defgroup ematrix-apps nil "Ematrix applications." :group 'ematrix)
+(defgroup ematrix-binary nil "Ematrix binary files." :group 'ematrix)
+(defgroup ematrix-buffer nil "Ematrix buffer stuff." :group 'ematrix)
+(defgroup ematrix-completion nil "Completion related stuff." :group 'ematrix)
+(defgroup ematrix-core nil "Ematrix core tweaks." :group 'ematrix)
+(defgroup ematrix-edit nil "Ematrix editor tweaks." :group 'ematrix)
+(defgroup ematrix-keybinding nil "Ematrix keybinding." :group 'ematrix)
+(defgroup ematrix-org nil "Ematrix org-mode tweaks." :group 'ematrix)
+(defgroup ematrix-prog nil "Ematrix programming stuff." :group 'ematrix)
+(defgroup ematrix-project nil "Ematrix project stuff." :group 'ematrix)
+(defgroup ematrix-ui nil "Ematrix UI tweaks." :group 'ematrix)
+(defgroup ematrix-utils nil "Ematrix utility functions." :group 'ematrix)
 (defgroup ematrix-blog nil "Ematrix blog stuff" :group 'ematrix)
 
-;;; MinEmacs directories
+;;; Ematrix directories
 
-(defconst minemacs-ignore-user-config
-  (let* ((ignores (getenv "MINEMACS_IGNORE_USER_CONFIG"))
+(defconst ematrix-ignore-user-config
+  (let* ((ignores (getenv "EMATRIX_IGNORE_USER_CONFIG"))
          (ignores (and ignores (downcase ignores))))
     (when ignores
       (if (string= ignores "all")
@@ -38,35 +38,35 @@
 Accepted values are: early-config, init-tweaks, modules, config,
 local/early-config, local/init-tweaks, local/modules and local/config.
 This list is automatically constructed from the space-separated values in the
-environment variable \"$MINEMACS_IGNORE_USER_CONFIG\".")
+environment variable \"$EMATRIX_IGNORE_USER_CONFIG\".")
 
-(defconst minemacs-debug-p
-  (and (or (getenv "MINEMACS_DEBUG") init-file-debug) t)
-  "MinEmacs is started in debug mode.")
+(defconst ematrix-debug-p
+  (and (or (getenv "EMATRIX_DEBUG") init-file-debug) t)
+  "Ematrix is started in debug mode.")
 
-(defconst minemacs-verbose-p
-  (and (or (getenv "MINEMACS_VERBOSE") minemacs-debug-p) t)
-  "MinEmacs is started in verbose mode.")
+(defconst ematrix-verbose-p
+  (and (or (getenv "EMATRIX_VERBOSE") ematrix-debug-p) t)
+  "Ematrix is started in verbose mode.")
 
-(defconst minemacs-always-demand-p
-  (and (getenv "MINEMACS_ALWAYS_DEMAND") t)
+(defconst ematrix-always-demand-p
+  (and (getenv "EMATRIX_ALWAYS_DEMAND") t)
   "Load all packages immediately, do not defer any package.")
 
-(defconst minemacs-not-lazy-p
-  (or minemacs-always-demand-p (daemonp) (and (getenv "MINEMACS_NOT_LAZY") t))
-  "Load lazy packages (minemacs-lazy-hook) immediately.")
+(defconst ematrix-not-lazy-p
+  (or ematrix-always-demand-p (daemonp) (and (getenv "EMATRIX_NOT_LAZY") t))
+  "Load lazy packages (ematrix-lazy-hook) immediately.")
 
-(defconst minemacs-load-all-modules-p
-  (and (getenv "MINEMACS_LOAD_ALL_MODULES") t)
-  "Force loading all MinEmacs modules.")
+(defconst ematrix-load-all-modules-p
+  (and (getenv "EMATRIX_LOAD_ALL_MODULES") t)
+  "Force loading all Ematrix modules.")
 
-(defconst minemacs-no-proxies-p
-  (and (getenv "MINEMACS_NO_PROXIES") t)
-  "Disable proxies in `minemacs-proxies'.")
+(defconst ematrix-no-proxies-p
+  (and (getenv "EMATRIX_NO_PROXIES") t)
+  "Disable proxies in `ematrix-proxies'.")
 
-(defcustom minemacs-msg-level
-  (let ((level (string-to-number (or (getenv "MINEMACS_MSG_LEVEL") ""))))
-    (cond (minemacs-verbose-p 4)
+(defcustom ematrix-msg-level
+  (let ((level (string-to-number (or (getenv "EMATRIX_MSG_LEVEL") ""))))
+    (cond (ematrix-verbose-p 4)
           ((> level 0) level)
           (t 1)))
   "Level of printed messages.
@@ -74,7 +74,7 @@ environment variable \"$MINEMACS_IGNORE_USER_CONFIG\".")
 2 - `+info!'
 3 - `+log!'
 4 - `+debug!'"
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type '(choice
           (const :tag "Error" 1)
           (const :tag "Info" 2)
@@ -82,24 +82,24 @@ environment variable \"$MINEMACS_IGNORE_USER_CONFIG\".")
           (const :tag "Debug" 4)))
 
 ;; Derive the root directory from this file path
-(defconst minemacs-root-dir (abbreviate-file-name (file-name-directory (directory-file-name (file-name-directory (file-truename load-file-name))))))
-(defconst minemacs-core-dir (concat minemacs-root-dir "core/"))
-(defconst minemacs-assets-dir (concat minemacs-root-dir "assets/"))
-(defconst minemacs-elisp-dir (concat minemacs-root-dir "elisp/"))
-(defconst minemacs-modules-dir (concat minemacs-root-dir "modules/"))
-(defconst minemacs-obsolete-modules-dir (concat minemacs-modules-dir "obsolete/"))
-(defconst minemacs-extras-dir (concat minemacs-modules-dir "extras/"))
-(defconst minemacs-local-dir (concat minemacs-root-dir "local/"))
-(defconst minemacs-cache-dir (concat minemacs-local-dir "cache/"))
-(defconst minemacs-loaddefs-file (concat minemacs-core-dir "me-loaddefs.el"))
-(defconst minemacs-extra-packages-dir (concat minemacs-local-dir "extra-packages/"))
-(defconst minemacs-config-dir (file-name-as-directory
-                               (or (getenv "MINEMACS_DIR") (getenv "MINEMACSDIR")
-                                   (if (file-directory-p "~/.minemacs.d/") "~/.minemacs.d/" (concat minemacs-root-dir "user-config/"))))
-  "MinEmacs user customization directory.")
-(defconst ematrix-blog-dir (concat minemacs-root-dir "blog/"))
+(defconst ematrix-root-dir (abbreviate-file-name (file-name-directory (directory-file-name (file-name-directory (file-truename load-file-name))))))
+(defconst ematrix-core-dir (concat ematrix-root-dir "core/"))
+(defconst ematrix-assets-dir (concat ematrix-root-dir "assets/"))
+(defconst ematrix-elisp-dir (concat ematrix-root-dir "elisp/"))
+(defconst ematrix-modules-dir (concat ematrix-root-dir "modules/"))
+(defconst ematrix-obsolete-modules-dir (concat ematrix-modules-dir "obsolete/"))
+(defconst ematrix-extras-dir (concat ematrix-modules-dir "extras/"))
+(defconst ematrix-local-dir (concat ematrix-root-dir "local/"))
+(defconst ematrix-cache-dir (concat ematrix-local-dir "cache/"))
+(defconst ematrix-loaddefs-file (concat ematrix-core-dir "me-loaddefs.el"))
+(defconst ematrix-extra-packages-dir (concat ematrix-local-dir "extra-packages/"))
+(defconst ematrix-config-dir (file-name-as-directory
+                               (or (getenv "EMATRIX_DIR") (getenv "EMATRIXDIR")
+                                   (if (file-directory-p "~/.ematrix.d/") "~/.ematrix.d/" (concat ematrix-root-dir "user-config/"))))
+  "Ematrix user customization directory.")
+(defconst ematrix-blog-dir (concat ematrix-root-dir "blog/"))
 
-(defconst minemacs-started-with-extra-args-p (and (cdr command-line-args) t) "Has Emacs been started with extras arguments? like a file name or so.")
+(defconst ematrix-started-with-extra-args-p (and (cdr command-line-args) t) "Has Emacs been started with extras arguments? like a file name or so.")
 (defconst os/linux (eq system-type 'gnu/linux) "Non-nil on GNU/Linux systems.")
 (defconst os/bsd (and (memq system-type '(berkeley-unix gnu/kfreebsd)) t) "Non-nil on BSD systems.")
 (defconst os/win (and (memq system-type '(cygwin windows-nt ms-dos)) t) "Non-nil on Windows systems.")
@@ -116,78 +116,78 @@ It return a symbol like `x86_64', `aarch64', `armhf', ...")
   "List of symbols representing Emacs' enabled features.
 Compiled from the `system-configuration-features'.")
 
-(defcustom minemacs-leader-key "SPC"
-  "MinEmacs leader key."
-  :group 'minemacs-keybinding
+(defcustom ematrix-leader-key "SPC"
+  "Ematrix leader key."
+  :group 'ematrix-keybinding
   :type 'string)
 
-(defcustom minemacs-localleader-key "SPC m"
-  "MinEmacs local leader (a.k.a. mode specific) key sequence."
-  :group 'minemacs-keybinding
+(defcustom ematrix-localleader-key "SPC m"
+  "Ematrix local leader (a.k.a. mode specific) key sequence."
+  :group 'ematrix-keybinding
   :type 'string)
 
-(defcustom minemacs-global-leader-prefix "C-SPC"
-  "MinEmacs general leader key."
-  :group 'minemacs-keybinding
+(defcustom ematrix-global-leader-prefix "C-SPC"
+  "Ematrix general leader key."
+  :group 'ematrix-keybinding
   :type 'string)
 
-(defcustom minemacs-global-mode-prefix "C-SPC m"
-  "MinEmacs general local leader (a.k.a. mode specific) key sequence."
-  :group 'minemacs-keybinding
+(defcustom ematrix-global-mode-prefix "C-SPC m"
+  "Ematrix general local leader (a.k.a. mode specific) key sequence."
+  :group 'ematrix-keybinding
   :type 'string)
 
-(defcustom minemacs-theme 'doom-one
-  "The theme of MinEmacs."
-  :group 'minemacs-ui
+(defcustom ematrix-theme 'doom-one
+  "The theme of Ematrix."
+  :group 'ematrix-ui
   :type 'symbol)
 
-(defcustom minemacs-disabled-packages nil
-  "List of packages to be disabled when loading MinEmacs modules.
+(defcustom ematrix-disabled-packages nil
+  "List of packages to be disabled when loading Ematrix modules.
 This can be useful if you want to enable a module but you don't want a package
 of being enabled."
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type '(list symbol))
 
-(defvar minemacs-configured-packages nil
-  "List of packages installed and configured by MinEmacs during startup.")
+(defvar ematrix-configured-packages nil
+  "List of packages installed and configured by Ematrix during startup.")
 
-(defcustom minemacs-after-loading-modules-hook nil
-  "This hook will be run after loading MinEmacs modules.
+(defcustom ematrix-after-loading-modules-hook nil
+  "This hook will be run after loading Ematrix modules.
 It is used internally to remove the `+use-package--check-if-disabled:around-a'
 advice we set on `use-package' in `me-bootstrap'."
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type 'hook)
 
-(defcustom minemacs-after-setup-fonts-hook nil
-  "Runs after setting MinEmacs fonts, runs at the end of `+setup-fonts'."
-  :group 'minemacs-ui
+(defcustom ematrix-after-setup-fonts-hook nil
+  "Runs after setting Ematrix fonts, runs at the end of `+setup-fonts'."
+  :group 'ematrix-ui
   :type 'hook)
 
-(defcustom minemacs-after-load-theme-hook nil
-  "Runs after loading MinEmacs theme, runs at the end of `+load-theme'."
-  :group 'minemacs-ui
+(defcustom ematrix-after-load-theme-hook nil
+  "Runs after loading Ematrix theme, runs at the end of `+load-theme'."
+  :group 'ematrix-ui
   :type 'hook)
 
-(defcustom minemacs-after-startup-hook nil
+(defcustom ematrix-after-startup-hook nil
   "This hook will be run after loading Emacs.
 
-MinEmacs hooks will be run in this order:
-1. `minemacs-after-startup-hook'
-2. `minemacs-lazy-hook'"
-  :group 'minemacs-core
+Ematrix hooks will be run in this order:
+1. `ematrix-after-startup-hook'
+2. `ematrix-lazy-hook'"
+  :group 'ematrix-core
   :type 'hook)
 
-(defcustom minemacs-lazy-hook nil
+(defcustom ematrix-lazy-hook nil
   "This hook will be run after loading Emacs, with laziness.
 
-MinEmacs hooks will be run in this order:
-1. `minemacs-after-startup-hook'
-2. `minemacs-lazy-hook'"
-  :group 'minemacs-core
+Ematrix hooks will be run in this order:
+1. `ematrix-after-startup-hook'
+2. `ematrix-lazy-hook'"
+  :group 'ematrix-core
   :type 'hook)
 
-(defcustom minemacs-proxies nil
-  "MinEmacs proxies.
+(defcustom ematrix-proxies nil
+  "Ematrix proxies.
 
 Example, set it to:
 
@@ -198,18 +198,18 @@ Example, set it to:
 
 These will set the environment variables \"no_proxy\", \"ftp_proxy\", ...
 
-When set in \"early-config.el\" or in \"init-tweaks.el\", MinEmacs will enable
+When set in \"early-config.el\" or in \"init-tweaks.el\", Ematrix will enable
 it automatically."
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type '(repeat (cons string string)))
 
-(defvaralias 'minemacs-build-functions-hook 'minemacs-build-functions)
-(defvar minemacs-build-functions nil
+(defvaralias 'ematrix-build-functions-hook 'ematrix-build-functions)
+(defvar ematrix-build-functions nil
   "Special hook for build functions that are run after completing package updates.")
 
-(defcustom +env-file (concat minemacs-local-dir "system-env.el")
+(defcustom +env-file (concat ematrix-local-dir "system-env.el")
   "The file in which the environment variables will be saved."
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type 'file)
 
 ;; Inspired by Doom Emacs
@@ -237,29 +237,29 @@ it automatically."
     "^SSH_\\(AUTH_SOCK\\|AGENT_PID\\)$" "^\\(SSH\\|GPG\\)_TTY$" "^GPG_AGENT_INFO$"
     ;; Tmux session
     "^TMUX$"
-    ;; MinEmacs envvars
-    "^MINEMACS_")
+    ;; Ematrix envvars
+    "^EMATRIX_")
   "Environment variables to omit.
 Each string is a regexp, matched against variable names to omit from
 `+env-file' when saving evnironment variables in `+env-save'."
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type '(repeat regexp))
 
 ;; Functions
 (defun +load-user-configs (&rest configs)
   "Load user configurations CONFIGS."
   (dolist (conf configs)
-    (unless (memq conf minemacs-ignore-user-config)
-      (let ((conf-path (format "%s%s.el" minemacs-config-dir conf)))
+    (unless (memq conf ematrix-ignore-user-config)
+      (let ((conf-path (format "%s%s.el" ematrix-config-dir conf)))
         (when (file-exists-p conf-path) (+load conf-path))))))
 
 (defun +load (&rest filename-parts)
   "Load a file, the FILENAME-PARTS are concatenated to form the file name."
   (let ((filename (file-truename (apply #'file-name-concat filename-parts))))
     (if (file-exists-p filename)
-        (with-demoted-errors "[MinEmacs:LoadError] %s"
-          (load filename nil (not minemacs-verbose-p)))
-      (message "[MinEmacs:Error] Cannot load \"%s\", the file doesn't exists." filename))))
+        (with-demoted-errors "[Ematrix:LoadError] %s"
+          (load filename nil (not ematrix-verbose-p)))
+      (message "[Ematrix:Error] Cannot load \"%s\", the file doesn't exists." filename))))
 
 
 (provide 'me-vars)

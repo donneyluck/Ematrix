@@ -88,7 +88,7 @@
 
 (use-package oer-reveal
   :straight t
-  :hook (minemacs-build-functions . oer-reveal-setup-submodules))
+  :hook (ematrix-build-functions . oer-reveal-setup-submodules))
 
 
 (provide 'me-org)

@@ -11,8 +11,8 @@
 (use-package treemacs
   :straight t
   :custom
-  (treemacs-persist-file (concat minemacs-local-dir "treemacs/persist.el"))
-  (treemacs-last-error-persist-file (concat minemacs-local-dir "treemacs/last-error-persist.el"))
+  (treemacs-persist-file (concat ematrix-local-dir "treemacs/persist.el"))
+  (treemacs-last-error-persist-file (concat ematrix-local-dir "treemacs/last-error-persist.el"))
   (treemacs-width 30)
   :config
   ;; Use the same height for the root node (project directory)

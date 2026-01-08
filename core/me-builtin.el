@@ -13,12 +13,12 @@
   :hook (minibuffer-setup . cursor-intangible-mode) ; See the `minibuffer-prompt-properties' below
   :custom
   ;; ====== Default directories for builtin packages ======
-  (auto-save-list-file-prefix (+directory-ensure minemacs-local-dir "auto-save/"))
-  (backup-directory-alist (list (cons "." (+directory-ensure minemacs-local-dir "backup/"))))
-  (custom-theme-directory (concat minemacs-config-dir "themes/"))
-  (diary-file (concat minemacs-local-dir "diary"))
-  (eww-bookmarks-directory (+directory-ensure minemacs-local-dir "eww/bookmarks/"))
-  (remember-data-directory (+directory-ensure minemacs-local-dir "remember/"))
+  (auto-save-list-file-prefix (+directory-ensure ematrix-local-dir "auto-save/"))
+  (backup-directory-alist (list (cons "." (+directory-ensure ematrix-local-dir "backup/"))))
+  (custom-theme-directory (concat ematrix-config-dir "themes/"))
+  (diary-file (concat ematrix-local-dir "diary"))
+  (eww-bookmarks-directory (+directory-ensure ematrix-local-dir "eww/bookmarks/"))
+  (remember-data-directory (+directory-ensure ematrix-local-dir "remember/"))
 
   ;; ====== Better defaults ======
   (auto-save-default t) ; Enable auto-save (use `recover-file' or `recover-session' to recover)
@@ -122,11 +122,11 @@
   (put 'narrow-to-region 'disabled nil)
   (put 'narrow-to-page 'disabled nil)
 
-  (defvar-keymap minemacs-open-thing-map
+  (defvar-keymap ematrix-open-thing-map
     :doc "Open/toggle thing, under `C-c o'."
     :name "Open/toggle thing")
 
-  (keymap-global-set "C-c o" minemacs-open-thing-map)
+  (keymap-global-set "C-c o" ematrix-open-thing-map)
 
   ;; Disable previously enabled custom themes before enabling a new one.
   (advice-add
@@ -164,7 +164,7 @@ or file path may exist now."
              (set-auto-mode)))))
 
   ;; Advice `emacs-session-filename' to ensure creating "session.ID" files in a sub-directory
-  (let ((x-win-dir (+directory-ensure minemacs-local-dir "x-win/")))
+  (let ((x-win-dir (+directory-ensure ematrix-local-dir "x-win/")))
     (advice-add
      'emacs-session-filename :filter-return
      (satch-defun +emacs-session-filename--in-subdir:filter-return-a (session-filename)
@@ -203,7 +203,7 @@ or file path may exist now."
 
 (use-package which-key
   :straight (:source gnu-elpa-mirror)
-  :hook (minemacs-lazy . which-key-mode)
+  :hook (ematrix-lazy . which-key-mode)
   :custom
   (which-key-idle-delay 1.0)
   (which-key-idle-secondary-delay nil)
@@ -224,7 +224,7 @@ or file path may exist now."
   (unless os/win
     (setq tramp-default-method "ssh"))
   :custom
-  (tramp-auto-save-directory (concat minemacs-local-dir "tramp-auto-save/"))
+  (tramp-auto-save-directory (concat ematrix-local-dir "tramp-auto-save/"))
   (tramp-backup-directory-alist backup-directory-alist)
   (tramp-default-remote-shell "/bin/bash"))
 
@@ -244,7 +244,7 @@ or file path may exist now."
   (epg-pinentry-mode 'loopback)) ; Force gpg-agent to use minibuffer to prompt for passphrase (GPG 2.1+).
 
 (use-package epa-file
-  :after minemacs-first-file
+  :after ematrix-first-file
   :demand
   :config
   (+shutup! (epa-file-enable)))
@@ -317,7 +317,7 @@ or file path may exist now."
   (add-to-list 'project-switch-commands '(project-shell "Shell") t))
 
 (use-package tab-bar
-  :hook (minemacs-lazy . tab-bar-mode)
+  :hook (ematrix-lazy . tab-bar-mode)
   :custom
   (tab-bar-format '(tab-bar-format-history tab-bar-format-tabs tab-bar-separator))
   (tab-bar-tab-name-function #'+tab-bar-tab-name-by-project)
@@ -451,7 +451,7 @@ or file path may exist now."
 
 (use-package autoinsert
   :custom
-  (auto-insert-directory (+directory-ensure minemacs-local-dir "auto-insert/")))
+  (auto-insert-directory (+directory-ensure ematrix-local-dir "auto-insert/")))
 
 (use-package hideif
   :custom
@@ -569,7 +569,7 @@ or file path may exist now."
   ;; lines. After each new event the whole buffer is pretty printed which causes
   ;; steady performance decrease over time. CPU is spent on pretty priting and
   ;; Emacs GC is put under high pressure.
-  (unless minemacs-debug-p
+  (unless ematrix-debug-p
     (cl-callf plist-put eglot-events-buffer-config :size 0))
 
   ;; When a sub/super project with a separate Python virtual environment is detected,
@@ -618,7 +618,7 @@ or file path may exist now."
   :hook (nxml-mode . sgml-electric-tag-pair-mode)) ; Auto rename matching tags
 
 (use-package elisp-mode
-  :after minemacs-first-elisp-file ; prevent elisp-mode from being loaded too early
+  :after ematrix-first-elisp-file ; prevent elisp-mode from being loaded too early
   :custom-face ; better the default cyan color!
   (elisp-shorthand-font-lock-face ((t :inherit font-lock-keyword-face :foreground "red")))
   :init
@@ -663,11 +663,11 @@ or file path may exist now."
   ;; Set to nil so we can detect user changes (in config.el)
   (setq org-directory nil)
   :custom
-  (org-persist-directory (+directory-ensure minemacs-cache-dir "org/persist/"))
-  (org-preview-latex-image-directory (+directory-ensure minemacs-cache-dir "org/preview/latex-image/"))
-  (org-publish-timestamp-directory (+directory-ensure minemacs-cache-dir "org/publish/timestamps/"))
-  (org-id-locations-file (concat minemacs-cache-dir "org/id-locations.el"))
-  (org-export-async-init-file (expand-file-name (concat minemacs-modules-dir "extras/me-org-export-async-init.el")))
+  (org-persist-directory (+directory-ensure ematrix-cache-dir "org/persist/"))
+  (org-preview-latex-image-directory (+directory-ensure ematrix-cache-dir "org/preview/latex-image/"))
+  (org-publish-timestamp-directory (+directory-ensure ematrix-cache-dir "org/publish/timestamps/"))
+  (org-id-locations-file (concat ematrix-cache-dir "org/id-locations.el"))
+  (org-export-async-init-file (expand-file-name (concat ematrix-modules-dir "extras/me-org-export-async-init.el")))
   (org-auto-align-tags nil)
   (org-cycle-hide-block-startup t)
   (org-edit-src-auto-save-idle-delay auto-save-timeout) ; use the defaults
@@ -694,7 +694,7 @@ or file path may exist now."
   (org-use-property-inheritance t) ; it's convenient to have properties inherited
   (org-use-sub-superscripts '{}) ; Do the same when rendering the Org buffer
   :config
-  (setq org-export-async-debug minemacs-debug-p) ;; Can be useful!
+  (setq org-export-async-debug ematrix-debug-p) ;; Can be useful!
 
   ;; TEMP: This solve the "Invalid face reference: org-indent [X times]" problem.
   (require 'org-indent)
@@ -997,8 +997,8 @@ current line.")
 
 (use-package url
   :custom
-  (url-cookie-file (concat minemacs-local-dir "url/cookie.el"))
-  (url-history-file (concat minemacs-local-dir "url/history.el")))
+  (url-cookie-file (concat ematrix-local-dir "url/cookie.el"))
+  (url-history-file (concat ematrix-local-dir "url/history.el")))
 
 (use-package webjump
   :custom
@@ -1035,15 +1035,15 @@ current line.")
   (whitespace-action '(cleanup auto-cleanup))) ; Default behavior for `whitespace-cleanup'
 
 (use-package autorevert
-  :hook (minemacs-first-file . global-auto-revert-mode) ; Auto load files changed on disk
+  :hook (ematrix-first-file . global-auto-revert-mode) ; Auto load files changed on disk
   :custom
   (global-auto-revert-non-file-buffers t)) ; Revert non-file buffers like dired
 
 (use-package savehist
-  :hook (minemacs-lazy . savehist-mode))
+  :hook (ematrix-lazy . savehist-mode))
 
 (use-package saveplace
-  :hook (minemacs-first-file . save-place-mode)) ; Save place in files
+  :hook (ematrix-first-file . save-place-mode)) ; Save place in files
 
 (use-package term
   :config
@@ -1069,7 +1069,7 @@ current line.")
   (display-line-numbers-widen t)) ; Display absolute line numbers in narrowed regions
 
 (use-package pixel-scroll
-  :hook (minemacs-lazy . +pixel-scroll-mode)
+  :hook (ematrix-lazy . +pixel-scroll-mode)
   :custom
   (pixel-scroll-precision-use-momentum t) ; Better scrolling on Emacs29+, specially on a touchpad
   :config
@@ -1080,7 +1080,7 @@ current line.")
       (pixel-scroll-mode 1))))
 
 (use-package mouse
-  :hook (minemacs-lazy . context-menu-mode) ; Enable context menu on mouse right click
+  :hook (ematrix-lazy . context-menu-mode) ; Enable context menu on mouse right click
   :custom
   (mouse-drag-and-drop-region t) ; Enable Drag-and-Drop of regions
   (mouse-drag-and-drop-region-cross-program t)) ; Enable Drag-and-Drop of regions from Emacs to external programs
@@ -1093,28 +1093,28 @@ current line.")
 
 (use-package gnus
   :custom
-  (gnus-dribble-directory (+directory-ensure minemacs-local-dir "gnus/dribble/"))
-  (gnus-init-file (concat minemacs-config-dir "gnus/init.el"))
-  (gnus-startup-file (concat minemacs-config-dir "gnus/newsrc")))
+  (gnus-dribble-directory (+directory-ensure ematrix-local-dir "gnus/dribble/"))
+  (gnus-init-file (concat ematrix-config-dir "gnus/init.el"))
+  (gnus-startup-file (concat ematrix-config-dir "gnus/newsrc")))
 
 (use-package time
-  :hook (minemacs-lazy . display-time-mode) ; Display time in mode-line
+  :hook (ematrix-lazy . display-time-mode) ; Display time in mode-line
   :custom
   (display-time-string-forms '((propertize (concat 24-hours ":" minutes))))) ; Enable time in the mode-line
 
 (use-package frame
-  :hook (minemacs-lazy . window-divider-mode) ; Display divider between windows
+  :hook (ematrix-lazy . window-divider-mode) ; Display divider between windows
   :custom
   ;; Set line width for the divider in `window-divider-mode' to 2px
   (window-divider-default-bottom-width 2)
   (window-divider-default-right-width 2))
 
 (use-package repeat
-  :hook (minemacs-lazy . repeat-mode)) ; Enable repeat mode, "C-x o then C-x o" becomes "C-x o o"
+  :hook (ematrix-lazy . repeat-mode)) ; Enable repeat mode, "C-x o then C-x o" becomes "C-x o o"
 
 (use-package server
   :autoload server-running-p
-  :hook ((server-after-make-frame minemacs-after-startup) . +scratch-replace-with-persistent-scratch)
+  :hook ((server-after-make-frame ematrix-after-startup) . +scratch-replace-with-persistent-scratch)
   :init
   ;; When we start in a non-daemon Emacs, we start a server when Emacs is idle.
   (unless (daemonp)
@@ -1162,9 +1162,9 @@ current line.")
 (use-package simple
   :init
   (setq-default indent-tabs-mode nil) ; Never mix, use only spaces
-  :hook (minemacs-lazy . line-number-mode) ; Show line number in mode-line
-  :hook (minemacs-lazy . column-number-mode) ; Show column numbers (a.k.a. cursor position) in the mode-line
-  :hook (minemacs-lazy . size-indication-mode) ; Display buffer size on mode line
+  :hook (ematrix-lazy . line-number-mode) ; Show line number in mode-line
+  :hook (ematrix-lazy . column-number-mode) ; Show column numbers (a.k.a. cursor position) in the mode-line
+  :hook (ematrix-lazy . size-indication-mode) ; Display buffer size on mode line
   :hook ((prog-mode conf-mode org-mode) . visual-line-mode) ; Wrap long lines
   :custom
   (kill-do-not-save-duplicates t) ; Filter duplicate entries in kill ring
@@ -1175,30 +1175,30 @@ current line.")
   (help-window-select t)) ; Select help window for faster quit!
 
 (use-package winner
-  :hook (minemacs-lazy . winner-mode)) ; Window layout undo/redo (`winner-undo' / `winner-redo')
+  :hook (ematrix-lazy . winner-mode)) ; Window layout undo/redo (`winner-undo' / `winner-redo')
 
 (use-package delsel
-  :hook (minemacs-lazy . delete-selection-mode)) ; Replace selection after start typing
+  :hook (ematrix-lazy . delete-selection-mode)) ; Replace selection after start typing
 
 (use-package mb-depth
-  :hook (minemacs-lazy . minibuffer-depth-indicate-mode)) ; Show recursion depth in minibuffer (see `enable-recursive-minibuffers')
+  :hook (ematrix-lazy . minibuffer-depth-indicate-mode)) ; Show recursion depth in minibuffer (see `enable-recursive-minibuffers')
 
 (use-package subword
-  :hook (minemacs-lazy . global-subword-mode)) ; Global SubWord mode
+  :hook (ematrix-lazy . global-subword-mode)) ; Global SubWord mode
 
 (use-package so-long
   ;; Better handling for files with so long lines
-  :hook (minemacs-after-startup . global-so-long-mode))
+  :hook (ematrix-after-startup . global-so-long-mode))
 
 (use-package icomplete
   ;; Fallback the new `fido-vertical-mode' Emacs28+ builtin completion mode if
   ;; the `me-completion' (which contains `vertico-mode' configuration) core
   ;; module is not enabled.
   :when (+package-disabled-p 'vertico 'me-completion)
-  :hook (minemacs-lazy . fido-vertical-mode))
+  :hook (ematrix-lazy . fido-vertical-mode))
 
 (use-package battery
-  :hook (minemacs-lazy . +display-battery-mode-maybe)
+  :hook (ematrix-lazy . +display-battery-mode-maybe)
   :init
   ;; Show the battery status (if available) in the mode-line
   (defun +display-battery-mode-maybe ()
@@ -1210,7 +1210,7 @@ current line.")
        (display-battery-mode 1)))))
 
 (use-package windmove
-  :after minemacs-lazy
+  :after ematrix-lazy
   :demand
   :config
   (windmove-default-keybindings 'shift) ; Navigate windows using Shift+Direction

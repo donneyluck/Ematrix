@@ -17,12 +17,12 @@
 
 ;;; Code:
 
-(defcustom minemacs-core-modules '()
+(defcustom ematrix-core-modules '()
   "Ematrix enabled core modules."
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type '(repeat symbol))
 
-(defcustom minemacs-modules
+(defcustom ematrix-modules
   '(;; me-ai
     ;; me-biblio
     ;; me-calendar
@@ -72,8 +72,8 @@
     me-vc
     me-window
     me-workspaces)
-  "MinEmacs enabled modules."
-  :group 'minemacs-core
+  "Ematrix enabled modules."
+  :group 'ematrix-core
   :type '(repeat symbol))
 
 ;;; me-modules.el ends here

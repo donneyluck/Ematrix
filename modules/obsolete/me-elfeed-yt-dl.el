@@ -10,11 +10,11 @@
 
 (defcustom +elfeed-videos-dir "~/Videos/elfeed/"
   "Directory of downloaded videos."
-  :group 'minemacs-elfeed)
+  :group 'ematrix-elfeed)
 
 (defcustom +yt-dlp-command "yt-dlp"
   "The \"yt-dlp\" command."
-  :group 'minemacs-utils)
+  :group 'ematrix-utils)
 
 (defun +yt-dl-it (url)
   "Downloads the URL with \"yt-dlp\" in an async shell."

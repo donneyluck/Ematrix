@@ -11,7 +11,7 @@
 (use-package eaf
   :straight (:host github :repo "emacs-eaf/emacs-application-framework" :files (:defaults "*"))
   :unless (+emacs-features-p 'lucid) ; EAF don't work on LUCID, a.k.a. XEmacs.
-  :hook (minemacs-build-functions . eaf-install-and-update)
+  :hook (ematrix-build-functions . eaf-install-and-update)
   :init
   (+map! "oo" #'eaf-open)
   ;; Evil integration doesn't work, start `eaf-mode' in `emacs-state'.
@@ -25,7 +25,7 @@
   (eaf-start-python-process-when-require t)
   (eaf-kill-process-after-last-buffer-closed t)
   (eaf-fullscreen-p nil)
-  (eaf-config-location (concat minemacs-local-dir "eaf/"))
+  (eaf-config-location (concat ematrix-local-dir "eaf/"))
   ;; Debug
   (eaf-enable-debug nil)
   ;; Web engine
@@ -45,7 +45,7 @@
   (eaf-browser-ignore-history-list '("google.com/search" "file://"))
   (eaf-browser-translate-language "en")
   (eaf-browser-blank-page-url "https://www.duckduckgo.com")
-  (eaf-browser-chrome-history-file (concat minemacs-local-dir "eaf/browser/chrome-history"))
+  (eaf-browser-chrome-history-file (concat ematrix-local-dir "eaf/browser/chrome-history"))
   (eaf-browser-default-search-engine "duckduckgo")
   (eaf-browser-continue-where-left-off t)
   (eaf-browser-aria2-auto-file-renaming t)

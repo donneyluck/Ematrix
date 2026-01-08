@@ -30,11 +30,11 @@
   (defcustom flymake-clang-tidy-build-path "build"
     "Clang build directory."
     :type '(choice (const nil) directory)
-    :group 'minemacs-prog)
+    :group 'ematrix-prog)
   (defcustom flymake-clang-tidy-extra-options nil
     "Extra options to pass to Clang-tidy."
     :type '(choice (const nil) (repeat string))
-    :group 'minemacs-prog)
+    :group 'ematrix-prog)
   :config
   ;; Add Bandit support for Python (example from https://github.com/karlotness/flymake-quickdef)
   (flymake-quickdef-backend flymake-bandit

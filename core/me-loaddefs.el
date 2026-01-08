@@ -39,7 +39,7 @@ restores it after that.
 
 ;;; Generated autoloads from me-external-tools.el
 
-(register-definition-prefixes "me-external-tools" '("minemacs-external-dependencies"))
+(register-definition-prefixes "me-external-tools" '("ematrix-external-dependencies"))
 
 
 ;;; Generated autoloads from ../modules/extras/me-gdb.el
@@ -54,7 +54,7 @@ This will overwrite the built-in \"gdb-mi\" for this session." t)
 
 ;;; Generated autoloads from me-lib.el
 
-(register-definition-prefixes "me-lib" '("+a" "+binary-hexl-enable" "+c" "+d" "+e" "+f" "+hook-once" "+i" "+known-scripts" "+l" "+m" "+n" "+omap!" "+p" "+quoted-p" "+r" "+s" "+un" "+v" "+with-" "minemacs-"))
+(register-definition-prefixes "me-lib" '("+a" "+binary-hexl-enable" "+c" "+d" "+e" "+f" "+hook-once" "+i" "+known-scripts" "+l" "+m" "+n" "+omap!" "+p" "+quoted-p" "+r" "+s" "+un" "+v" "+with-" "ematrix-"))
 
 
 ;;; Generated autoloads from me-lib-extra.el
@@ -86,43 +86,43 @@ triggered.
 DEPTH and LOCAL are passed as is to `add-hook'.
 
 (fn HOOK SECS FUNCTION &optional DEPTH LOCAL)" nil t)
-(autoload 'minemacs-run-build-functions "me-lib-extra" "\
-Run all build functions in `minemacs-build-functions'.
+(autoload 'ematrix-run-build-functions "me-lib-extra" "\
+Run all build functions in `ematrix-build-functions'.
 
 Call functions without asking when DONT-ASK-P is non-nil.
 
 (fn &optional DONT-ASK-P)" t)
-(autoload 'minemacs--bump-packages "me-lib-extra" "\
-Bump MinEmacs packages to the latest revisions.")
-(autoload 'minemacs-bump-packages "me-lib-extra" "\
-Update MinEmacs packages to the last revisions (can cause breakages)." t)
-(autoload 'minemacs-restore-locked-packages "me-lib-extra" "\
+(autoload 'ematrix--bump-packages "me-lib-extra" "\
+Bump Ematrix packages to the latest revisions.")
+(autoload 'ematrix-bump-packages "me-lib-extra" "\
+Update Ematrix packages to the last revisions (can cause breakages)." t)
+(autoload 'ematrix-restore-locked-packages "me-lib-extra" "\
 Restore lockfile packages list. Takes into account the pinned ones.
 When called with \\[universal-argument] or with RESTORE-FROM-BACKUP, it will
 restore the lockfile from backups, not Git.
 
 (fn RESTORE-FROM-BACKUP)" t)
-(autoload 'minemacs-upgrade "me-lib-extra" "\
-Upgrade MinEmacs and its packages to the latest pinned versions (recommended).
+(autoload 'ematrix-upgrade "me-lib-extra" "\
+Upgrade Ematrix and its packages to the latest pinned versions (recommended).
 
-When PULL-MINEMACS is non-nil, run a \"git pull\" in MinEmacs' directory.
+When PULL-EMATRIX is non-nil, run a \"git pull\" in Ematrix' directory.
 
-This calls `minemacs-update-restore-locked' asynchronously.
+This calls `ematrix-update-restore-locked' asynchronously.
 
-(fn PULL-MINEMACS)" t)
-(autoload 'minemacs-root-dir-cleanup "me-lib-extra" "\
-Cleanup MinEmacs' root directory.")
+(fn PULL-EMATRIX)" t)
+(autoload 'ematrix-root-dir-cleanup "me-lib-extra" "\
+Cleanup Ematrix' root directory.")
 (autoload '+straight-prune-build-cache "me-lib-extra" "\
 Prune straight.el build directories for old Emacs versions.")
-(autoload 'minemacs-cleanup-emacs-directory "me-lib-extra" "\
-Cleanup unwanted files/directories from MinEmacs' directory." t)
-(autoload 'minemacs-apply-performance-tweaks "me-lib-extra" "\
+(autoload 'ematrix-cleanup-emacs-directory "me-lib-extra" "\
+Cleanup unwanted files/directories from Ematrix' directory." t)
+(autoload 'ematrix-apply-performance-tweaks "me-lib-extra" "\
 Set some Emacs variables for better (!) performance." t)
-(autoload 'minemacs-modules "me-lib-extra" "\
+(autoload 'ematrix-modules "me-lib-extra" "\
 List of available modules, with optional INCLUDE-OBSOLETE.
 
 (fn &optional INCLUDE-OBSOLETE)")
-(autoload 'minemacs-load-module "me-lib-extra" "\
+(autoload 'ematrix-load-module "me-lib-extra" "\
 Interactively install and load a module that isn't enabled in \"modules.el\".
 When called with the universal argument, it prompts for obsolete modules also." t)
 (autoload '+file-mime-type "me-lib-extra" "\
@@ -389,7 +389,7 @@ Show the list of declared external dependencies." t)
 
 ;;; Generated autoloads from me-modules.el
 
-(register-definition-prefixes "me-modules" '("minemacs-"))
+(register-definition-prefixes "me-modules" '("ematrix-"))
 
 
 ;;; Generated autoloads from ../modules/extras/me-mu4e-extras.el
@@ -414,7 +414,7 @@ Show the list of declared external dependencies." t)
 
 ;;; Generated autoloads from me-vars.el
 
-(register-definition-prefixes "me-vars" '("+env-" "+load" "emacs/features" "minemacs-" "os/" "sys/arch"))
+(register-definition-prefixes "me-vars" '("+env-" "+load" "emacs/features" "ematrix-" "os/" "sys/arch"))
 
 
 ;;; Generated autoloads from ../modules/extras/me-writing-mode.el
@@ -464,9 +464,9 @@ See `+writing-mode' for more information on +Writing mode.
 (register-definition-prefixes "../modules/extras/me-writing-mode" '("+turn-on-writing-mode" "+writing-"))
 
 
-;;; Generated autoloads from minemacs-lazy.el
+;;; Generated autoloads from ematrix-lazy.el
 
-(register-definition-prefixes "minemacs-lazy" '("minemacs--lazy-"))
+(register-definition-prefixes "ematrix-lazy" '("ematrix--lazy-"))
 
 
 ;;; Generated autoloads from ../elisp/valgrind.el

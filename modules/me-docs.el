@@ -12,7 +12,7 @@
 ;;   :straight t
 ;;   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
 ;;   :magic ("%PDF" . pdf-view-mode)
-;;   :hook (minemacs-build-functions . pdf-tools-install)
+;;   :hook (ematrix-build-functions . pdf-tools-install)
 ;;   :custom
 ;;   (pdf-view-display-size 'fit-page)
 ;;   (pdf-view-image-relief 2)
@@ -26,7 +26,7 @@
 ;;   :hook (pdf-view-mode . pdf-view-restore-mode)
 ;;   :custom
 ;;   (use-file-base-name-flag nil)
-;;   (pdf-view-restore-filename (concat minemacs-local-dir "pdf-view-restore.el")))
+;;   (pdf-view-restore-filename (concat ematrix-local-dir "pdf-view-restore.el")))
 
 ;; (use-package pdfgrep
 ;;   :straight t
@@ -67,7 +67,7 @@
 ;; (use-package rfc-mode
 ;;   :straight t
 ;;   :custom
-;;   (rfc-mode-directory (concat minemacs-local-dir "rfc"))
+;;   (rfc-mode-directory (concat ematrix-local-dir "rfc"))
 ;;   :init
 ;;   ;; Use a window wide enough but not too wide
 ;;   (add-to-list

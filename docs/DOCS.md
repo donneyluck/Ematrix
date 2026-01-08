@@ -1,108 +1,108 @@
 <img src="https://www.gnu.org/software/emacs/images/emacs.png" alt="Emacs Logo" width="80" height="80" align="right">
 
-# MinEmacs - a minimalist & lightweight Emacs configuration framework
+# Ematrix - a minimalist & lightweight Emacs configuration framework
 
 Load and hooks order:
 - `~/.emacs.d/early-init.el`
-- `$MINEMACSDIR/early-config.el` (unless disabled in `$MINEMACS_IGNORE_USER_CONFIG`)
-- `$MINEMACSDIR/local/early-config.el` (unless disabled)
+- `$EMATRIXDIR/early-config.el` (unless disabled in `$EMATRIX_IGNORE_USER_CONFIG`)
+- `$EMATRIXDIR/local/early-config.el` (unless disabled)
 - `~/.emacs.d/init.el`
   * `before-init-hook`
   * `~/.emacs.d/core/me-vars.el`
   * `~/.emacs.d/core/backports/*.el` (when Emacs < 29)
   * `~/.emacs.d/core/me-loaddefs.el`
-  * `$MINEMACSDIR/init-tweaks.el` (unless disabled)
-  * `$MINEMACSDIR/local/init-tweaks.el` (unless disabled)
-  * `$MINEMACSDIR/modules.el` (unless disabled)
-  * `$MINEMACSDIR/local/modules.el` (unless disabled)
+  * `$EMATRIXDIR/init-tweaks.el` (unless disabled)
+  * `$EMATRIXDIR/local/init-tweaks.el` (unless disabled)
+  * `$EMATRIXDIR/modules.el` (unless disabled)
+  * `$EMATRIXDIR/local/modules.el` (unless disabled)
   * `~/.emacs.d/core/<module>.el`
-  * `~/.emacs.d/modules/<module>.el` (for module in `minemacs-modules`)
-  * `minemacs-after-loading-modules-hook`
-  * `$MINEMACSDIR/custom-vars.el`
-  * `$MINEMACSDIR/config.el` (unless disabled)
-  * `$MINEMACSDIR/local/config.el` (unless disabled)
+  * `~/.emacs.d/modules/<module>.el` (for module in `ematrix-modules`)
+  * `ematrix-after-loading-modules-hook`
+  * `$EMATRIXDIR/custom-vars.el`
+  * `$EMATRIXDIR/config.el` (unless disabled)
+  * `$EMATRIXDIR/local/config.el` (unless disabled)
   * `after-init-hook`
   * `emacs-startup-hook`
-  * `minemacs-after-startup-hook`
-    + `minemacs-lazy-hook` (delayed)
+  * `ematrix-after-startup-hook`
+    + `ematrix-lazy-hook` (delayed)
 
 Special hooks defined with `+make-first-file-hook!`
-- `minemacs-first-file-hook`
-- `minemacs-first-elisp-file-hook`
-- `minemacs-first-python-file-hook`
-- `minemacs-first-org-file-hook`
-- `minemacs-first-c/c++-file-hook`
+- `ematrix-first-file-hook`
+- `ematrix-first-elisp-file-hook`
+- `ematrix-first-python-file-hook`
+- `ematrix-first-org-file-hook`
+- `ematrix-first-c/c++-file-hook`
 
 
 
 ### Customization Documentation
 
-#### `minemacs-msg-level`
+#### `ematrix-msg-level`
 
 Level of printed messages.
 1 - `+error!`
 2 - `+info!`
 3 - `+log!`
 
-#### `minemacs-leader-key`
+#### `ematrix-leader-key`
 
-MinEmacs leader key.
+Ematrix leader key.
 
-#### `minemacs-localleader-key`
+#### `ematrix-localleader-key`
 
-MinEmacs local leader (a.k.a. mode specific) key sequence.
+Ematrix local leader (a.k.a. mode specific) key sequence.
 
-#### `minemacs-global-leader-prefix`
+#### `ematrix-global-leader-prefix`
 
-MinEmacs general leader key.
+Ematrix general leader key.
 
-#### `minemacs-global-mode-prefix`
+#### `ematrix-global-mode-prefix`
 
-MinEmacs general local leader (a.k.a. mode specific) key sequence.
+Ematrix general local leader (a.k.a. mode specific) key sequence.
 
-#### `minemacs-theme`
+#### `ematrix-theme`
 
-The theme of MinEmacs.
+The theme of Ematrix.
 
-#### `minemacs-disabled-packages`
+#### `ematrix-disabled-packages`
 
-List of packages to be disabled when loading MinEmacs modules.
+List of packages to be disabled when loading Ematrix modules.
 This can be useful if you want to enable a module but you don't want a package
 of being enabled.
 
-#### `minemacs-after-loading-modules-hook`
+#### `ematrix-after-loading-modules-hook`
 
-This hook will be run after loading MinEmacs modules.
+This hook will be run after loading Ematrix modules.
 It is used internally to remove the `+use-package--check-if-disabled:around-a`
 advice we set on `use-package` in `me-bootstrap`.
 
-#### `minemacs-after-setup-fonts-hook`
+#### `ematrix-after-setup-fonts-hook`
 
-Runs after setting MinEmacs fonts, runs at the end of `+setup-fonts`.
+Runs after setting Ematrix fonts, runs at the end of `+setup-fonts`.
 
-#### `minemacs-after-load-theme-hook`
+#### `ematrix-after-load-theme-hook`
 
-Runs after loading MinEmacs theme, runs at the end of `+load-theme`.
+Runs after loading Ematrix theme, runs at the end of `+load-theme`.
 
-#### `minemacs-after-startup-hook`
+#### `ematrix-after-startup-hook`
 
 This hook will be run after loading Emacs.
 
-MinEmacs hooks will be run in this order:
-1. `minemacs-after-startup-hook`
-2. `minemacs-lazy-hook`
+Ematrix hooks will be run in this order:
+1. `ematrix-after-startup-hook`
+2. `ematrix-lazy-hook`
 
-#### `minemacs-lazy-hook`
+#### `ematrix-lazy-hook`
 
 This hook will be run after loading Emacs, with laziness.
 
-MinEmacs hooks will be run in this order:
-1. `minemacs-after-startup-hook`
-2. `minemacs-lazy-hook`
+Ematrix hooks will be run in this order:
+1. `ematrix-after-startup-hook`
+2. `ematrix-lazy-hook`
 
-#### `minemacs-proxies`
+#### `ematrix-proxies`
 
-MinEmacs proxies.
+Ematrix proxies.
 
 Example, set it to:
 
@@ -113,7 +113,7 @@ Example, set it to:
 
 These will set the environment variables "no_proxy", "ftp_proxy", ...
 
-When set in "early-config.el" or in "init-tweaks.el", MinEmacs will enable
+When set in "early-config.el" or in "init-tweaks.el", Ematrix will enable
 it automatically.
 
 #### `+env-file`
@@ -136,7 +136,7 @@ The default delay (in seconds) to consider in `+lazy!` macro.
 
 #### `+first-file-hook-ignore-list`
 
-A list of files to ignore in the `minemacs-first-*-file-hook`.
+A list of files to ignore in the `ematrix-first-*-file-hook`.
 
 #### `+eglot-auto-enable-modes`
 
@@ -155,9 +155,9 @@ It can be a list of strings (paths) or a list of (cons "~/path" recursive-p) to 
 
 Default directory to store serialized symbols.
 
-#### `minemacs-fonts-plist`
+#### `ematrix-fonts-plist`
 
-MinEmacs fonts used by `+setup-fonts`.
+Ematrix fonts used by `+setup-fonts`.
 
 The function checks and enables the first available font from these defined in
 this plist. This variable can be customized to set font specs for specific Emacs
@@ -265,9 +265,9 @@ Enable `+writing-global-mode` for modes derived these modes.
 
 ### Function and Macro Documentation
 
-#### `(minemacs-generate-loaddefs)`
+#### `(ematrix-generate-loaddefs)`
 
-Generate MinEmacs' loaddefs file.
+Generate Ematrix' loaddefs file.
 
 #### `(+load-user-configs &rest CONFIGS)`
 
@@ -371,7 +371,7 @@ Log info MSG and VARS using `message`.
 
 #### `(+log! MSG &rest VARS)` (macro)
 
-Log MSG and VARS using `message` when `minemacs-verbose-p` is non-nil.
+Log MSG and VARS using `message` when `ematrix-verbose-p` is non-nil.
 
 #### `(+emacs-features-p &rest FEATS)`
 
@@ -393,7 +393,7 @@ Convert BODY to an interactive command.
 
 #### `(+load-theme)`
 
-Load Emacs' theme from `minemacs-theme`.
+Load Emacs' theme from `ematrix-theme`.
 
 #### `(+eval-when-idle DELAY &rest FNS)`
 
@@ -409,11 +409,11 @@ Evaluate BODY after DELAY seconds from Emacs becoming idle.
 
 #### `(+deferred! &rest BODY)` (macro)
 
-Run BODY after Emacs gets loaded, a.k.a. after `minemacs-loaded`.
+Run BODY after Emacs gets loaded, a.k.a. after `ematrix-loaded`.
 
 #### `(+lazy! &rest BODY)` (macro)
 
-Run BODY as a lazy block (see `minemacs-lazy`).
+Run BODY as a lazy block (see `ematrix-lazy`).
 
 #### `(+after-load! FEATURES &rest BODY)` (macro)
 
@@ -436,8 +436,8 @@ The extension should matches EXT-REGEXP.
 This will creates a function named `+first-file--FILETYPE-h` which gets executed
 before `after-find-file`. This function will run on the first file that matches
 EXT-REGEXP. When it runs, this function provides a feature named
-`minemacs-first-FILETYPE-file` and a run all hooks in
-`minemacs-first-FILETYPE-file-hook`.
+`ematrix-first-FILETYPE-file` and a run all hooks in
+`ematrix-first-FILETYPE-file-hook`.
 
 #### `(+resolve-hook-forms HOOKS)`
 
@@ -507,7 +507,7 @@ Add ROOTS to ignored projects, recentf, etc.
 
 #### `(+package-disabled-p PACKAGE &optional MODULE)`
 
-Is package PACKAGE disabled in `minemacs-disabled-packages`.
+Is package PACKAGE disabled in `ematrix-disabled-packages`.
 Optionally, check also for the containing MODULE.
 
 #### `(+file-read-to-string FILENAME)`
@@ -570,25 +570,25 @@ Examples:
 
 Scan and remember projects under DIR or `+project-scan-dir-paths`.
 
-#### `(minemacs-get-enabled-proxies)`
+#### `(ematrix-get-enabled-proxies)`
 
 Get a list of enabled proxies.
 
-#### `(minemacs-set-enabled-proxies PROXIES)`
+#### `(ematrix-set-enabled-proxies PROXIES)`
 
 Set PROXIES.
 
-#### `(minemacs-enable-proxy PROXIES)`
+#### `(ematrix-enable-proxy PROXIES)`
 
 Set *_proxy Linux environment variables from PROXIES.
 
-#### `(minemacs-disable-proxy)`
+#### `(ematrix-disable-proxy)`
 
 Unset *_proxy Linux environment variables.
 
 #### `(+with-proxies &rest BODY)` (macro)
 
-Execute BODY with proxies enabled from `minemacs-proxies`.
+Execute BODY with proxies enabled from `ematrix-proxies`.
 
 #### `(+with-no-proxies &rest BODY)` (macro)
 
@@ -596,12 +596,12 @@ Execute BODY with proxies disabled.
 
 #### `(+map! &rest ARGS)` (macro)
 
-A wrapper around `+minemacs--internal-map!`.
+A wrapper around `+ematrix--internal-map!`.
 It is deferred until `general` gets loaded and configured.
 
 #### `(+map-local! &rest ARGS)` (macro)
 
-A wrapper around `+minemacs--internal-map-local!`.
+A wrapper around `+ematrix--internal-map-local!`.
 It is deferred until `general` gets loaded and configured.
 
 #### `(+nmap! &rest ARGS)` (macro)
@@ -725,7 +725,7 @@ Check if FONT-FAMILY is installed on the system.
 
 #### `(+apply-font-or-script SCRIPT-OR-FACE)`
 
-Set font for SCRIPT-OR-FACE from `minemacs-fonts-plist`.
+Set font for SCRIPT-OR-FACE from `ematrix-fonts-plist`.
 
 #### `(+setup-fonts)`
 

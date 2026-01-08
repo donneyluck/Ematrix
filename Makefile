@@ -46,10 +46,10 @@ check:
 	$(EMACS_BATCH) --eval='(straight-check-all)'
 
 bump:
-	MINEMACS_LOAD_ALL_MODULES=1 $(EMACS_BATCH) --eval='(minemacs--bump-packages)'
+	EMATRIX_LOAD_ALL_MODULES=1 $(EMACS_BATCH) --eval='(ematrix--bump-packages)'
 
 locked:
-	$(EMACS_BATCH) --eval='(minemacs-restore-locked-packages nil)'
+	$(EMACS_BATCH) --eval='(ematrix-restore-locked-packages nil)'
 
 cloc:
 	$(CLOC) --match-f='\.el$$' init.el early-init.el elisp/ modules/ core/ skel/

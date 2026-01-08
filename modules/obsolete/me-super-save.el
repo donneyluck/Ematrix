@@ -10,7 +10,7 @@
 
 (use-package super-save
   :straight t
-  :hook (minemacs-first-file . super-save-mode)
+  :hook (ematrix-first-file . super-save-mode)
   :custom
   (super-save-silent t)
   (super-save-all-buffers t)

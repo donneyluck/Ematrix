@@ -20,7 +20,7 @@
 
 (use-package tree-sitter-langs
   :straight t
-  :hook (minemacs-build-functions . tree-sitter-langs-install-grammars)
+  :hook (ematrix-build-functions . tree-sitter-langs-install-grammars)
   :preface
   (+fn-inhibit-messages! tree-sitter-langs-install-grammars)
   :after tree-sitter

@@ -42,7 +42,7 @@
 
 (use-package sudo-edit
   :straight t
-  :hook (minemacs-first-file . sudo-edit-indicator-mode))
+  :hook (ematrix-first-file . sudo-edit-indicator-mode))
 
 (use-package dired-rsync
   :straight (:files ("dired-rsync.el" "dired-rsync-transient.el"))

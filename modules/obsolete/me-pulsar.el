@@ -11,7 +11,7 @@
 
 (use-package pulsar
   :straight t
-  :hook (minemacs-first-file . pulsar-global-mode))
+  :hook (ematrix-first-file . pulsar-global-mode))
 
 
 (provide 'obsolete/me-pulsar)

@@ -13,7 +13,7 @@
 
 (use-package pyenv
   :straight (:host github :repo "aiguofer/pyenv.el")
-  :hook (minemacs-first-python-file . +global-pyenv-mode-maybe)
+  :hook (ematrix-first-python-file . +global-pyenv-mode-maybe)
   :custom
   (pyenv-show-active-python-in-modeline nil)
   :config

@@ -4,7 +4,7 @@
 
 ;; =============================================================================
 ;; CAVEAT! PLEASE NOTE THAT THIS CONFIG FILE IS JUST AN EXAMPLE OF HOW TO SET
-;; SOME OF MINEMACS' FEATURES. IT IS NOT INTENDED TO BE USED AS IT IS UNLESS YOU
+;; SOME OF EMATRIX' FEATURES. IT IS NOT INTENDED TO BE USED AS IT IS UNLESS YOU
 ;; UNDERSTAND IT ALL. IF YOU USE IT AS IT IS, YOU CAN SET SOME SETTINGS THAT YOU
 ;; DON'T WANT TO SET!
 ;; =============================================================================
@@ -16,19 +16,19 @@
 ;; Set the default GPG key ID, see "gpg --list-secret-keys"
 ;; (setq-default epa-file-encrypt-to '("XXXX"))
 
-;; Set a theme for MinEmacs, supported themes include these from `doom-themes'
+;; Set a theme for Ematrix, supported themes include these from `doom-themes'
 ;; or built-in themes
-(setq minemacs-theme 'doom-one) ; `doom-one' is a dark theme, `doom-one-light' is the light one
+(setq ematrix-theme 'doom-one) ; `doom-one' is a dark theme, `doom-one-light' is the light one
 
-;; MinEmacs defines the variable `minemacs-fonts-plist' that is used by the
+;; Ematrix defines the variable `ematrix-fonts-plist' that is used by the
 ;; `+setup-fonts' function. The function checks and enables the first available
-;; font from these defined in `minemacs-fonts-plist'. This variable can be
+;; font from these defined in `ematrix-fonts-plist'. This variable can be
 ;; customized to set font specs for specific Emacs faces or to enable some
 ;; language-specific fonts.
 
 ;; You can set a list of fonts to be used, like the snippet below. The first
 ;; font found on the system will be used:
-(plist-put minemacs-fonts-plist
+(plist-put ematrix-fonts-plist
            :default ;; <- applies to the `default' face using `custom-theme-set-faces'
            '((:family "Iosevka Fixed Curly Slab" :height 130) ; <- priority 1
              (:family "JetBrains Mono" :height 110 :weight light) ; <- priority 2
@@ -36,7 +36,7 @@
 
 ;; To set font for arbitrary Emacs face, you need just to write the face name as
 ;; a keyword. For example `variable-pitch' -> `:variable-pitch':
-(plist-put minemacs-fonts-plist
+(plist-put ematrix-fonts-plist
            :variable-pitch ;; <- applies to the `variable-pitch' face using `custom-theme-set-faces'
            '("Lato"
              "Roboto"
@@ -44,12 +44,12 @@
              "Helvetica"))
 
 ;; For example to set custom font for `mode-line' -> `:mode-line':
-(plist-put minemacs-fonts-plist
+(plist-put ematrix-fonts-plist
            :mode-line ;; <- applies to the `mode-line' face using `custom-theme-set-faces'
            '((:family "Lato" :weight regular)
              (:family "Roboto" :weight light)))
 
-(plist-put minemacs-fonts-plist
+(plist-put ematrix-fonts-plist
            :mode-line-inactive ;; <- applies to the `mode-line-inactive'
            '((:family "Lato" :weight regular)
              (:family "Roboto" :weight light)))
@@ -60,17 +60,17 @@
 ;; `:prepend' is passed the last argument to `set-fontset-font'. The extra
 ;; `:scale' parameter can be used to set a scaling factor for the font in Emacs'
 ;; `face-font-rescale-alist'.
-(plist-put minemacs-fonts-plist
+(plist-put ematrix-fonts-plist
            :arabic ;; <- applies to arabic script using `set-fontset-font'
            '((:family "Amiri" :scale 0.9)
              (:family "KacstOne")))
 
 ;; Use "LXGW WenKai Mono" for Han (Chinese) script
-(plist-put minemacs-fonts-plist
+(plist-put ematrix-fonts-plist
            :han
            '((:family "LXGW WenKai Mono" :scale 1.3)))
 
-;; When `me-daemon' and `me-email' are enabled, MinEmacs will try to start
+;; When `me-daemon' and `me-email' are enabled, Ematrix will try to start
 ;; `mu4e' in background at startup. To disable this behavior, you can set
 ;; `+mu4e-auto-start' to nil here.
 ;; (setq +mu4e-auto-start nil)
@@ -97,7 +97,7 @@
 ;; I use Brave, and never use Chrome, so I replace chrome program with "brave"
 (setq browse-url-chrome-program (or (executable-find "brave") (executable-find "chromium")))
 
-;; Install some third-party packages. MinEmacs uses `use-package' and `straight'
+;; Install some third-party packages. Ematrix uses `use-package' and `straight'
 ;; for package management. It is recommended to use the same to install
 ;; additional packages. For example, to install `devdocs' you can use something
 ;; like:
@@ -108,7 +108,7 @@
   ;; commands are already autoloaded (defined with `autoload'), this is not
   ;; needed.
   :commands devdocs-install
-  ;; MinEmacs sets the `use-package-always-defer' to t, so by default, packages
+  ;; Ematrix sets the `use-package-always-defer' to t, so by default, packages
   ;; are deferred to save startup time. If you want to load a package
   ;; immediately, you need to explicitly use `:demand'.
   ;; :demand
@@ -116,7 +116,7 @@
   ;; using `setq'. This will ensure calling the right setter function if it is
   ;; defined for the custom variable.
   :custom
-  (devdocs-data-dir (concat minemacs-local-dir "devdocs/")))
+  (devdocs-data-dir (concat ematrix-local-dir "devdocs/")))
 
 ;; Module: `me-tools' -- Package: `vterm'
 ;; When the libvterm present in the system is too old, you can face VTERM_COLOR
@@ -136,12 +136,12 @@
   (setq-default jinx-languages "ar en fr"))
 
 ;; The `spell-fu' configuration is obsolete now (in favor of `jinx'). However,
-;; you can force MinEmacs to load obsolete configurations by loading them
+;; you can force Ematrix to load obsolete configurations by loading them
 ;; manually. Here is an example of how to force loading an obsolete module, you
 ;; can do this here or in modules.el.
-;; (+load minemacs-obsolete-modules-dir "me-spell-fu.el")
+;; (+load ematrix-obsolete-modules-dir "me-spell-fu.el")
 ;; (with-eval-after-load 'spell-fu
-;;   ;; We can use MinEmacs' helper macro `+spell-fu-register-dictionaries!'
+;;   ;; We can use Ematrix' helper macro `+spell-fu-register-dictionaries!'
 ;;   ;; to enable multi-language spell checking.
 ;;   (+spell-fu-register-dictionaries! "en" "fr"))
 
@@ -162,12 +162,12 @@
   ;; alias gmail "Firstname Lastname <some.user.name@gmail.com>"
   ;; alias work  "Firstname Lastname <some.user.name@work.com>"
 
-  ;; (setq mail-personal-alias-file (concat minemacs-config-dir "private/mail-aliases.mailrc"))
+  ;; (setq mail-personal-alias-file (concat ematrix-config-dir "private/mail-aliases.mailrc"))
 
   (setq +mu4e-auto-bcc-address "always.bcc@this.email") ;; Add an email address always included as BCC
 
   ;; Register email accounts with mu4e
-  ;; Use MinEmacs' `+mu4e-register-account' helper function to register multiple accounts
+  ;; Use Ematrix' `+mu4e-register-account' helper function to register multiple accounts
   (+mu4e-register-account
    "Google mail" ;; Account name
    "gmail" ;; Maildir
@@ -265,7 +265,7 @@
 
 ;; Module: `me-services' -- Package: `jiralib' / `org-jira'
 ;; When `jiralib2' is enabled, do some extra stuff
-(when (memq 'jiralib minemacs-configured-packages)
+(when (memq 'jiralib ematrix-configured-packages)
   ;; You need to set `jiralib-url', `jiralib-host' and `jiralib-user' are optional
   (setq jiralib-url "https://my-jira-server.tld/"
         jiralib-host "my-jira-server.tld"

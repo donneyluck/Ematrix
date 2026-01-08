@@ -1,6 +1,6 @@
 from_latest_tag = true
 ignore_merge_commits = false
-branch_whitelist = ["main", "minemacs-ng"]
+branch_whitelist = ["main", "ematrix-ng"]
 
 pre_bump_hooks = []
 post_bump_hooks = [
@@ -21,7 +21,7 @@ nit = { changelog_title = "Nitpicks, changes with no side effect" }
 path = "docs/CHANGELOG.md"
 template = "remote"
 remote = "github.com"
-repository = "minemacs"
+repository = "ematrix"
 owner = "abougouffa"
 authors = [
   { signature = "Abdelhak Bougouffa", username = "abougouffa" },

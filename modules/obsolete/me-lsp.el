@@ -17,12 +17,12 @@
   (setenv "LSP_USE_PLISTS" "true")
   (setq lsp-use-plists t)
   :custom
-  (lsp-session-file (concat minemacs-local-dir "lsp/session.el"))
-  (lsp-server-install-dir (concat minemacs-local-dir "lsp/servers/"))
+  (lsp-session-file (concat ematrix-local-dir "lsp/session.el"))
+  (lsp-server-install-dir (concat ematrix-local-dir "lsp/servers/"))
   (lsp-keep-workspace-alive nil)
   (lsp-log-io nil)
   (lsp-idle-delay 1.0)
-  (lsp-log-max (when minemacs-debug-p message-log-max))
+  (lsp-log-max (when ematrix-debug-p message-log-max))
   ;; Less intrusive UI
   (lsp-eldoc-render-all nil) ; clangd docs looks ugly on eldoc-box!
   (lsp-headerline-breadcrumb-enable nil)
@@ -48,7 +48,7 @@
       rust-ts-mode cmake-mode js-mode js-ts-mode typescript-mode
       typescript-ts-mode json-mode json-ts-mode js-json-mode)
     "Modes for which LSP-mode can be automatically enabled by `+lsp-auto-enable'."
-    :group 'minemacs-prog
+    :group 'ematrix-prog
     :type '(repeat symbol))
   (defun +lsp--ensure-maybe-h ()
     "Maybe auto start LSP if the current mode is in `+lsp-auto-enable-modes'."
@@ -130,8 +130,8 @@
     "dh" #'dap-hydra/body)
   :hook (dap-stopped . (lambda (arg) (call-interactively #'dap-hydra)))
   :custom
-  (dap-utils-extension-path (concat minemacs-local-dir "dap/extension/"))
-  (dap-breakpoints-file (concat minemacs-local-dir "dap/breakpoints.el"))
+  (dap-utils-extension-path (concat ematrix-local-dir "dap/extension/"))
+  (dap-breakpoints-file (concat ematrix-local-dir "dap/breakpoints.el"))
   (dap-auto-configure-features '(locals breakpoints controls tooltip))
   (dap-auto-show-output nil))
 

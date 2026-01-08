@@ -10,7 +10,7 @@
 
 (use-package projectile
   :straight t
-  :after minemacs-loaded
+  :after ematrix-loaded
   :demand
   :custom
   (projectile-ignored-projects '("~/"))

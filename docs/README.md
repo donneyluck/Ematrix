@@ -1,8 +1,8 @@
-# MinEmacs
+# Ematrix
 
 > [!CAUTION]
-> Please note that MinEmacs is under active rewrite. The new generation of this
-> configuration (branch `minemacs-ng`) will not be compatible with this one as
+> Please note that Ematrix is under active rewrite. The new generation of this
+> configuration (branch `ematrix-ng`) will not be compatible with this one as
 > it includes multiple breaking changes compared to the `main` branch. Including
 > but not limited to, dropping the support of Evil and General **(still, you can
 > enable the `obsolete/me-evil` module to have the same experience)**, among
@@ -13,22 +13,22 @@
 > hides a lot of Emacs' beauty and creates more problems than it solves
 > [personal opinion/experience].
 >
-> I will cherry pick some relevant commits from `minemacs-ng`, but I won't be
+> I will cherry pick some relevant commits from `ematrix-ng`, but I won't be
 > able to add new features to this branch.
 >
-> **At some point, the new `minemacs-ng` will become the `main` branch, so if
+> **At some point, the new `ematrix-ng` will become the `main` branch, so if
 > you want to stick with this old generation of the framework, we highly
 > recommend you to switch to the `legacy` branch**.
 
-[![CI-Linux](https://github.com/abougouffa/minemacs/actions/workflows/ci-linux.yaml/badge.svg)](https://github.com/abougouffa/minemacs/actions/workflows/ci-linux.yaml)
-[![CI-MacOS](https://github.com/abougouffa/minemacs/actions/workflows/ci-macos.yaml/badge.svg)](https://github.com/abougouffa/minemacs/actions/workflows/ci-macos.yaml)
-[![CI-Windows](https://github.com/abougouffa/minemacs/actions/workflows/ci-windows.yaml/badge.svg)](https://github.com/abougouffa/minemacs/actions/workflows/ci-windows.yaml)
+[![CI-Linux](https://github.com/abougouffa/ematrix/actions/workflows/ci-linux.yaml/badge.svg)](https://github.com/abougouffa/ematrix/actions/workflows/ci-linux.yaml)
+[![CI-MacOS](https://github.com/abougouffa/ematrix/actions/workflows/ci-macos.yaml/badge.svg)](https://github.com/abougouffa/ematrix/actions/workflows/ci-macos.yaml)
+[![CI-Windows](https://github.com/abougouffa/ematrix/actions/workflows/ci-windows.yaml/badge.svg)](https://github.com/abougouffa/ematrix/actions/workflows/ci-windows.yaml)
 
-**MinEmacs** is a complete and fast Emacs configuration framework.
+**Ematrix** is a complete and fast Emacs configuration framework.
 
-![MinEmacs banner](/docs/images/minemacs-cover.svg)
+![Ematrix banner](/docs/images/ematrix-cover.svg)
 
-![MinEmacs screenshot](/docs/images/minemacs-screenshot.png)
+![Ematrix screenshot](/docs/images/ematrix-screenshot.png)
 
 ## Why?
 
@@ -49,7 +49,7 @@ configuration.
 I discovered then [Doom Emacs](https://github.com/doomemacs/doomemacs), which I
 found a remarkable piece of software that introduced me to the world of Emacs.
 Nonetheless, my experience with it turned out to be **less enjoyable** later. In
-fact, before I started the [MinEmacs](https://github.com/abougouffa/minemacs)
+fact, before I started the [Ematrix](https://github.com/abougouffa/ematrix)
 project back in September 2022, I encountered numerous issues with Doom Emacs.
 Occasionally, after running the `doom upgrade` command, everything would cease
 to function properly. These problems always seemed to arise during my busiest
@@ -63,13 +63,13 @@ startup time, configuration modules that tightly combined various packages in an
 opinionated manner, CI commands, and even a profile manager! Each of these
 features introduced extra complexity and more failure points at every layer.
 
-As a result, MinEmacs emerged as my personal configuration framework for Emacs,
+As a result, Ematrix emerged as my personal configuration framework for Emacs,
 _and it continues to serve that purpose_. I'm trying to tailor it to my specific
-needs while maintaining its modularity and portability. MinEmacs is changing
+needs while maintaining its modularity and portability. Ematrix is changing
 constantly, you can refer to the [change log](/docs/CHANGELOG.md) for more
-information about the evolution of MinEmacs.
+information about the evolution of Ematrix.
 
-MinEmacs was mainly based on Evil and General (for the `SPC` leader), even
+Ematrix was mainly based on Evil and General (for the `SPC` leader), even
 though Evil still supported via the `me-evil` module, I'm moving away recently
 from Evil to embrace the classic Emacs experience. Vim is awesome, and Evil does
 a great job in emulating Vim functionalities in Emacs. However, using Emacs via
@@ -81,7 +81,7 @@ it is, trying to make use of its features as they are intended to be used.
 > [!NOTE]
 > Please note that I have no intent or availability to create an alternative to
 > Doom Emacs or Spacemacs. While I find joy (like every other Emacser out there)
-> in tinkering with Emacs, MinEmacs remains just a tool that I use in my
+> in tinkering with Emacs, Ematrix remains just a tool that I use in my
 > everyday work, and that I like to share with other Emacsers.
 
 ## Install
@@ -89,12 +89,12 @@ it is, trying to make use of its features as they are intended to be used.
 Open a shell and run:
 
 ```shell
-git clone --recursive https://github.com/abougouffa/minemacs.git ~/.emacs.d && emacs
+git clone --recursive https://github.com/abougouffa/ematrix.git ~/.emacs.d && emacs
 ```
 
 By executing this command, the repository will be cloned, and Emacs will be
 launched. During the initial run, Emacs will automatically install the necessary
-packages. You might need to run `M-x minemacs-run-build-functions` when Emacs
+packages. You might need to run `M-x ematrix-run-build-functions` when Emacs
 loads up to install some extra stuff (build some libraries, install Nerd Fonts,
 etc.)
 
@@ -102,43 +102,43 @@ etc.)
 > Please note that I'm using a fresh Emacs 29 *(recommended version)* built from
 > the `emacs-29` branch mainly on two machines, one based on Manjaro Linux and
 > the other on (the quite old) Debian 10. However, I have set up some basic
-> [Github CI actions](https://github.com/abougouffa/minemacs/actions) that
+> [Github CI actions](https://github.com/abougouffa/ematrix/actions) that
 > automatically test running this configuration on Emacs 28, 29 and 30 in
 > [Ubuntu
-> Linux](https://github.com/abougouffa/minemacs/actions/workflows/ci-linux.yaml)
+> Linux](https://github.com/abougouffa/ematrix/actions/workflows/ci-linux.yaml)
 > and
-> [MacOS](https://github.com/abougouffa/minemacs/actions/workflows/ci-macos.yaml)
+> [MacOS](https://github.com/abougouffa/ematrix/actions/workflows/ci-macos.yaml)
 > and on Emacs 29 in
-> [Windows](https://github.com/abougouffa/minemacs/actions/workflows/ci-windows.yaml).
-> These actions ensure that MinEmacs is "runnable" on these systems; with all
+> [Windows](https://github.com/abougouffa/ematrix/actions/workflows/ci-windows.yaml).
+> These actions ensure that Ematrix is "runnable" on these systems; with all
 > its modules enabled. However, more testing should be done to validate the
 > configuration on systems other than Linux.
 >
 > I'm trying to support at least Emacs 28.2, so [I back port some of the new
-> functions/macros I use to Emacs 28](/core/backports/). Furthermore, MinEmacs
+> functions/macros I use to Emacs 28](/core/backports/). Furthermore, Ematrix
 > includes the `me-compat` module which loads the `compat` package at early
 > stage (just after bootstrapping `straight` and `use-package`), this can
-> facilitate porting MinEmacs to earlier Emacs versions. However, I've never
-> tested MinEmacs with versions earlier than 28.2, and I don't plan to do so!
+> facilitate porting Ematrix to earlier Emacs versions. However, I've never
+> tested Ematrix with versions earlier than 28.2, and I don't plan to do so!
 
 ## Customization
 
-To personalize MinEmacs, you can add a specific set of files within the default
-user configuration directory, which is located by default at `~/.minemacs.d/` or
+To personalize Ematrix, you can add a specific set of files within the default
+user configuration directory, which is located by default at `~/.ematrix.d/` or
 `.emacs.d/user-config/` (the first to be found). However, if you prefer to use a
 different directory, you have the flexibility to do so by setting the
-`MINEMACSDIR` environment variable.
+`EMATRIXDIR` environment variable.
 
 ### Main configuration files
 
-There are two main files that can be added in the `~/.minemacs.d` directory:
+There are two main files that can be added in the `~/.ematrix.d` directory:
 
-1. The `~/.minemacs.d/modules.el` file contains a list of enabled modules and a
-   list of disabled packages (`minemacs-modules` and `minemacs-disabled-packages`
+1. The `~/.ematrix.d/modules.el` file contains a list of enabled modules and a
+   list of disabled packages (`ematrix-modules` and `ematrix-disabled-packages`
    can be set in this file).
-2. The `~/.minemacs.d/config.el` file contains the user configuration and
+2. The `~/.ematrix.d/config.el` file contains the user configuration and
    customization, you can think of it as your `init.el`, which gets loaded at the
-   end of MinEmacs' `init.el`!
+   end of Ematrix' `init.el`!
 
 This repository contains skeleton files for [`modules.el`](/skel/modules.el) and
 [`config.el`](/skel/config.el) (under [`skel/`](/skel)). We highly recommend
@@ -157,63 +157,63 @@ machine-specific configurations. For example, I use them to overwrite the email
 address on my workstation, to setup my Email accounts, to setup Forge and Jira
 integration in my workstation, and so on.
 
-For this purpose, MinEmacs will also check for files in
-`~/.minemacs.d/local/{early-config,config,modules}.el` and load them, after the
-`~/.minemacs.d/{early-config,config,modules}.el` if they exists.
+For this purpose, Ematrix will also check for files in
+`~/.ematrix.d/local/{early-config,config,modules}.el` and load them, after the
+`~/.ematrix.d/{early-config,config,modules}.el` if they exists.
 
 ### Advanced configuration files
 
-MinEmacs provides also some advanced customization files, these files can be
-used to tweak MinEmacs' behavior, add some early initialization code, make
-MinEmacs runnable on older Emacs versions, etc.
+Ematrix provides also some advanced customization files, these files can be
+used to tweak Ematrix' behavior, add some early initialization code, make
+Ematrix runnable on older Emacs versions, etc.
 
-1. The `~/.minemacs.d/early-config.el` file is loaded at the end of MinEmacs'
+1. The `~/.ematrix.d/early-config.el` file is loaded at the end of Ematrix'
    `early-init.el`. You can use it to set up some early stuff like tweaking the
-   UI, overwrite the variables set by MinEmacs in `~/.emacs.d/early-init.el`,
+   UI, overwrite the variables set by Ematrix in `~/.emacs.d/early-init.el`,
    and so on.
-2. The `~/.minemacs.d/init-tweaks.el` file is loaded at an [early stage of the
+2. The `~/.ematrix.d/init-tweaks.el` file is loaded at an [early stage of the
    `init.el` file](/init.el#L175). You can use it to do some useful stuff before
-   MinEmacs starts to customize packages and load modules. See the comments in
+   Ematrix starts to customize packages and load modules. See the comments in
    [`init.el`](/init.el) for more information.
 
 ### Environment variables
 
-You can customize MinEmacs' behavior via some environment variables.
+You can customize Ematrix' behavior via some environment variables.
 
-- `MINEMACS_DIR` or `MINEMACSDIR`: Path for MinEmacs user configuration
-  directory, if not set, `~/.minemacs.d/` is used.
-- `MINEMACS_MSG_LEVEL`: Change message log level, from 1 (only errors) to 4 (all
+- `EMATRIX_DIR` or `EMATRIXDIR`: Path for Ematrix user configuration
+  directory, if not set, `~/.ematrix.d/` is used.
+- `EMATRIX_MSG_LEVEL`: Change message log level, from 1 (only errors) to 4 (all
   messages).
-- `MINEMACS_VERBOSE`: Be more verbose (useful for debugging).
-- `MINEMACS_DEBUG`: Enable debugging at startup.
-- `MINEMACS_ALPHA`: Set frame `background-alpha` to percentage (value from 0 to
+- `EMATRIX_VERBOSE`: Be more verbose (useful for debugging).
+- `EMATRIX_DEBUG`: Enable debugging at startup.
+- `EMATRIX_ALPHA`: Set frame `background-alpha` to percentage (value from 0 to
   100).
-- `MINEMACS_NOT_LAZY`: Load lazy packages immediately after loading Emacs.
-- `MINEMACS_ALWAYS_DEMAND`: Load all packages immediately (this works by setting
+- `EMATRIX_NOT_LAZY`: Load lazy packages immediately after loading Emacs.
+- `EMATRIX_ALWAYS_DEMAND`: Load all packages immediately (this works by setting
   `use-package-always-demand` to `t` and `use-package-always-defer` to `nil`.
-- `MINEMACS_IGNORE_USER_CONFIG`: space-separated values, used to disables
-  loading `~/.minemacs.d/<file>.el` user configuration files. Accepted values
+- `EMATRIX_IGNORE_USER_CONFIG`: space-separated values, used to disables
+  loading `~/.ematrix.d/<file>.el` user configuration files. Accepted values
   for `<file>` are: `early-config`, `init-tweaks`, `modules`, `config`,
   `local/early-config`, `local/init-tweaks`, `local/modules` and `local/config`.
   Use `all` to disable all user configuration files.
-- `MINEMACS_LOAD_ALL_MODULES`: Load all modules (without taking
-  `~/.minemacs.d/modules.el` into account).
-- `MINEMACS_BENCHMARK`: Run a benchmark at initialization of Emacs (using
+- `EMATRIX_LOAD_ALL_MODULES`: Load all modules (without taking
+  `~/.ematrix.d/modules.el` into account).
+- `EMATRIX_BENCHMARK`: Run a benchmark at initialization of Emacs (using
   [`benchmark-init.el`](https://github.com/dholm/benchmark-init-el)) and display
   the results after startup (including lazy packages).
-- `MINEMACS_NO_PROXIES`: Set if you have `minemacs-proxies` setup in your
+- `EMATRIX_NO_PROXIES`: Set if you have `ematrix-proxies` setup in your
   `early-config.el` but you want to start Emacs without passing by these proxies
   (useful if you use some proxies for work but you want Emacs to start without
   passing by them to be able to download packages).
 
 ## Extra documentation
 For more information about customization variables, functions and commands
-defined by MinEmacs, you can refer to the [documentation generated from the
+defined by Ematrix, you can refer to the [documentation generated from the
 source code](/docs/DOCS.md).
 
 ## Troubleshooting
 
-If you experienced an issue with MinEmacs, you can take a look at the
+If you experienced an issue with Ematrix, you can take a look at the
 [FAQ](/docs/FAQ.md), consult the
-[discussions](https://github.com/abougouffa/minemacs/discussions), check [open
-issues or open a new one](https://github.com/abougouffa/minemacs/issues).
+[discussions](https://github.com/abougouffa/ematrix/discussions), check [open
+issues or open a new one](https://github.com/abougouffa/ematrix/issues).

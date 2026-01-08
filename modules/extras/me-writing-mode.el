@@ -13,47 +13,47 @@
 
 (defcustom +writing-mode-enable-hook nil
   "Execute hooks on enable."
-  :group 'minemacs-ui
+  :group 'ematrix-ui
   :type 'hook)
 
 (defcustom +writing-mode-disable-hook nil
   "Execute hooks on disable."
-  :group 'minemacs-ui
+  :group 'ematrix-ui
   :type 'hook)
 
 (defcustom +writing-text-scale 2.0
   "The text-scaling level for `+writing-mode'."
-  :group 'minemacs-ui
+  :group 'ematrix-ui
   :type 'float)
 
 (defcustom +writing-text-width nil
   "Like `olivetti-body-width'."
-  :group 'minemacs-ui
+  :group 'ematrix-ui
   :type '(choice
           (const :tag "Use `fill-column'" :value nil)
           (integer :tag "Specify width" :value 70)))
 
 (defcustom +writing-mixed-pitch-enable t
   "Enable `mixed-pitch-mode' with `+writing-mode' for some modes defined in `+writing-mixed-pitch-modes'."
-  :group 'minemacs-ui
+  :group 'ematrix-ui
   :type 'boolean)
 
 (defcustom +writing-mixed-pitch-modes
   '(rst-mode markdown-mode org-mode)
   "Enable `mixed-pitch-mode' with `+writing-mode' for these modes."
-  :group 'minemacs-ui
+  :group 'ematrix-ui
   :type '(repeat symbol))
 
 (defcustom +writing-major-modes
   '(rst-mode text-mode markdown-mode org-mode)
   "Enable `+writing-global-mode' for these exact modes."
-  :group 'minemacs-ui
+  :group 'ematrix-ui
   :type '(repeat symbol))
 
 (defcustom +writing-derived-major-modes
   '(rst-mode markdown-mode org-mode)
   "Enable `+writing-global-mode' for modes derived these modes."
-  :group 'minemacs-ui
+  :group 'ematrix-ui
   :type '(repeat symbol))
 
 (defvar-local +writing--line-nums-active-p nil)

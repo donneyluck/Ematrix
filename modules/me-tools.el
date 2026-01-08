@@ -11,7 +11,7 @@
 ;;  :hook ((after-save . ssh-deploy-after-save)
 ;;         (find-file . ssh-deploy-find-file))
 ;;  :custom
-;;  (ssh-deploy-revision-folder (concat minemacs-cache-dir "ssh-deploy-revisions/"))
+;;  (ssh-deploy-revision-folder (concat ematrix-cache-dir "ssh-deploy-revisions/"))
 ;;  :config
 ;;  (ssh-deploy-hydra "C-c C-z"))
 
@@ -38,7 +38,7 @@
 
 (use-package tldr
   :straight t
-  :hook (minemacs-build-functions . tldr-update-docs)
+  :hook (ematrix-build-functions . tldr-update-docs)
   :hook (tldr-mode . visual-line-mode)
   :custom
   (tldr-enabled-categories '("common" "linux" "osx")))
@@ -46,7 +46,7 @@
 ;; (use-package vterm
 ;;   :straight t
 ;;   :when (and (not os/win) (+emacs-features-p 'modules))
-;;   :hook (minemacs-build-functions . vterm-module-compile)
+;;   :hook (ematrix-build-functions . vterm-module-compile)
 ;;   :hook (vterm-mode . compilation-shell-minor-mode)
 ;;   :bind (:map vterm-mode-map ([return] . vterm-send-return))
 ;;   :init
@@ -141,10 +141,10 @@
 
 ;; (use-package envrc
 ;;   :straight t
-;;   :hook (minemacs-first-file . envrc-global-mode)
+;;   :hook (ematrix-first-file . envrc-global-mode)
 ;;   :when (and (not os/win) (executable-find "direnv"))
 ;;   :custom
-;;   (envrc-debug minemacs-debug-p)
+;;   (envrc-debug ematrix-debug-p)
 ;;   :config
 ;;   ;; Ensure loading envrc for babel source blocks
 ;;   (advice-add #'org-babel-execute-src-block :around #'envrc-propagate-environment))

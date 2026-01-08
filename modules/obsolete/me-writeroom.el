@@ -14,16 +14,16 @@
   (+map! "tw" #'writeroom-mode)
   (defcustom +writeroom-text-scale 1.7
     "The text-scaling level for `writeroom-mode'."
-    :group 'minemacs-ui
+    :group 'ematrix-ui
     :type 'float)
   (defcustom +writeroom-enable-mixed-pitch t
     "Enable `mixed-pitch-mode' with `writeroom-mode' for some modes defined in `+writeroom-mixed-pitch-modes'."
-    :group 'minemacs-ui
+    :group 'ematrix-ui
     :type 'boolean)
   (defcustom +writeroom-mixed-pitch-modes
     '(rst-mode markdown-mode org-mode)
     "Enable `mixed-pitch-mode' with `writeroom-mode' for these modes."
-    :group 'minemacs-ui
+    :group 'ematrix-ui
     :type 'boolean)
   :hook (writeroom-mode . +writeroom--enable-text-scaling-mode-h)
   :hook (writeroom-mode . +writeroom--enable-mixed-pitch-mode-maybe-h)

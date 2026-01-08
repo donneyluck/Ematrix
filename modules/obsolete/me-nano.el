@@ -21,12 +21,12 @@
 (use-package nano-theme
   :straight (:host github :repo "rougier/nano-theme")
   :init
-  ;; Set `nano-light' as the default MinEmacs theme
-  (+set-standard-value 'minemacs-theme 'nano-light))
+  ;; Set `nano-light' as the default Ematrix theme
+  (+set-standard-value 'ematrix-theme 'nano-light))
 
 (use-package nano-modeline
   :straight (:host github :repo "rougier/nano-modeline")
-  :after minemacs-loaded
+  :after ematrix-loaded
   :demand
   :config
   ;; Disable the default mode-line
@@ -39,7 +39,7 @@
 
 (use-package nano-vertico
   :straight (:host github :repo "rougier/nano-vertico")
-  :hook (minemacs-lazy . nano-vertico-mode))
+  :hook (ematrix-lazy . nano-vertico-mode))
 
 
 (provide 'obsolete/me-nano)

@@ -1,4 +1,4 @@
-;;; early-init.el --- MinEmacs early initialization tweaks -*- lexical-binding: t; -*-
+;;; early-init.el --- Ematrix early initialization tweaks -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022-2024  Abdelhak Bougouffa
 
@@ -36,18 +36,18 @@
 
 ;; NOTE: In Emacs29+, frames can have a transparent background via the
 ;; `alpha-background' parameter. For a better experience, this value should be
-;; set early before any frame gets created (i.e. in "early-init.el"). MinEmacs
-;; uses the `$MINEMACS_ALPHA` environment variable that can be set to an integer
+;; set early before any frame gets created (i.e. in "early-init.el"). Ematrix
+;; uses the `$EMATRIX_ALPHA` environment variable that can be set to an integer
 ;; value in the [1-100] range (the alpha percentage). When this variable is not
 ;; set, Emacs will load the default GUI (without background alpha), and when it
-;; is set but the value is not valid, MinEmacs will fallback to the default
+;; is set but the value is not valid, Ematrix will fallback to the default
 ;; alpha of 93%.
 (when (>= emacs-major-version 29)
-  (when-let* ((alpha (getenv "MINEMACS_ALPHA"))
+  (when-let* ((alpha (getenv "EMATRIX_ALPHA"))
               (alpha (string-to-number alpha)))
     (push `(alpha-background . ,(if (or (zerop alpha) (> alpha 100)) 93 alpha)) default-frame-alist)))
 
-;; Load MinEmacs variables from the `me-vars' core module.
+;; Load Ematrix variables from the `me-vars' core module.
 (load (expand-file-name "core/me-vars.el" (file-name-directory (file-truename load-file-name))) nil t)
 
 ;; Better titlebar on MacOS!

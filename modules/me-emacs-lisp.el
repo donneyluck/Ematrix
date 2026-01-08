@@ -10,7 +10,7 @@
 
 (use-package elisp-plus
   :straight (:host github :repo "abougouffa/elisp-plus")
-  :after minemacs-first-elisp-file
+  :after ematrix-first-elisp-file
   :init
   (elisp-plus-mode 1))
 
@@ -70,7 +70,7 @@
 
 (use-package eros
   :straight t
-  :hook (minemacs-first-elisp-file . eros-mode)
+  :hook (ematrix-first-elisp-file . eros-mode)
   :custom
   (eros-eval-result-prefix (if (char-displayable-p ?→) "→ " "=>"))
   :config

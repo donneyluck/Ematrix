@@ -1,10 +1,10 @@
-# MinEmacs FAQ
+# Ematrix FAQ
 This file assembles solutions to some of the known issues and answers some of
-the frequently asked questions about MinEmacs.
+the frequently asked questions about Ematrix.
 
-## MinEmacs (with Evil) keybindings cheat sheet
+## Ematrix (with Evil) keybindings cheat sheet
 
-MinEmacs defines several keybindings, mainly using [**general.el**](https://github.com/noctuid/general.el). To see the full
+Ematrix defines several keybindings, mainly using [**general.el**](https://github.com/noctuid/general.el). To see the full
 list of keybindings defined using general, you can type `SPC h g` or `M-x
 general-describe-keybindings`.
 
@@ -45,7 +45,7 @@ PDF. For example, after hitting `SPC m e l p`, you get short after, the message
 
 With something like this in the `*Org Export Process*` buffer:
 
-Using MinEmacs’ "me-org-export-async-init.el" as init file.
+Using Ematrix’ "me-org-export-async-init.el" as init file.
 Loading "init.el" in an org-export-async context.
 Symbol s function definition is void: evil-snipe-mode
 
@@ -55,12 +55,12 @@ Error: void-function (evil-snipe-mode)
   debug-early-backtrace()
   debug-early(error (void-function evil-snipe-mode))
   (evil-snipe-mode 1)
-  eval-buffer(#<buffer  *load*-90736> nil "/home/abougouffa/.minemacs.d/config.el" nil t)
-  load-with-code-conversion("/home/abougouffa/.minemacs.d/config.el" "/home/abougouffa/.minemacs.d/config.el" nil t)
-  load("~/.minemacs.d/config.el" nil t)
-  (progn nil (load user-config nil (not minemacs-verbose-p)))
-  (if (file-exists-p user-config) (progn nil (load user-config nil (not minemacs-verbose-p))))
-  (let ((user-config (concat minemacs-config-dir "config.el"))) (if (file-exists-p user-config) (progn nil (load user-config nil (not minemacs-verbose-p)))))
+  eval-buffer(#<buffer  *load*-90736> nil "/home/abougouffa/.ematrix.d/config.el" nil t)
+  load-with-code-conversion("/home/abougouffa/.ematrix.d/config.el" "/home/abougouffa/.ematrix.d/config.el" nil t)
+  load("~/.ematrix.d/config.el" nil t)
+  (progn nil (load user-config nil (not ematrix-verbose-p)))
+  (if (file-exists-p user-config) (progn nil (load user-config nil (not ematrix-verbose-p))))
+  (let ((user-config (concat ematrix-config-dir "config.el"))) (if (file-exists-p user-config) (progn nil (load user-config nil (not ematrix-verbose-p)))))
   eval-buffer(#<buffer  *load*-220865> nil "/home/abougouffa/.emacs.d/init.el" nil t)
   load-with-code-conversion("/home/abougouffa/.emacs.d/init.el" "/home/abougouffa/.emacs.d/init.el" nil t)
   load("~/.emacs.d/init.el" nil t)
@@ -72,10 +72,10 @@ Error: void-function (evil-snipe-mode)
       normal-top-level()
 ```
 
-To resolve this, we need to understand how MinEmacs configures Org-mode's
-asynchronous export. By default, MinEmacs enables `org-export-in-background` to
+To resolve this, we need to understand how Ematrix configures Org-mode's
+asynchronous export. By default, Ematrix enables `org-export-in-background` to
 export documents asynchronously (in a child Emacs process). As this process do
-not need all of MinEmacs installed package, so there is a minimalist init file
+not need all of Ematrix installed package, so there is a minimalist init file
 in `modules/extras/me-org-export-async-init.el` which will be used by default for
 the `org-export-async-init-file` variable.
 
@@ -111,7 +111,7 @@ So, to resolve this issue, you can either:
 ```
 
 - Or, you can revert to Org-mode's default behavior for the child export
-  process (will use MinEmacs' `init.el` file):
+  process (will use Ematrix' `init.el` file):
 
 ```elisp
 (with-eval-after-load 'org
@@ -148,7 +148,7 @@ however, the version provided by your system might be incompatible with
   (setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=Off"))
 ```
 
-## Debugging MinEmacs
+## Debugging Ematrix
 Sometimes Emacs might freezes and stop responding, the reflex in this case is to
 use `C-g` to call `keyboard-quit` which signals a "quit" condition. If Emacs
 stay frozen, you can send `SIGUSR2` via a terminal, this should stop the running

@@ -38,7 +38,7 @@ to built-in `flyspell-mode'."
   (interactive (list (if current-prefix-arg (prefix-numeric-value current-prefix-arg) 'toggle)))
   (cond ((and (fboundp 'jinx-mode) (+jinx-load-module))
          (jinx-mode arg))
-        ((and (+load minemacs-obsolete-modules-dir "me-spell-fu.el") (fboundp 'spell-fu-mode))
+        ((and (+load ematrix-obsolete-modules-dir "me-spell-fu.el") (fboundp 'spell-fu-mode))
          (spell-fu-mode arg))
         (t ; Fallback to builtin `flyspell'
          (flyspell-mode arg))))

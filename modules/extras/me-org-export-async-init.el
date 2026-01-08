@@ -17,16 +17,16 @@
 
 ;;; Code:
 
-(message "Using MinEmacs' \"me-org-export-async-init.el\" as init file.")
+(message "Using Ematrix' \"me-org-export-async-init.el\" as init file.")
 
 ;; This signals that we are running in a org-export-async context
 (provide 'me-org-export-async-init)
 
 ;; Load only some essential modules
-(setq minemacs-modules '(me-org me-biblio me-latex me-project me-prog me-data me-emacs-lisp))
+(setq ematrix-modules '(me-org me-biblio me-latex me-project me-prog me-data me-emacs-lisp))
 
 (load (concat user-emacs-directory "init.el") nil t)
 
-(message "Loaded %d modules!" (length minemacs-modules))
+(message "Loaded %d modules!" (length ematrix-modules))
 
 ;;; me-org-export-async-init.el ends here

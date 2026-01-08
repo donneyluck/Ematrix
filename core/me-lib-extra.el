@@ -1,4 +1,4 @@
-;; me-lib-extra.el -- MinEmacs Library (extra features and commands) -*- lexical-binding: t; -*-
+;; me-lib-extra.el -- Ematrix Library (extra features and commands) -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022-2024  Abdelhak Bougouffa
 
@@ -14,7 +14,7 @@
 (make-obsolete '+lazy-unless! "This macro will be removed, use (unless COND (+lazy! BODY)) instead.." "2024-05-18")
 (make-obsolete '+directory-root-containing-file "Use builtin `locate-dominating-file' instead." "2024-05-25")
 
-;;; Minemacs' core functions and macros
+;;; Ematrix' core functions and macros
 
 ;;;###autoload
 (defmacro +deferred-when! (condition &rest body)
@@ -57,13 +57,13 @@ DEPTH and LOCAL are passed as is to `add-hook'."
 
 
 ;;;###autoload
-(defun minemacs-run-build-functions (&optional dont-ask-p)
-  "Run all build functions in `minemacs-build-functions'.
+(defun ematrix-run-build-functions (&optional dont-ask-p)
+  "Run all build functions in `ematrix-build-functions'.
 
 Call functions without asking when DONT-ASK-P is non-nil."
   (interactive "P")
-  (dolist (fn minemacs-build-functions)
-    (message "[MinEmacs]: Running `%s'" fn)
+  (dolist (fn ematrix-build-functions)
+    (message "[Ematrix]: Running `%s'" fn)
     (if dont-ask-p
         ;; Do not ask before installing
         (cl-letf (((symbol-function 'yes-or-no-p) #'always)
@@ -72,17 +72,17 @@ Call functions without asking when DONT-ASK-P is non-nil."
       (funcall-interactively fn))))
 
 ;;;###autoload
-(defun minemacs--bump-packages ()
-  "Bump MinEmacs packages to the latest revisions."
+(defun ematrix--bump-packages ()
+  "Bump Ematrix packages to the latest revisions."
   ;; Backup the current installed versions, this file can be restored if version
   ;; upgrade does break some packages.
-  (message "[MinEmacs]: Creating backups for the current versions of packages")
-  (let* ((backup-dir (concat minemacs-local-dir "minemacs/versions/"))
+  (message "[Ematrix]: Creating backups for the current versions of packages")
+  (let* ((backup-dir (concat ematrix-local-dir "ematrix/versions/"))
          (dest-file (concat backup-dir (format-time-string "default-%Y%m%d%H%M%S.el")))
          (src-file (concat straight-base-dir "straight/versions/default.el")))
     (unless (file-directory-p backup-dir) (mkdir backup-dir 'parents))
     (when (file-exists-p src-file)
-      (message "[MinEmacs]: Creating backup from \"%s\" to \"%s\"" src-file dest-file)
+      (message "[Ematrix]: Creating backup from \"%s\" to \"%s\"" src-file dest-file)
       (copy-file src-file dest-file)))
 
   ;; Update straight recipe repositories
@@ -90,85 +90,85 @@ Call functions without asking when DONT-ASK-P is non-nil."
 
   ;; Run `straight's update cycle, taking into account the explicitly pinned
   ;; packages versions.
-  (message "[MinEmacs]: Pulling packages")
+  (message "[Ematrix]: Pulling packages")
   (straight-x-pull-all)
-  (message "[MinEmacs]: Freezing packages")
+  (message "[Ematrix]: Freezing packages")
   (straight-x-freeze-versions)
-  (message "[MinEmacs]: Rebuilding packages")
+  (message "[Ematrix]: Rebuilding packages")
   (straight-rebuild-all)
 
   ;; Run package-specific build functions (ex: `pdf-tools-install')
-  (message "[MinEmacs]: Running additional package-specific build functions")
-  (minemacs-run-build-functions 'dont-ask))
+  (message "[Ematrix]: Running additional package-specific build functions")
+  (ematrix-run-build-functions 'dont-ask))
 
 ;;;###autoload
-(defun minemacs-bump-packages ()
-  "Update MinEmacs packages to the last revisions (can cause breakages)."
+(defun ematrix-bump-packages ()
+  "Update Ematrix packages to the last revisions (can cause breakages)."
   (interactive)
-  (let ((default-directory minemacs-root-dir)
-        (compilation-buffer-name-function (lambda (_) "" "*minemacs-bump-packages*")))
+  (let ((default-directory ematrix-root-dir)
+        (compilation-buffer-name-function (lambda (_) "" "*ematrix-bump-packages*")))
     (compile "make bump")))
 
 ;;;###autoload
-(defun minemacs-restore-locked-packages (restore-from-backup)
+(defun ematrix-restore-locked-packages (restore-from-backup)
   "Restore lockfile packages list. Takes into account the pinned ones.
 When called with \\[universal-argument] or with RESTORE-FROM-BACKUP, it will
 restore the lockfile from backups, not Git."
   (interactive "P")
   (let* ((lockfile (concat straight-base-dir "straight/versions/default.el"))
          (default-directory (vc-git-root lockfile))
-         (backup-dir (concat minemacs-local-dir "minemacs/versions/")))
+         (backup-dir (concat ematrix-local-dir "ematrix/versions/")))
     ;; Update straight recipe repositories
     (straight-pull-recipe-repositories)
     (if (not restore-from-backup)
         (progn
-          (message "[MinEmacs] Reverting file \"%s\" to the original" lockfile)
+          (message "[Ematrix] Reverting file \"%s\" to the original" lockfile)
           (unless (zerop (vc-git-revert lockfile))
             ;; Signal an error when the `vc-git-revert' returns non-zero
-            (user-error "[MinEmacs] An error occurred when trying to revert \"%s\"" lockfile)))
-      (message "[MinEmacs] Trying to restore the lockfile from backups.")
+            (user-error "[Ematrix] An error occurred when trying to revert \"%s\"" lockfile)))
+      (message "[Ematrix] Trying to restore the lockfile from backups.")
       (if-let* ((_ (file-exists-p backup-dir))
                 (backups (directory-files backup-dir nil "[^.][^.]?\\'"))
                 (restore-backup-file (completing-read "Select which backup to restore: " backups))
                 (last-backup (expand-file-name restore-backup-file backup-dir)))
           (if (not (file-exists-p last-backup))
-              (user-error "[MinEmacs] No backup file")
+              (user-error "[Ematrix] No backup file")
             (copy-file last-backup lockfile 'overwrite-existing)
-            (message "[MinEmacs] Restored the last backup from \"%s\"" restore-backup-file))))
+            (message "[Ematrix] Restored the last backup from \"%s\"" restore-backup-file))))
     ;; This will ensure that the pinned lockfile is up-to-date
     (straight-x-freeze-pinned-versions)
     ;; Restore packages to the versions pinned in the lockfiles
     (when (file-exists-p (concat straight-base-dir "versions/pinned.el"))
-      (message "[MinEmacs] Restoring pinned versions of packages")
+      (message "[Ematrix] Restoring pinned versions of packages")
       (straight-x-thaw-pinned-versions))
-    (message "[MinEmacs] Restoring packages from the global lockfile versions")
+    (message "[Ematrix] Restoring packages from the global lockfile versions")
     (straight-thaw-versions)
     ;; Rebuild the packages
-    (message "[MinEmacs] Rebuilding packages")
+    (message "[Ematrix] Rebuilding packages")
     (straight-rebuild-all)
     ;; Run package-specific build functions (ex: `pdf-tools-install')
-    (message "[MinEmacs] Running additional package-specific build functions")
-    (minemacs-run-build-functions 'dont-ask)))
+    (message "[Ematrix] Running additional package-specific build functions")
+    (ematrix-run-build-functions 'dont-ask)))
 
 ;;;###autoload
-(defun minemacs-upgrade (pull-minemacs)
-  "Upgrade MinEmacs and its packages to the latest pinned versions (recommended).
+(defun ematrix-upgrade (pull-ematrix)
+  "Upgrade Ematrix and its packages to the latest pinned versions (recommended).
 
-When PULL-MINEMACS is non-nil, run a \"git pull\" in MinEmacs' directory.
+When PULL-EMATRIX is non-nil, run a \"git pull\" in Ematrix' directory.
 
-This calls `minemacs-update-restore-locked' asynchronously."
+This calls `ematrix-update-restore-locked' asynchronously."
   (interactive "P")
-  (let ((default-directory minemacs-root-dir)
-        (compilation-buffer-name-function (lambda (_) "" "*minemacs-upgrade*"))
-        (cmd (format "sh -c '%smake locked'" (if pull-minemacs "git pull && " ""))))
+  (let ((default-directory ematrix-root-dir)
+        (compilation-buffer-name-function (lambda (_) "" "*ematrix-upgrade*"))
+        (cmd (format "sh -c '%smake locked'" (if pull-ematrix "git pull && " ""))))
     (compile cmd)))
 
 ;;;###autoload
-(defun minemacs-root-dir-cleanup ()
-  "Cleanup MinEmacs' root directory."
-  (let ((default-directory minemacs-root-dir))
+(defun ematrix-root-dir-cleanup ()
+  "Cleanup Ematrix' root directory."
+  (let ((default-directory ematrix-root-dir))
     (mapc (+apply-partially-right #'+delete-file-or-directory 'trash 'recursive)
-          (directory-files minemacs-root-dir nil (rx (seq bol (or "eln-cache" "auto-save-list" "elpa") eol))))))
+          (directory-files ematrix-root-dir nil (rx (seq bol (or "eln-cache" "auto-save-list" "elpa") eol))))))
 
 ;;;###autoload
 (defun +straight-prune-build-cache ()
@@ -184,8 +184,8 @@ This calls `minemacs-update-restore-locked' asynchronously."
            (directory-files default-directory nil "[^.][^.]?\\'")))))
 
 ;;;###autoload
-(defun minemacs-cleanup-emacs-directory ()
-  "Cleanup unwanted files/directories from MinEmacs' directory."
+(defun ematrix-cleanup-emacs-directory ()
+  "Cleanup unwanted files/directories from Ematrix' directory."
   (interactive)
   (when (featurep 'native-compile)
     (+info! "Trying to clean outdated native compile cache")
@@ -193,11 +193,11 @@ This calls `minemacs-update-restore-locked' asynchronously."
     (+shutup! (native-compile-prune-cache)))
   (+info! "Trying to clean outdated straight build cache")
   (+shutup! (+straight-prune-build-cache))
-  (+info! "Trying to clean MinEmacs' root directory")
-  (+shutup! (minemacs-root-dir-cleanup)))
+  (+info! "Trying to clean Ematrix' root directory")
+  (+shutup! (ematrix-root-dir-cleanup)))
 
 ;;;###autoload
-(defun minemacs-apply-performance-tweaks ()
+(defun ematrix-apply-performance-tweaks ()
   "Set some Emacs variables for better (!) performance."
   (interactive)
   (setq gc-cons-threshold (* 128 1024 1024) ; Set a big enough threshhold
@@ -207,22 +207,22 @@ This calls `minemacs-update-restore-locked' asynchronously."
         fast-but-imprecise-scrolling t)) ; Fast scrolling
 
 ;;;###autoload
-(defun minemacs-load-module (&rest modules)
+(defun ematrix-load-module (&rest modules)
   "Interactively install and load MODULES that aren't enabled in \"modules.el\".
 When called with the universal argument, it prompts for obsolete modules also."
-  (interactive (completing-read-multiple "Select modules: " (seq-filter (lambda (module) (not (featurep module))) (minemacs-modules current-prefix-arg))))
-  (let ((old-hooks ; save the old MinEmacs hooks to detect when the loaded module requires a hook to be run
-         (append minemacs-after-startup-hook minemacs-lazy-hook minemacs-after-load-theme-hook minemacs-after-setup-fonts-hook
-                 minemacs-first-file-hook minemacs-first-elisp-file-hook minemacs-first-python-file-hook minemacs-first-c/c++-file-hook))
-        (old-fns minemacs-build-functions-hook))
-    (mapc #'+load (mapcar (apply-partially #'format "%s%s.el" minemacs-modules-dir) modules))
+  (interactive (completing-read-multiple "Select modules: " (seq-filter (lambda (module) (not (featurep module))) (ematrix-modules current-prefix-arg))))
+  (let ((old-hooks ; save the old Ematrix hooks to detect when the loaded module requires a hook to be run
+         (append ematrix-after-startup-hook ematrix-lazy-hook ematrix-after-load-theme-hook ematrix-after-setup-fonts-hook
+                 ematrix-first-file-hook ematrix-first-elisp-file-hook ematrix-first-python-file-hook ematrix-first-c/c++-file-hook))
+        (old-fns ematrix-build-functions-hook))
+    (mapc #'+load (mapcar (apply-partially #'format "%s%s.el" ematrix-modules-dir) modules))
     (let ((new-hooks (cl-set-difference
-                      (append minemacs-after-startup-hook minemacs-lazy-hook minemacs-after-load-theme-hook minemacs-after-setup-fonts-hook
-                              minemacs-first-file-hook minemacs-first-elisp-file-hook minemacs-first-python-file-hook minemacs-first-c/c++-file-hook)
+                      (append ematrix-after-startup-hook ematrix-lazy-hook ematrix-after-load-theme-hook ematrix-after-setup-fonts-hook
+                              ematrix-first-file-hook ematrix-first-elisp-file-hook ematrix-first-python-file-hook ematrix-first-c/c++-file-hook)
                       old-hooks))
-          (minemacs-build-functions (cl-set-difference minemacs-build-functions old-fns)))
+          (ematrix-build-functions (cl-set-difference ematrix-build-functions old-fns)))
       (mapc #'funcall new-hooks)
-      (minemacs-run-build-functions (not (called-interactively-p))))))
+      (ematrix-run-build-functions (not (called-interactively-p))))))
 
 
 
@@ -376,7 +376,7 @@ RECURSIVE is non-nil."
 
 (defcustom +html2pdf-default-backend 'wkhtmltopdf
   "The default backend to convert HTML files to PDFs in `+html2pdf'."
-  :group 'minemacs-utils
+  :group 'ematrix-utils
   :type '(choice
           (const wkhtmltopdf)
           (const htmldoc)
@@ -386,7 +386,7 @@ RECURSIVE is non-nil."
 
 (defcustom +html2pdf-backend-config-file nil
   "A config file to use with the backend tool (pandoc, weasyprint, ...)."
-  :group 'minemacs-utils
+  :group 'ematrix-utils
   :type 'file)
 
 ;;;###autoload
@@ -416,7 +416,7 @@ value of `+html2pdf-default-backend' is used."
                (list "weasyprint"
                      "--encoding" "utf-8"
                      "--stylesheet" (or +html2pdf-backend-config-file
-                                        (expand-file-name "templates/+html2pdf/weasyprint-pdf.css" minemacs-assets-dir))
+                                        (expand-file-name "templates/+html2pdf/weasyprint-pdf.css" ematrix-assets-dir))
                      infile outfile))
               ('pandoc+context
                (list "pandoc"
@@ -427,7 +427,7 @@ value of `+html2pdf-default-backend' is used."
               ('pandoc
                (list "pandoc"
                      "--defaults" (or +html2pdf-backend-config-file
-                                      (expand-file-name "templates/+html2pdf/pandoc.yaml" minemacs-assets-dir))
+                                      (expand-file-name "templates/+html2pdf/pandoc.yaml" ematrix-assets-dir))
                      "-o" outfile infile)))))
       (apply #'call-process (append (list (car backend-command) nil nil nil) (cdr backend-command)))
     (user-error "Backend \"%s\" not available" backend)))
@@ -470,7 +470,7 @@ When MAIL-MODE-P is non-nil, treat INFILE as a mail."
 (defcustom +single-file-executable "single-file"
   "The executable for \"single-file\" which is used archive HTML pages."
   :type 'string
-  :group 'minemacs-utils)
+  :group 'ematrix-utils)
 
 ;;;###autoload
 (defun +single-file (url out-file)
@@ -494,17 +494,17 @@ When MAIL-MODE-P is non-nil, treat INFILE as a mail."
 (autoload 'term-send-string "term")
 (defcustom +serial-port "/dev/ttyUSB0"
   "The default port (device) to use."
-  :group 'minemacs-utils
+  :group 'ematrix-utils
   :type 'file)
 
 (defcustom +serial-baudrate 115200
   "The default baudrate to use."
-  :group 'minemacs-utils
+  :group 'ematrix-utils
   :type 'natnum)
 
 (defcustom +serial-first-commands nil
   "A list of commands to run in the serial terminal after creation."
-  :group 'minemacs-utils
+  :group 'ematrix-utils
   :type '(repeat string))
 
 (defvar +serial-buffer nil)
@@ -649,7 +649,7 @@ If ENABLE is non-nil, force enabling autoreloading."
 (defcustom +screenshot-delay 5
   "A delay to wait before taking the screenshot.
 Applicable only when calling `+screenshot-svg' with a prefix."
-  :group 'minemacs-utils
+  :group 'ematrix-utils
   :type 'number)
 
 ;; Inspired by: reddit.com/r/emacs/comments/idz35e/comment/g2c2c6y
@@ -971,7 +971,7 @@ See `kill-some-buffers'."
 (defcustom +kill-buffer-no-ask-list
   (list (or (bound-and-true-p messages-buffer-name) "*Messages*") "*Warnings*")
   "A list of buffer names to be killed without confirmation."
-  :group 'minemacs-buffer
+  :group 'ematrix-buffer
   :type '(repeat string))
 
 (with-eval-after-load 'comp
@@ -1180,7 +1180,7 @@ external tools, either in your development machine, docker, remote host, etc.
 The presence of these programs isn't mandatory, however, for better experience,
 you might need install some of these tools.\n\n")
     (let ((counter 0))
-      (dolist (dep minemacs-external-dependencies)
+      (dolist (dep ematrix-external-dependencies)
         (insert (format "%d. [%s](%s) - %s\n"
                         (cl-incf counter)
                         (string-join (mapcar (apply-partially #'format "`%s`")

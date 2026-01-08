@@ -10,7 +10,7 @@
 
 (use-package citar
   :straight t
-  :after minemacs-first-org-file oc
+  :after ematrix-first-org-file oc
   :demand
   :custom
   (org-cite-insert-processor 'citar)

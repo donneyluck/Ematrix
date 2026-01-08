@@ -19,7 +19,7 @@
 
 (use-package evil
   :straight t
-  :hook (minemacs-lazy . evil-mode)
+  :hook (ematrix-lazy . evil-mode)
   :preface
   ;; Needed by `evil-collection'
   (setq evil-want-keybinding nil
@@ -68,7 +68,7 @@
 (use-package evil-collection
   :straight t
   :unless (+package-disabled-p 'evil 'me-evil)
-  :after evil minemacs-loaded
+  :after evil ematrix-loaded
   :demand
   :config
   (evil-collection-init
@@ -123,7 +123,7 @@
 (cl-defmacro +evil-conf-for! (package module &optional &key init-form &key config-form)
   (declare (indent 2))
   `(when (and (not (+package-disabled-p ',package ',module))
-          (memq ',module (append (bound-and-true-p minemacs-core-modules) minemacs-modules)))
+          (memq ',module (append (bound-and-true-p ematrix-core-modules) ematrix-modules)))
     ,init-form
     ,(when config-form
       `(with-eval-after-load ',package ,config-form))))
@@ -136,7 +136,7 @@
   :straight t
   ;; PERF: Loading `general' early make Emacs very slow on startup.
   :after evil
-  :when (memq 'me-keybindings minemacs-modules)
+  :when (memq 'me-keybindings ematrix-modules)
   :demand
   :config
   ;; Advise `define-key' to automatically unbind keys when necessary.
@@ -146,22 +146,22 @@
   (general-evil-setup t)
 
   ;; Global leader
-  (general-create-definer +minemacs--internal-map!
+  (general-create-definer +ematrix--internal-map!
     ;; The order of states matters, the last is prioritized
     :states '(insert emacs visual normal)
     :keymaps 'override
-    :prefix minemacs-leader-key
-    :global-prefix minemacs-global-leader-prefix)
+    :prefix ematrix-leader-key
+    :global-prefix ematrix-global-leader-prefix)
 
   ;; Local leader
-  (general-create-definer +minemacs--internal-map-local!
+  (general-create-definer +ematrix--internal-map-local!
     :states '(insert emacs visual normal)
     :keymaps 'override
-    :prefix minemacs-localleader-key
-    :global-prefix minemacs-global-mode-prefix)
+    :prefix ematrix-localleader-key
+    :global-prefix ematrix-global-mode-prefix)
 
   ;; Define the built-in global keybindings
-  (+minemacs--internal-map!
+  (+ematrix--internal-map!
     ;; ====== Top level functions ======
     "SPC"  '(execute-extended-command :wk "M-x")
     ">"    '(switch-to-next-buffer :wk "Next buffer")
@@ -196,7 +196,7 @@
     "ft"   #'recover-this-file
     "fT"   #'recover-file
     "fy"   #'+yank-this-file-name
-    "fE"   `(,(+cmdfy! (dired (or minemacs-config-dir minemacs-root-dir)))
+    "fE"   `(,(+cmdfy! (dired (or ematrix-config-dir ematrix-root-dir)))
              :wk "User config directory")
 
     ;; ====== Buffers ======
@@ -350,8 +350,8 @@
   ;; To handle repeated "SPC u" like repeated "C-u"
   (general-def
     :keymaps 'universal-argument-map
-    :prefix minemacs-leader-key
-    :global-prefix minemacs-global-mode-prefix
+    :prefix ematrix-leader-key
+    :global-prefix ematrix-global-mode-prefix
     "u" #'universal-argument-more)
 
   (when (or os/linux os/bsd)
@@ -363,8 +363,8 @@
 
   ;; HACK: This is a synchronization feature, providing `me-general-ready' tells
   ;; the `+map!', `+map-local!', ... macros that `general' is ready and the
-  ;; definers `+minemacs--internal-map!', `+minemacs--internal-map-local!', ...
-  ;; are available (See the `+map!' macro definition in "elisp/+minemacs.el").
+  ;; definers `+ematrix--internal-map!', `+ematrix--internal-map-local!', ...
+  ;; are available (See the `+map!' macro definition in "elisp/+ematrix.el").
   (provide 'me-general-ready))
 
 (+evil-conf-for! which-key me-keybindings
@@ -530,7 +530,7 @@
 (use-package evil-multiedit ; This will load `iedit' and suppresses it
   :straight t
   :unless (+package-disabled-p 'iedit 'me-multi-cursors)
-  :after evil minemacs-first-file
+  :after evil ematrix-first-file
   :demand
   :init
   (+nvmap! :infix "g"
@@ -570,8 +570,8 @@
 
 (use-package evil-mc
   :straight t
-  :when (memq 'me-multi-cursors minemacs-modules)
-  :hook (minemacs-first-file . global-evil-mc-mode)
+  :when (memq 'me-multi-cursors ematrix-modules)
+  :hook (ematrix-first-file . global-evil-mc-mode)
   :config
   ;; Use "gz" instead of "gr", this last is mapped to `xref-find-references' in some programming modes.
   (evil-define-key* '(normal visual) evil-mc-key-map (kbd "gr") nil)
@@ -712,7 +712,7 @@
 
 ;;; For `me-natural-langs'
 
-(when (memq 'me-natural-langs minemacs-modules)
+(when (memq 'me-natural-langs ematrix-modules)
   (+nvmap! "z=" #'+spellcheck-correct))
 
 (+map! "ts" #'+spellcheck-mode)
@@ -721,7 +721,7 @@
 
 ;;; For `me-editor'
 
-(when (memq 'me-editor minemacs-modules)
+(when (memq 'me-editor ematrix-modules)
   ;; Bind `+yank-region-as-paragraph' (autoloaded from "me-lib.el")
   (+nvmap! "gy" #'+kill-region-as-paragraph))
 
@@ -898,8 +898,8 @@
 
 (use-package evil-textobj-tree-sitter
   :straight (:host github :repo "meain/evil-textobj-tree-sitter" :files (:defaults "queries" "treesit-queries"))
-  :when (memq 'me-prog minemacs-modules)
-  :after evil minemacs-first-file
+  :when (memq 'me-prog ematrix-modules)
+  :after evil ematrix-first-file
   :init
   ;; Require the package on the first `prog-mode' file
   (satch-add-hook 'prog-mode-hook (lambda () (require 'evil-textobj-tree-sitter)) nil nil :transient t)

@@ -18,19 +18,19 @@
 
 (unless (+emacs-features-p 'tree-sitter)
   ;; Use the external `tree-sitter' module
-  (+load minemacs-obsolete-modules-dir "me-tree-sitter.el"))
+  (+load ematrix-obsolete-modules-dir "me-tree-sitter.el"))
 
 (use-package treesit-auto
   :straight (:host github :repo "renzmann/treesit-auto")
   :when (+emacs-features-p 'tree-sitter)
-  :hook (minemacs-build-functions . treesit-auto-install-all)
-  :hook (minemacs-lazy . global-treesit-auto-mode)
+  :hook (ematrix-build-functions . treesit-auto-install-all)
+  :hook (ematrix-lazy . global-treesit-auto-mode)
   :custom
   (treesit-auto-install 'prompt)
 ;;   :config
 ;;   ;; Add extra grammars
 ;;   ;; BUG+FIX: Remove the C++ grammar to force using v0.22.0, newer versions
-;;   ;; cause problems with syntax highlighting in `c++-ts-mode' buffers (abougouffa/minemacs#135)
+;;   ;; cause problems with syntax highlighting in `c++-ts-mode' buffers (abougouffa/ematrix#135)
 ;;   ;; BUG+FIX: Remove the Markdown grammar to install it correctly (renzmann/treesit-auto#102)
 ;;   (let* ((extra-recipes
 ;;           (list (make-treesit-auto-recipe

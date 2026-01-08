@@ -31,16 +31,16 @@
 
 ;;; Code:
 
-(defgroup minemacs-eglot-ltex nil
+(defgroup ematrix-eglot-ltex nil
   "LTeX-LS related settings."
-  :group 'minemacs-utils)
+  :group 'ematrix-utils)
 
 (defvar-local eglot-ltex-language "auto")
 ;;;###autoload(put 'eglot-ltex-language 'safe-local-variable 'stringp)
 
-(defcustom eglot-ltex-user-rules-path (concat minemacs-local-dir "eglot/ltex/")
+(defcustom eglot-ltex-user-rules-path (concat ematrix-local-dir "eglot/ltex/")
   "Path to save user rules."
-  :group 'minemacs-eglot-ltex
+  :group 'ematrix-eglot-ltex
   :type 'directory)
 
 ;; Load serialized rules

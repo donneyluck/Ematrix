@@ -18,7 +18,7 @@
 
 (use-package vimish-fold
   :straight t
-  :hook (minemacs-first-file . vimish-fold-global-mode))
+  :hook (ematrix-first-file . vimish-fold-global-mode))
 
 (use-package evil-vimish-fold
   :straight t

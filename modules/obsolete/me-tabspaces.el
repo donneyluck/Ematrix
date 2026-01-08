@@ -11,7 +11,7 @@
 
 (use-package tabspaces
   :straight t
-  :after minemacs-loaded
+  :after ematrix-loaded
   :hook (tabspaces-mode . +consult-tabspaces-setup)
   :custom
   (tabspaces-use-filtered-buffers-as-default t)

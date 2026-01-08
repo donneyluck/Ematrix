@@ -10,7 +10,7 @@
 
 (use-package spacious-padding
   :straight t
-  :hook (minemacs-after-startup . spacious-padding-mode)
+  :hook (ematrix-after-startup . spacious-padding-mode)
   :custom
   (spacious-padding-subtle-mode-line t)
   (spacious-padding-widths '(:internal-border-width 15

@@ -22,7 +22,7 @@
   :straight (:host github :repo "doomelpa/code-review")
   :after magit
   :custom
-  (code-review-download-dir (concat minemacs-cache-dir "code-review/"))
+  (code-review-download-dir (concat ematrix-cache-dir "code-review/"))
   (code-review-auth-login-marker 'forge) ; use the same credentials as forge in ~/.authinfo.gpg
   :init
   (transient-append-suffix 'magit-merge "i" '("y" "Review pull-request" code-review-forge-pr-at-point))

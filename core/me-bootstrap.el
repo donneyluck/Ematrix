@@ -10,7 +10,7 @@
 
 (setq
  ;; Base directory
- straight-base-dir minemacs-local-dir
+ straight-base-dir ematrix-local-dir
  ;; Add Emacs version and the Git hash to the build directory to avoid problems
  straight-build-dir (format "build-%s%s" emacs-version (if emacs-repository-version (format "-%s" (substring emacs-repository-version 0 8)) ""))
  ;; Use the "develop" branch on straight.el's repo.
@@ -37,16 +37,16 @@
   (straight-use-package 'use-package))
 
 (setq
- ;; Set `use-package' to verbose when MinEmacs is started in verbose mode
- use-package-verbose (cond (minemacs-debug-p 'debug) (minemacs-verbose-p t))
+ ;; Set `use-package' to verbose when Ematrix is started in verbose mode
+ use-package-verbose (cond (ematrix-debug-p 'debug) (ematrix-verbose-p t))
  ;; Defer loading packages by default, use `:demand' to force loading a package
- use-package-always-defer (not minemacs-always-demand-p)
- use-package-always-demand minemacs-always-demand-p
+ use-package-always-defer (not ematrix-always-demand-p)
+ use-package-always-demand ematrix-always-demand-p
  ;; Make the expanded code as minimal as possible, do not try to catch errors
- use-package-expand-minimally (not minemacs-debug-p))
+ use-package-expand-minimally (not ematrix-debug-p))
 
 ;; Add the `:pin-ref' extension to integrate `straight' with `use-package'. And
-;; add support for `minemacs-disabled-packages'.
+;; add support for `ematrix-disabled-packages'.
 (require 'me-use-package-extra)
 
 ;; Extra utilities

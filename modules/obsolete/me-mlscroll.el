@@ -10,7 +10,7 @@
 
 (use-package mlscroll
   :straight (:host github :repo "jdtsmith/mlscroll")
-  :hook (minemacs-lazy . mlscroll-mode))
+  :hook (ematrix-lazy . mlscroll-mode))
 
 
 (provide 'obsolete/me-mlscroll)

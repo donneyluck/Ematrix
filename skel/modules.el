@@ -2,10 +2,10 @@
 
 ;; Copyright (C) 2022-2024 Abdelhak Bougouffa
 
-;; This file can be used to override `minemacs-modules'
+;; This file can be used to override `ematrix-modules'
 
 ;;; List of enabled modules
-(setq minemacs-modules
+(setq ematrix-modules
       '(;; me-ai          ; AI assistant using Ollama (ellama, llm, ...)
         ;; me-biblio      ; Bibliography & citations (citar, citar-embark, org-re-reveal-citeproc, ...)
         ;; me-calendar    ; Calendar (calfw, calfw-org, calfw-ical, ...)
@@ -55,13 +55,13 @@
         me-window))       ; Frame & window tweaks (ace-window, ...)
 
 ;;; List of disabled packages
-;; You can set `minemacs-disabled-packages' to disable some packages. For
+;; You can set `ematrix-disabled-packages' to disable some packages. For
 ;; example, if you want to use the `me-ui' module, but you want to disable the
 ;; `focus' package. You can use:
-;; (push 'focus minemacs-disabled-packages)
+;; (push 'focus ematrix-disabled-packages)
 
-;; Adding a package to `minemacs-disabled-packages' guarantees disabling its
-;; corresponding `use-package' section in MinEmacs' modules. However, please
+;; Adding a package to `ematrix-disabled-packages' guarantees disabling its
+;; corresponding `use-package' section in Ematrix' modules. However, please
 ;; note that, if you want to completely disable a package, you need to make sure
 ;; you've also disabled its dependent packages (see `M-x straight-dependents'),
 ;; otherwise it will get installed as a dependency.
@@ -69,17 +69,17 @@
 ;; You can also `push' (or `add-to-list') multiple packages at once (as a list).
 ;; For example, to completely disable `iedit' and its dependencies
 ;; `evil-multiedit' and `evil-iedit-state', you can use:
-;; (push '(iedit evil-multiedit evil-iedit-state) minemacs-disabled-packages)
+;; (push '(iedit evil-multiedit evil-iedit-state) ematrix-disabled-packages)
 
 ;;; Using the obsolete modules
 ;; You can use the obsolete packages configurations by adding the
-;; `obsolete/me-*' modules to `minemacs-modules'. However, these modules, as
+;; `obsolete/me-*' modules to `ematrix-modules'. However, these modules, as
 ;; their names indicate, are OBSOLETE and NOT SUPPORTED. This is a
 ;; non-comprehensive list of obsolete modules, see "modules/obsolete/*.el" for
 ;; the full list.
-;; (setq minemacs-modules
+;; (setq ematrix-modules
 ;;       (append
-;;        minemacs-modules
+;;        ematrix-modules
 ;;        '(
 ;;          obsolete/me-blamer         ; M-x git blame
 ;;          obsolete/me-chezmoi        ; Integrate chezmoi with Emacs

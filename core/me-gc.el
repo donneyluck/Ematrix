@@ -1,4 +1,4 @@
-;; me-gc.el --- MinEmacs -*- lexical-binding: t; -*-
+;; me-gc.el --- Ematrix -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022-2024  Abdelhak Bougouffa
 
@@ -11,15 +11,15 @@
 ;; The `gc-cons-threshold' has been set in "early-init.el" to a ridiculously
 ;; high value (`most-positive-fixnum') to reduce the number of garbage
 ;; collections during startup, it will be overwritten by `gcmh-mode' or by the
-;; following hook, so we place it at the end of `minemacs-lazy-hook' to maximize
+;; following hook, so we place it at the end of `ematrix-lazy-hook' to maximize
 ;; the benefit.
 
 ;; NOTE: I'm experimenting with these settings instead of using `gcmh'.
 ;; See: https://zenodo.org/records/10213384
 (when (+package-disabled-p 'gcmh)
   (add-hook
-   'minemacs-lazy-hook
-   (satch-defun +minemacs--gc-tweaks-h ()
+   'ematrix-lazy-hook
+   (satch-defun +ematrix--gc-tweaks-h ()
      (setq gc-cons-threshold (* 128 1024 1024)
            gc-cons-percentage 0.25))
    90))
@@ -27,7 +27,7 @@
 (use-package gcmh
   :straight t
   :init
-  (add-hook 'minemacs-lazy-hook #'gcmh-mode 90)
+  (add-hook 'ematrix-lazy-hook #'gcmh-mode 90)
   :custom
   ;; Set the delay to 20s instead of the default 15. I tried using `auto', but
   ;; with the default 20 of `gcmh-auto-idle-delay-factor', it triggers GC each

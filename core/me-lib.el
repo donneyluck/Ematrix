@@ -1,4 +1,4 @@
-;; me-lib.el -- MinEmacs Library (helper functions, extra features and commands) -*- lexical-binding: t; -*-
+;; me-lib.el -- Ematrix Library (helper functions, extra features and commands) -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022-2024  Abdelhak Bougouffa
 
@@ -22,18 +22,18 @@
 
 
 
-(defvar minemacs--lazy-low-priority-forms nil)
-(defvar minemacs--lazy-high-priority-forms nil)
+(defvar ematrix--lazy-low-priority-forms nil)
+(defvar ematrix--lazy-high-priority-forms nil)
 
 (defmacro +with-delayed! (&rest body)
   "Delay evaluating BODY with priority 0 (high priority)."
   (declare (indent 0))
-  `(push ',(macroexp-progn body) minemacs--lazy-high-priority-forms))
+  `(push ',(macroexp-progn body) ematrix--lazy-high-priority-forms))
 
 (defmacro +with-delayed-1! (&rest body)
   "Delay evaluating BODY with priority 1."
   (declare (indent 0))
-  `(push ',(macroexp-progn body) minemacs--lazy-low-priority-forms))
+  `(push ',(macroexp-progn body) ematrix--lazy-low-priority-forms))
 
 
 
@@ -169,30 +169,30 @@ For the alist \=((some-mode . spec)), this will add \=(some-ts-mode . spec)."
 
 
 
-;;; Minemacs' core functions and macros
+;;; Ematrix' core functions and macros
 
 (defmacro +error! (msg &rest vars)
   "Log error MSG and VARS using `message'."
-  (when (>= minemacs-msg-level 1)
-    `(apply #'message (list (concat "[MinEmacs:Error] " ,msg) ,@vars))))
+  (when (>= ematrix-msg-level 1)
+    `(apply #'message (list (concat "[Ematrix:Error] " ,msg) ,@vars))))
 
 (defmacro +info! (msg &rest vars)
   "Log info MSG and VARS using `message'."
-  (when (>= minemacs-msg-level 2)
+  (when (>= ematrix-msg-level 2)
     `(let ((inhibit-message t))
-      (apply #'message (list (concat "[MinEmacs:Info] " ,msg) ,@vars)))))
+      (apply #'message (list (concat "[Ematrix:Info] " ,msg) ,@vars)))))
 
 (defmacro +log! (msg &rest vars)
-  "Log MSG and VARS using `message' when `minemacs-verbose-p' is non-nil."
-  (when (>= minemacs-msg-level 3)
+  "Log MSG and VARS using `message' when `ematrix-verbose-p' is non-nil."
+  (when (>= ematrix-msg-level 3)
     `(let ((inhibit-message t))
-      (apply #'message (list (concat "[MinEmacs:Log] " ,msg) ,@vars)))))
+      (apply #'message (list (concat "[Ematrix:Log] " ,msg) ,@vars)))))
 
 (defmacro +debug! (msg &rest vars)
-  "Log debug MSG and VARS using `message' when `minemacs-msg-level' is 4."
-  (when (>= minemacs-msg-level 4)
+  "Log debug MSG and VARS using `message' when `ematrix-msg-level' is 4."
+  (when (>= ematrix-msg-level 4)
     `(let ((inhibit-message t))
-      (apply #'message (list (concat "[MinEmacs:Debug] " ,msg) ,@vars)))))
+      (apply #'message (list (concat "[Ematrix:Debug] " ,msg) ,@vars)))))
 
 (defun +emacs-features-p (&rest feats)
   "Is features FEATS are enabled in this Emacs build."
@@ -213,7 +213,7 @@ If NO-MESSAGE-LOG is non-nil, do not print any message to *Messages* buffer."
 (defmacro +shutup! (&rest body)
   "Suppress new messages temporarily while evaluating BODY.
 This inhebits both the echo area and the `*Messages*' buffer."
-  (if (not minemacs-verbose-p)
+  (if (not ematrix-verbose-p)
       `(let ((message-log-max nil))
         (with-temp-message (or (current-message) "") ,@body))
     `(progn ,@body)))
@@ -223,30 +223,30 @@ This inhebits both the echo area and the `*Messages*' buffer."
   `(lambda () (interactive) ,@body))
 
 (defun +load-theme ()
-  "Load Emacs' theme from `minemacs-theme'."
+  "Load Emacs' theme from `ematrix-theme'."
   (interactive)
-  (when minemacs-theme
-    (+log! "Loading user theme: %s" minemacs-theme)
-    ;; Fallback to built-in `tsdh-light' when `minemacs-theme' is not available.
-    (unless (ignore-errors (load-theme minemacs-theme t))
-      (let ((default-theme (+standard-value 'minemacs-theme)))
-        (+error! "Cannot load theme %S, trying to load the default theme %S" minemacs-theme default-theme)
+  (when ematrix-theme
+    (+log! "Loading user theme: %s" ematrix-theme)
+    ;; Fallback to built-in `tsdh-light' when `ematrix-theme' is not available.
+    (unless (ignore-errors (load-theme ematrix-theme t))
+      (let ((default-theme (+standard-value 'ematrix-theme)))
+        (+error! "Cannot load theme %S, trying to load the default theme %S" ematrix-theme default-theme)
         (unless (ignore-errors (load-theme default-theme t))
           (+error! "Cannot load default theme %S, falling back to the builtin tsdh-light theme" default-theme)
           (load-theme 'tsdh-light t)))))
   ;; Run hooks
-  (run-hooks 'minemacs-after-load-theme-hook))
+  (run-hooks 'ematrix-after-load-theme-hook))
 
 ;; An internal variable to keep track of the tasks
 (defvar +eval-when-idle--task-num 0)
 (defcustom +eval-when-idle-delay 5.0
   "The default delay (in seconds) to consider in `+eval-when-idle!' macro."
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type 'float)
 
 (defcustom +lazy-delay 1.0
   "The default delay (in seconds) to consider in `+lazy!' macro."
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type 'float)
 
 (defun +eval-when-idle (delay &rest fns)
@@ -275,12 +275,12 @@ This inhebits both the echo area and the `*Messages*' buffer."
   `(+eval-when-idle ,delay (lambda () ,@body)))
 
 (defmacro +deferred! (&rest body)
-  "Run BODY after Emacs gets loaded, a.k.a. after `minemacs-loaded'."
-  `(with-eval-after-load 'minemacs-loaded ,@body))
+  "Run BODY after Emacs gets loaded, a.k.a. after `ematrix-loaded'."
+  `(with-eval-after-load 'ematrix-loaded ,@body))
 
 (defmacro +lazy! (&rest body)
-  "Run BODY as a lazy block (see `minemacs-lazy')."
-  `(with-eval-after-load 'minemacs-lazy
+  "Run BODY as a lazy block (see `ematrix-lazy')."
+  `(with-eval-after-load 'ematrix-lazy
     (+eval-when-idle-for! +lazy-delay ,@body)))
 
 (defmacro +after-load! (features &rest body)
@@ -335,8 +335,8 @@ Inside BODY, you will have access to the original args as `orig-args'."
       external-forms))))
 
 (defcustom +first-file-hook-ignore-list nil
-  "A list of files to ignore in the `minemacs-first-*-file-hook'."
-  :group 'minemacs-core
+  "A list of files to ignore in the `ematrix-first-*-file-hook'."
+  :group 'ematrix-core
   :type '(repeat file))
 
 (defmacro +make-first-file-hook! (filetype ext-regexp)
@@ -346,12 +346,12 @@ The extension should matches EXT-REGEXP.
 This will creates a function named `+first-file--FILETYPE-h' which gets executed
 before `after-find-file'. This function will run on the first file that matches
 EXT-REGEXP. When it runs, this function provides a feature named
-`minemacs-first-FILETYPE-file' and a run all hooks in
-`minemacs-first-FILETYPE-file-hook'."
+`ematrix-first-FILETYPE-file' and a run all hooks in
+`ematrix-first-FILETYPE-file-hook'."
   (let* ((filetype (+unquote filetype))
          (fn-name (intern (format "+first-%s-file:after-a" (if filetype (format "-%s" filetype) ""))))
-         (hook-name (intern (format "minemacs-first%s-file-hook" (if filetype (format "-%s" filetype) ""))))
-         (feature-name (intern (format "minemacs-first%s-file" (if filetype (format "-%s" filetype) ""))))
+         (hook-name (intern (format "ematrix-first%s-file-hook" (if filetype (format "-%s" filetype) ""))))
+         (feature-name (intern (format "ematrix-first%s-file" (if filetype (format "-%s" filetype) ""))))
          (hook-docs (format "This hook will be run before opening the first %s file.
 
 Applies to files that matches %S.
@@ -360,13 +360,13 @@ Executed before `find-file-noselect', it runs all hooks in `%s' and provide the 
                             (or filetype "") (eval ext-regexp) hook-name feature-name)))
     `(progn
        (+log! "Setting up hook `%s' -- function `%s' -- feature `%s'." ',hook-name ',fn-name ',feature-name)
-       (defcustom ,hook-name nil ,hook-docs :group 'minemacs-core :type 'hook)
+       (defcustom ,hook-name nil ,hook-docs :group 'ematrix-core :type 'hook)
        (defun ,fn-name (&optional filename &rest _)
         (when (and
                after-init-time ; after Emacs initialization
                filename ; for named files
                (or
-                (featurep 'minemacs-loaded) ; after MinEmacs is loaded
+                (featurep 'ematrix-loaded) ; after Ematrix is loaded
                 (when-let ((files (cdr command-line-args))) ; or immediately if the file is passed as a command line argument
                  (cl-some (lambda (file) (string= (expand-file-name filename) (expand-file-name file))) files)))
                (not ; not an ignored file
@@ -619,19 +619,19 @@ Emacs-specific early exit in \".bashrc\"."
       (add-to-list 'recentf-exclude (rx-to-string `(or ,root ,(expand-file-name root)))))))
 
 (defun +package-disabled-p (package &optional module)
-  "Is package PACKAGE disabled in `minemacs-disabled-packages'.
+  "Is package PACKAGE disabled in `ematrix-disabled-packages'.
 
 Optionally, check also for the containing MODULE."
   (or
-   (and (memq package (apply #'append (mapcar #'ensure-list minemacs-disabled-packages))) t)
-   (and module (not (memq module (append (bound-and-true-p minemacs-core-modules) minemacs-modules))))))
+   (and (memq package (apply #'append (mapcar #'ensure-list ematrix-disabled-packages))) t)
+   (and module (not (memq module (append (bound-and-true-p ematrix-core-modules) ematrix-modules))))))
 
-(defun minemacs-modules (&optional include-obsolete)
+(defun ematrix-modules (&optional include-obsolete)
   "List all the available modules, with optional INCLUDE-OBSOLETE."
-  (let ((mod-files (directory-files minemacs-modules-dir nil "\\`me-.*\\.el\\'")))
+  (let ((mod-files (directory-files ematrix-modules-dir nil "\\`me-.*\\.el\\'")))
     (when include-obsolete
       (cl-callf append mod-files (mapcar (apply-partially #'concat "obsolete/")
-                                         (directory-files minemacs-obsolete-modules-dir nil "\\`me-.*\\.el\\'"))))
+                                         (directory-files ematrix-obsolete-modules-dir nil "\\`me-.*\\.el\\'"))))
     (mapcar #'intern (mapcar #'file-name-sans-extension mod-files))))
 
 
@@ -690,7 +690,7 @@ If FORCE-P, overwrite the destination file if it exists, without confirmation."
 
 (defun +lock--file (name)
   "Get the absolute path of the lockfile for resource NAME."
-  (expand-file-name (format "minemacs-%s.lock" name) temporary-file-directory))
+  (expand-file-name (format "ematrix-%s.lock" name) temporary-file-directory))
 
 (defun +lock--locker-pid (name)
   "Get thecker PID of resource NAME."
@@ -789,7 +789,7 @@ be deleted.
     rust-ts-mode cmake-mode js-mode js-ts-mode typescript-mode
     typescript-ts-mode json-mode json-ts-mode js-json-mode)
   "Modes for which Eglot can be automatically enabled by `+eglot-auto-enable'."
-  :group 'minemacs-prog
+  :group 'ematrix-prog
   :type '(repeat symbol))
 
 (defun +eglot--ensure-maybe-h ()
@@ -839,7 +839,7 @@ Examples:
 
 (defcustom +binary-hexl-enable t
   "Enable or disable opening suitable files in `hexl-mode'."
-  :group 'minemacs-binary
+  :group 'ematrix-binary
   :type 'boolean)
 
 
@@ -849,7 +849,7 @@ Examples:
 (defcustom +project-scan-dir-paths nil
   "A list of paths to scan and add to known projects list.
 It can be a list of strings (paths) or a list of (cons \"~/path\" recursive-p) to scan directories recursively."
-  :group 'minemacs-project
+  :group 'ematrix-project
   :type '(repeat (choice directory (cons directory boolean))))
 
 (defun +project-scan-for-projects (&optional dir)
@@ -865,7 +865,7 @@ It can be a list of strings (paths) or a list of (cons \"~/path\" recursive-p) t
 
 (defcustom +super-project-root-markers '(".super-project" ".super-project.el" ".repo" ".code-workspace" ".workspace")
   "List of super-project markers."
-  :group 'minemacs-project
+  :group 'ematrix-project
   :type '(repeat string))
 
 (defun +project-super-project-try-or-fail (dir)
@@ -896,14 +896,14 @@ It can be a list of strings (paths) or a list of (cons \"~/path\" recursive-p) t
 ;;; Proxy
 ;;; =====
 
-(defun minemacs-get-enabled-proxies ()
+(defun ematrix-get-enabled-proxies ()
   "Get a list of enabled proxies."
   (cl-loop
    for prox in '("no" "ftp" "http" "https")
    append (cl-loop for fn in '(downcase upcase)
                    collect (cons (funcall fn prox) (getenv (funcall fn (format "%s_proxy" prox)))))))
 
-(defun minemacs-set-enabled-proxies (proxies)
+(defun ematrix-set-enabled-proxies (proxies)
   "Set PROXIES."
   (cl-loop
    for prox in proxies
@@ -911,51 +911,51 @@ It can be a list of strings (paths) or a list of (cons \"~/path\" recursive-p) t
        for fn in '(upcase downcase)
        do (cons (funcall fn (car prox)) (setenv (funcall fn (format "%s_proxy" (car prox))) (cdr prox))))))
 
-(defun minemacs-enable-proxy (proxies)
+(defun ematrix-enable-proxy (proxies)
   "Set *_proxy Linux environment variables from PROXIES."
-  (interactive (list minemacs-proxies))
-  (minemacs-set-enabled-proxies proxies))
+  (interactive (list ematrix-proxies))
+  (ematrix-set-enabled-proxies proxies))
 
-(defun minemacs-disable-proxy ()
+(defun ematrix-disable-proxy ()
   "Unset *_proxy Linux environment variables."
   (interactive)
-  (minemacs-set-enabled-proxies (mapcar (lambda (a) (list (car a))) (minemacs-get-enabled-proxies))))
+  (ematrix-set-enabled-proxies (mapcar (lambda (a) (list (car a))) (ematrix-get-enabled-proxies))))
 
 (defmacro +with-proxies (&rest body)
-  "Execute BODY with proxies enabled from `minemacs-proxies'."
-  `(let ((old-proxies (minemacs-get-enabled-proxies)))
-    (minemacs-enable-proxy minemacs-proxies)
+  "Execute BODY with proxies enabled from `ematrix-proxies'."
+  `(let ((old-proxies (ematrix-get-enabled-proxies)))
+    (ematrix-enable-proxy ematrix-proxies)
     ,@body
-    (minemacs-enable-proxy old-proxies)))
+    (ematrix-enable-proxy old-proxies)))
 
 (defmacro +with-no-proxies (&rest body)
   "Execute BODY with proxies disabled."
-  `(let ((old-proxies (minemacs-get-enabled-proxies)))
-    (minemacs-disable-proxy)
+  `(let ((old-proxies (ematrix-get-enabled-proxies)))
+    (ematrix-disable-proxy)
     ,@body
-    (minemacs-enable-proxy old-proxies)))
+    (ematrix-enable-proxy old-proxies)))
 
 
 
 ;;; Keybinding macros
 ;;; =================
 
-;; TEMP: These macros are specific to `evil' and `general'. MinEmacs moved since
+;; TEMP: These macros are specific to `evil' and `general'. Ematrix moved since
 ;; v7.0.0 to a more classic (non Evil-based) keybindings. These macros are left
 ;; for now to avoid breaking users configurations, they might be deleted in a
 ;; future release.
-;; PERF+HACK: At some point, MinEmacs startup become too slow, specially when
+;; PERF+HACK: At some point, Ematrix startup become too slow, specially when
 ;; initializing `general' and `evil'. After trying several configurations, I
 ;; figured out that deferring `general' solves the issue. However, deferring
 ;; `general' means that we cannot define the keybindings when loading other
-;; packages, i.e. before `general' gets loaded and the MinEmacs definers (i.e.
-;; `+minemacs--internal-map!', `+minemacs--internal-map-local!', ...) are made
+;; packages, i.e. before `general' gets loaded and the Ematrix definers (i.e.
+;; `+ematrix--internal-map!', `+ematrix--internal-map-local!', ...) are made
 ;; available. We overcome this by defining these macros to define the
 ;; keybindings by wrapping the actual definition in a `with-eval-after-load'
 ;; block to be evaluated only after `general' gets loaded and configured and the
 ;; definers are ready (See `me-keybindings').
 (defmacro +map! (&rest args)
-  "A wrapper around `+minemacs--internal-map!'.
+  "A wrapper around `+ematrix--internal-map!'.
 It is deferred until `general' gets loaded and configured."
   (declare (indent defun))
   (let (pkg mod)
@@ -967,10 +967,10 @@ It is deferred until `general' gets loaded and configured."
               args (cddr args))))
     `(unless ,(when pkg (append (list '+package-disabled-p (list 'quote pkg)) (when mod (list (list 'quote mod)))))
       (with-eval-after-load 'me-general-ready
-       (+minemacs--internal-map! ,@args)))))
+       (+ematrix--internal-map! ,@args)))))
 
 (defmacro +map-local! (&rest args)
-  "A wrapper around `+minemacs--internal-map-local!'.
+  "A wrapper around `+ematrix--internal-map-local!'.
 It is deferred until `general' gets loaded and configured."
   (declare (indent defun))
   (let (pkg mod)
@@ -982,7 +982,7 @@ It is deferred until `general' gets loaded and configured."
               args (cddr args))))
     `(unless ,(when pkg (append (list '+package-disabled-p (list 'quote pkg)) (when mod (list (list 'quote mod)))))
       (with-eval-after-load 'me-general-ready
-       (+minemacs--internal-map-local! ,@args)))))
+       (+ematrix--internal-map-local! ,@args)))))
 
 ;; Wrappers around `general's VIM like definers, needs `general-evil-setup' to
 ;; be executed (See `me-keybindings')
@@ -1053,9 +1053,9 @@ It is deferred until `general' gets loaded and configured."
 
 ;;; Data serialization
 
-(defcustom +serialized-symbols-directory (concat minemacs-local-dir "+serialized-symbols/")
+(defcustom +serialized-symbols-directory (concat ematrix-local-dir "+serialized-symbols/")
   "Default directory to store serialized symbols."
-  :group 'minemacs-core
+  :group 'ematrix-core
   :type 'directory)
 
 (defun +serialize-sym (sym &optional dir filename-format)
@@ -1099,7 +1099,7 @@ file dont exist."
 
 Will be saved in `+scratch-dir'.")
 
-(defvar +scratch-dir (concat minemacs-local-dir "pscratch/")
+(defvar +scratch-dir (concat ematrix-local-dir "pscratch/")
   "Where to save persistent scratch buffers.")
 
 (defvar +scratch-initial-major-mode nil
@@ -1277,7 +1277,7 @@ ARG and PROJECT-P are passed to `+scratch-open-buffer'."
 
 ;;; Font and script settings
 
-(defcustom minemacs-fonts-plist
+(defcustom ematrix-fonts-plist
   '(:default
     ((:family "JetBrainsMono Nerd Font" :height 130)
      (:family "Martian Mono" :height 100)
@@ -1339,7 +1339,7 @@ ARG and PROJECT-P are passed to `+scratch-open-buffer'."
      (:family "PingFang SC" :scale 1.3)
      (:family "Microsoft Yahei UI" :scale 1.3)
      (:family "Simhei" :scale 1.3)))
-  "MinEmacs fonts used by `+setup-fonts'.
+  "Ematrix fonts used by `+setup-fonts'.
 
 The function checks and enables the first available font from these defined in
 this plist. This variable can be customized to set font specs for specific Emacs
@@ -1365,7 +1365,7 @@ The value of the extra `:prepend' keyword is passed the last argument to
 `set-fontset-font'. The value of the extra `:scale' keyword can be used to set a
 scaling factor for the font in Emacs' `face-font-rescale-alist'. See the
 `+setup-fonts' implementation for more details."
-  :group 'minemacs-ui
+  :group 'ematrix-ui
   :type 'plist)
 
 (defconst +known-scripts (mapcar #'car script-representative-chars)
@@ -1398,9 +1398,9 @@ scaling factor for the font in Emacs' `face-font-rescale-alist'. See the
   (and font-family (member font-family (and (fboundp 'font-family-list) (font-family-list))) t))
 
 (defun +apply-font-or-script (script-or-face)
-  "Set font for SCRIPT-OR-FACE from `minemacs-fonts-plist'."
+  "Set font for SCRIPT-OR-FACE from `ematrix-fonts-plist'."
   (catch 'done
-    (dolist (font (plist-get minemacs-fonts-plist (intern (format ":%s" script-or-face))))
+    (dolist (font (plist-get ematrix-fonts-plist (intern (format ":%s" script-or-face))))
       (let* ((spec (+font--get-valid-args script-or-face font))
              (scale (and (plistp font) (plist-get font :scale)))
              (prependp (and (plistp font) (plist-get font :prepend)))
@@ -1423,14 +1423,14 @@ scaling factor for the font in Emacs' `face-font-rescale-alist'. See the
     (mapc #'+apply-font-or-script
           (reverse
            (mapcar (lambda (k) (intern (substring (symbol-name k) 1)))
-                   (+plist-keys minemacs-fonts-plist))))
+                   (+plist-keys ematrix-fonts-plist))))
 
     ;; Set the tooltip font accordingly
     (when-let ((font (car (and (fboundp 'fontset-list) (fontset-list)))))
       (setq tooltip-frame-parameters (+alist-set 'font font tooltip-frame-parameters))))
 
   ;; Run hooks
-  (run-hooks 'minemacs-after-setup-fonts-hook))
+  (run-hooks 'ematrix-after-setup-fonts-hook))
 
 (+add-hook! (window-setup server-after-make-frame) #'+setup-fonts)
 

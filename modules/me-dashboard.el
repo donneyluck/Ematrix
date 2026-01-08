@@ -25,7 +25,7 @@
   (dashboard-items '((recents . 5) (projects . 5) (bookmarks . 5)))
   (dashboard-image-banner-max-width 600)
   (dashboard-projects-backend 'project-el)
-  (dashboard-startup-banner (concat minemacs-assets-dir "images/banner.txt"))
+  (dashboard-startup-banner (concat ematrix-assets-dir "images/banner.txt"))
   :config
   ;; Ensure setting the keybindings before opening the dashboard
   (with-eval-after-load 'evil (evil-collection-dashboard-setup))

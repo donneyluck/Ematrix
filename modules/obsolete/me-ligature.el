@@ -11,7 +11,7 @@
 (use-package ligature
   :straight t
   :when (and (>= emacs-major-version 28) (+emacs-features-p 'harfbuzz 'cairo))
-  :after minemacs-loaded
+  :after ematrix-loaded
   :hook (prog-mode . ligature-mode)
   :config
   ;; Enable the "www" ligature in every possible major mode

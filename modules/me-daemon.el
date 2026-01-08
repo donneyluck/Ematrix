@@ -9,7 +9,7 @@
 ;;; Code:
 
 ;; Email (mu4e)
-(when (and (memq 'me-email minemacs-modules) (not (+package-disabled-p 'mu4e)))
+(when (and (memq 'me-email ematrix-modules) (not (+package-disabled-p 'mu4e)))
   (+lazy!
    (when (and +mu4e-available-p +mu4e-auto-start (require 'mu4e nil :noerror))
      (defvar +daemon--mu4e-persist-timer

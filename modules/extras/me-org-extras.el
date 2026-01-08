@@ -10,17 +10,17 @@
 
 (defcustom +org-responsive-image-percentage 0.4
   "Maximum image width as a percentage of the window width."
-  :group 'minemacs-org
+  :group 'ematrix-org
   :type 'float)
 
 (defcustom +org-responsive-image-width-limits '(400 . 700) ; '(min . max)
   "The minimum and maximum width of a displayed image."
-  :group 'minemacs-org
+  :group 'ematrix-org
   :type '(cons natnum natnum))
 
 (defcustom +org-use-lower-case-keywords-and-properties t
   "Automatically convert Org keywords and properties to lowercase on save."
-  :group 'minemacs-org
+  :group 'ematrix-org
   :type 'boolean)
 
 (put '+org-use-lower-case-keywords-and-properties 'safe-local-variable 'booleanp)

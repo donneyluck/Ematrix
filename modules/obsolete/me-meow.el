@@ -11,7 +11,7 @@
 
 (use-package meow
   :straight t
-  :hook (minemacs-lazy . +meow-activate)
+  :hook (ematrix-lazy . +meow-activate)
   :config
   (defun +meow-setup/azerty ()
     (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)

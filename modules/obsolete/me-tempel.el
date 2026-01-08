@@ -12,8 +12,8 @@
   :straight t
   :custom
   (tempel-trigger-prefix "<") ;; Require trigger prefix before template name when completing.
-  (tempel-path (list (concat minemacs-assets-dir "templates/tempel/*.eld")
-                     (concat minemacs-config-dir "templates/tempel/*.eld")))
+  (tempel-path (list (concat ematrix-assets-dir "templates/tempel/*.eld")
+                     (concat ematrix-config-dir "templates/tempel/*.eld")))
   :bind (("M-\"" . tempel-complete) ;; Alternative tempel-expand
          ("M-*" . tempel-insert)
          :map tempel-map

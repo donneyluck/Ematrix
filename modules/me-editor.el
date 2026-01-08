@@ -21,17 +21,17 @@
   :straight t
   :hook ((text-mode prog-mode conf-mode) . yas-minor-mode)
   :init
-  (defvar yas-verbosity (if minemacs-verbose-p 4 2))
-  (unless minemacs-verbose-p
+  (defvar yas-verbosity (if ematrix-verbose-p 4 2))
+  (unless ematrix-verbose-p
     (+fn-inhibit-messages! yas-define-snippets) ; suppress "Multiple snippets with same identity: ..."
     (+fn-inhibit-messages! yas--parse-template)) ; suppress "Ignoring unknown directive ..."
   :custom
   (yas-triggers-in-field t) ; Allow nested snippets
-  (yas-snippet-dirs (list (+directory-ensure minemacs-config-dir "snippets/") (concat minemacs-root-dir "snippets/"))))
+  (yas-snippet-dirs (list (+directory-ensure ematrix-config-dir "snippets/") (concat ematrix-root-dir "snippets/"))))
 
 (use-package whitespace-cleanup-mode
   :straight t
-  :hook (minemacs-first-file . global-whitespace-cleanup-mode)
+  :hook (ematrix-first-file . global-whitespace-cleanup-mode)
   :custom
   (whitespace-cleanup-mode-preserve-point t))
 
@@ -84,7 +84,7 @@
 ;; (use-package selection-highlight-mode
 ;;   :straight (:host github :repo "balloneij/selection-highlight-mode")
 ;;   :unless (+package-disabled-p 'meow 'me-meow)
-;;   :hook (minemacs-lazy . selection-highlight-mode)
+;;   :hook (ematrix-lazy . selection-highlight-mode)
 ;;   :init
 ;;   (add-hook
 ;;    'enable-theme-functions
@@ -99,7 +99,7 @@
 
 (use-package smartparens
   :straight t
-  :hook (minemacs-lazy . smartparens-global-mode)
+  :hook (ematrix-lazy . smartparens-global-mode)
   :config
   (sp-local-pair 'org-mode "$" "$" :unless '(sp-point-after-word-p))
   (require 'smartparens-config))
@@ -112,7 +112,7 @@
 
 ;; Fallback to `expand-region' if `expreg' cannot be used
 ;; (unless (+emacs-features-p 'tree-sitter)
-;;   (+load minemacs-obsolete-modules-dir "me-expand-region.el"))
+;;   (+load ematrix-obsolete-modules-dir "me-expand-region.el"))
 
 (use-package drag-stuff
   :straight t
@@ -124,11 +124,11 @@
 
 (use-package real-backup
   :straight (:host github :repo "abougouffa/real-backup")
-  :hook (minemacs-first-file . real-backup-mode))
+  :hook (ematrix-first-file . real-backup-mode))
 
 (use-package editorconfig
   :straight t
-  :hook (minemacs-first-file . editorconfig-mode)
+  :hook (ematrix-first-file . editorconfig-mode)
   :config
   ;; Exclude compressed files
   (push "\\.\\(zip\\|epub\\|\\(doc\\|xls\\|ppt\\)x\\)\\'" editorconfig-exclude-regexps))

@@ -10,7 +10,7 @@
 
 (defcustom +mpv-command "mpv"
   "The MPV command."
-  :group 'minemacs-utils
+  :group 'ematrix-utils
   :type 'string)
 
 

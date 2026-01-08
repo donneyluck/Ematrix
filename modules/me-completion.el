@@ -10,7 +10,7 @@
 
 ;; (use-package lsp-bridge
 ;;   :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge" :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources") :build (:not compile))
-;;   :after minemacs-first-file
+;;   :after ematrix-first-file
 ;;   :init
 ;;   (global-lsp-bridge-mode)
 ;;   :config
@@ -19,7 +19,7 @@
 
 (use-package cape
   :straight t
-  :after minemacs-first-file
+  :after ematrix-first-file
   :bind (("C-c p p" . completion-at-point) ; capf
          ("C-c p t" . complete-tag) ; etags
          ("C-c p d" . cape-dabbrev) ; or dabbrev-completion
@@ -254,7 +254,7 @@
 
 (use-package marginalia
   :straight t
-  :hook (minemacs-lazy . marginalia-mode))
+  :hook (ematrix-lazy . marginalia-mode))
 
 (use-package nerd-icons-completion
   :straight t
@@ -278,8 +278,8 @@
 
 (use-package vertico
   :straight (:files (:defaults "extensions/*.el"))
-  :hook (minemacs-lazy . vertico-mode)
-  :hook (minemacs-lazy . vertico-mouse-mode)
+  :hook (ematrix-lazy . vertico-mode)
+  :hook (ematrix-lazy . vertico-mouse-mode)
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy)
   :hook (minibuffer-setup . vertico-repeat-save)
   :bind (("M-R" . vertico-repeat)

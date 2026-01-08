@@ -1,7 +1,7 @@
 ;;; me-external-tools.el - External tools
 
 (defvar
-  minemacs-external-dependencies
+  ematrix-external-dependencies
   '((:tool file
      :link "https://darwinsys.com/file"
      :desc "A tool to determine file types")

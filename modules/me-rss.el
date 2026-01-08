@@ -8,20 +8,20 @@
 
 ;;; Code:
 
-(defgroup minemacs-elfeed nil
-  "MinEmacs elfeed tweaks."
-  :group 'minemacs-apps)
+(defgroup ematrix-elfeed nil
+  "Ematrix elfeed tweaks."
+  :group 'ematrix-apps)
 
 (use-package elfeed
   :straight t
   :init
   (defcustom +elfeed-images-dir "~/Pictures/elfeed/"
     "Directory of downloaded pictures."
-    :group 'minemacs-elfeed)
+    :group 'ematrix-elfeed)
   (+def-dedicated-tab! elfeed :exit-func elfeed-search-quit-window)
   :custom
-  (elfeed-db-directory (concat minemacs-local-dir "elfeed/db/"))
-  (elfeed-enclosure-default-dir (concat minemacs-local-dir "elfeed/enclosure/"))
+  (elfeed-db-directory (concat ematrix-local-dir "elfeed/db/"))
+  (elfeed-enclosure-default-dir (concat ematrix-local-dir "elfeed/enclosure/"))
   :config
   ;; Hide the annoying index file form recent files
   (+ignore-root elfeed-db-directory elfeed-enclosure-default-dir)

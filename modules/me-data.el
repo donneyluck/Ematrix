@@ -75,7 +75,7 @@
   :straight t
   :hook (plantuml-mode . +plantuml-mode-setup)
   :custom
-  (plantuml-jar-path (concat minemacs-local-dir "plantuml/plantuml.jar"))
+  (plantuml-jar-path (concat ematrix-local-dir "plantuml/plantuml.jar"))
   (plantuml-indent-level 2)
   :config
   ;; Define `capf' function, based on `plantuml-complete-symbol'
@@ -101,7 +101,7 @@
 
 (use-package ob-mermaid
   :straight (:host github :repo "arnm/ob-mermaid")
-  :after minemacs-first-org-file ob
+  :after ematrix-first-org-file ob
   :demand
   :config
   (org-babel-do-load-languages
@@ -114,7 +114,7 @@
 
 (use-package ob-d2
   :straight t
-  :after minemacs-first-org-file ob
+  :after ematrix-first-org-file ob
   :demand
   :config
   (org-babel-do-load-languages

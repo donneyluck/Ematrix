@@ -38,7 +38,7 @@
        . (font-latex-math-face font-latex-sedate-face font-lock-function-name-face
           font-lock-keyword-face font-lock-variable-name-face)))
     "Faces in certain major modes that spell-fu will not spellcheck."
-    :group 'minemacs-ui
+    :group 'ematrix-ui
     :type '(repeat (cons symbol (repeat face))))
   :config
   (defun +spell-fu--init-excluded-faces-h ()

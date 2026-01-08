@@ -11,9 +11,9 @@
 (defvar netextender-process-name "netextender")
 (defvar netextender-buffer-name " *NetExtender*")
 
-(defgroup minemacs-netextender nil
-  "MinEmacs NetExtender."
-  :group 'minemacs)
+(defgroup ematrix-netextender nil
+  "Ematrix NetExtender."
+  :group 'ematrix)
 
 (defcustom netextender-passphrase-file "~/.ssh/sslvpn.gpg"
   "GPG encrypted file containing NetExtender connection parameters.
@@ -23,12 +23,12 @@ The file contains this line:
 
 It includes the connections credentials (username and password), hence, it is
 mandatory stored as a GPG encrypted file."
-  :group 'minemacs-netextender
+  :group 'ematrix-netextender
   :type 'file)
 
 (defcustom netextender-command "netExtender"
   "The NetExtender CLI command."
-  :group 'minemacs-netextender
+  :group 'ematrix-netextender
   :type '(choice string file))
 
 (defcustom netextender-launcher-command (locate-user-emacs-file "netextender-launcher.sh")
@@ -39,7 +39,7 @@ without asking about connection credentials.
 
 If this command doesn't exist, it will be created automatically (you need to set
 `netextender-passphrase-file' accordingly)."
-  :group 'minemacs-netextender
+  :group 'ematrix-netextender
   :type '(choice string file))
 
 (defun netextender-launcher-command ()

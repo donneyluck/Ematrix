@@ -63,7 +63,7 @@
            ,(macroexp-progn body))))))
 
   ;; HACK: This advice around `use-package' checks if a package is disabled in
-  ;; `minemacs-disabled-packages' before calling `use-package'. This can come
+  ;; `ematrix-disabled-packages' before calling `use-package'. This can come
   ;; handy if the user wants to enable some module while excluding some packages
   ;; from it. This advice also evaluates `use-package's conditional sections
   ;; (`:if', `:when' and `:unless') to prevent installing packages with
@@ -85,24 +85,24 @@
                  (recipe (if (and car-recipe car-recipe-is-pkg) recipe (append (list package) recipe))))
             (straight-register-package recipe)))
       ;; Otherwise, add it to the list of configured packages and apply the `use-package' form
-      (add-to-list 'minemacs-configured-packages package t)
+      (add-to-list 'ematrix-configured-packages package t)
       (apply origfn package args)))
 
   (advice-add 'use-package :around #'+use-package--check-if-disabled:around-a)
 
   ;; If you want to keep the `+use-package--check-if-disabled:around-a' advice after
-  ;; loading MinEmacs' modules. You need to set in in your
-  ;; "$MINEMACSDIR/early-config.el"
+  ;; loading Ematrix' modules. You need to set in in your
+  ;; "$EMATRIXDIR/early-config.el"
   (defvar +use-package-keep-checking-for-disabled-p nil)
 
-  ;; The previous advice will be removed after loading MinEmacs packages to avoid
+  ;; The previous advice will be removed after loading Ematrix packages to avoid
   ;; messing with the user configuration (for example, if the user manually
   ;; install a disabled package).
   (defun +use-package--remove-check-if-disabled-advice-h ()
     (unless +use-package-keep-checking-for-disabled-p
       (advice-remove 'use-package '+use-package--check-if-disabled:around-a)))
 
-  (add-hook 'minemacs-after-loading-modules-hook #'+use-package--remove-check-if-disabled-advice-h))
+  (add-hook 'ematrix-after-loading-modules-hook #'+use-package--remove-check-if-disabled-advice-h))
 
 
 (provide 'me-use-package-extra)

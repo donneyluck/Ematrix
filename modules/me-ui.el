@@ -19,7 +19,7 @@
 
 (use-package nerd-icons
   :straight t
-  :hook (minemacs-build-functions . nerd-icons-install-fonts)
+  :hook (ematrix-build-functions . nerd-icons-install-fonts)
   :config
   ;; Show .m files as Matlab/Octave files (integral icon)
   (setcdr (assoc "m" nerd-icons-extension-icon-alist) '(nerd-icons-mdicon "nf-md-math_integral_box" :face nerd-icons-orange)))
@@ -34,7 +34,7 @@
 
 (use-package doom-modeline
   :straight t
-  :hook (minemacs-lazy . doom-modeline-mode)
+  :hook (ematrix-lazy . doom-modeline-mode)
   :custom
   (doom-modeline-bar-width 1)
   (doom-modeline-time-icon nil)
@@ -60,7 +60,7 @@
 ;;       ("Projects"
 ;;        ("Switch to project" project-switch-project "p")))))
 ;;   :init
-;;   (if minemacs-started-with-extra-args-p
+;;   (if ematrix-started-with-extra-args-p
 ;;       (enlight-open)
 ;;     (setq initial-buffer-choice #'enlight)))
 
@@ -71,7 +71,7 @@
 (use-package svg-lib
   :straight t
   :custom
-  (svg-lib-icons-dir (concat minemacs-cache-dir "svg-lib/icons/")))
+  (svg-lib-icons-dir (concat ematrix-cache-dir "svg-lib/icons/")))
 
 (use-package mixed-pitch
   :straight t

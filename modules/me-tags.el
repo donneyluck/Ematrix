@@ -14,7 +14,7 @@
 
 (use-package citre
   :straight t
-  :after minemacs-first-c/c++-file
+  :after ematrix-first-c/c++-file
   :demand
   :custom
   ;; Better (!) project root detection function
@@ -23,22 +23,22 @@
   (defcustom +citre-recursive-root-project-detection-files '(".tags" ".repo" ".citre-root")
     "A list of files/directories to use as a project root markers."
     :type '(repeat string)
-    :group 'minemacs-prog)
+    :group 'ematrix-prog)
 
   (defcustom +citre-gtags-recursive-files-list t
     "Find files to index recursively."
     :type 'boolean
-    :group 'minemacs-prog)
+    :group 'ematrix-prog)
 
   (defcustom +citre-gtags-files-list-suffixes '("*.[chly]" "*.[ch]xx" "*.[ch]pp" "*.[ch]++" "*.cc" "*.hh")
     "List of filename suffixes globs to index (for extensions for example)."
     :type '(repeat string)
-    :group 'minemacs-prog)
+    :group 'ematrix-prog)
 
   (defcustom +citre-gtags-files-list-ignored-directories '("CVS" "RCS" "SCCS" ".git" ".hg" ".bzr" ".cdv" ".pc" ".svn" ".repo" "_MTN" "_darcs" "_sgbak" "debian")
     "List of directories to be ignored when creating the file list using `+citre-gtags-find-files-command'."
     :type '(repeat string)
-    :group 'minemacs-prog)
+    :group 'ematrix-prog)
   :config
   (require 'citre-config) ; default configuration
 
@@ -76,7 +76,7 @@ Fall back to the default `citre--project-root'."
 (use-package clink
   :straight (:host github :repo "abougouffa/clink.el")
   :when (+emacs-features-p 'sqlite3)
-  :hook (minemacs-first-c/c++-file . global-clink-mode))
+  :hook (ematrix-first-c/c++-file . global-clink-mode))
 
 (use-package rtags
   :straight t

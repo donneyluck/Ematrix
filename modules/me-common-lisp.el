@@ -12,7 +12,7 @@
 (use-package sly
   :straight t
   :custom
-  (sly-mrepl-history-file-name (+directory-ensure minemacs-local-dir "sly/mrepl-history.el"))
+  (sly-mrepl-history-file-name (+directory-ensure ematrix-local-dir "sly/mrepl-history.el"))
   (sly-net-coding-system 'utf-8-unix)
   :config
   (dolist (impl '("lisp"   ; Default Lisp implementation on the system
