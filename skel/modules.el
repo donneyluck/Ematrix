@@ -21,7 +21,7 @@
         me-emacs-lisp     ; Emacs lisp development (parinfer-rust, macrostep, eros, helpful, ...)
         ;; me-email       ; Email (mu4e, mu4e-alert, org-msg, ...)
         ;; me-embedded    ; Embedded systems (embed, arduino-mode, openocd, bitbake, dts-mode, ...)
-        ;; me-evil        ; Emacs as Vim (evil, evil-collection, evil-snipe, evil-numbers, ...)
+        me-evil        ; Emacs as Vim (evil, evil-collection, evil-snipe, evil-numbers, ...)
         me-extra          ; Extra features (better-jumper, crux, ...)
         me-files          ; Files and directories (dirvish, vlf, sudo-edit, ztree, ...)
         me-fun            ; Games and funny packages (xkcd, speed-type, wordel, ...)
