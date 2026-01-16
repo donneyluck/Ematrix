@@ -6,7 +6,9 @@
 
 ;;; Commentary:
 
-;;; Code: (use-package ai-code :straight (:host github :repo "donneyluck/ai-code-interface.el")
+;;; Code:
+(use-package ai-code
+  :straight (:host github :repo "donneyluck/ai-code-interface.el")
   :config
   ;; use codex as backend, other options are 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'claude-code-ide, 'claude-code, 'cursor
   (ai-code-set-backend 'cursor)
@@ -18,7 +20,7 @@
   (setq auto-revert-interval 1) ;; set to 1 second for faster update
   ;; Optional: Set up Magit integration for AI commands in Magit popups
   (with-eval-after-load 'magit
-    (ai-code-magit-setup-transients))
+    (ai-code-magit-setup-transients)))
 
 
 ;; (use-package aider

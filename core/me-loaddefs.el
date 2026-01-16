@@ -18,6 +18,11 @@ Unmount eCryptfs' private directory." t)
 (register-definition-prefixes "../elisp/ecryptfs" '("ecryptfs-"))
 
 
+;;; Generated autoloads from ematrix-lazy.el
+
+(register-definition-prefixes "ematrix-lazy" '("ematrix--lazy-"))
+
+
 ;;; Generated autoloads from ../modules/extras/me-cocogitto.el
 
 (autoload '+cocogitto-bump "../modules/extras/me-cocogitto" "\
@@ -118,13 +123,11 @@ Prune straight.el build directories for old Emacs versions.")
 Cleanup unwanted files/directories from Ematrix' directory." t)
 (autoload 'ematrix-apply-performance-tweaks "me-lib-extra" "\
 Set some Emacs variables for better (!) performance." t)
-(autoload 'ematrix-modules "me-lib-extra" "\
-List of available modules, with optional INCLUDE-OBSOLETE.
-
-(fn &optional INCLUDE-OBSOLETE)")
 (autoload 'ematrix-load-module "me-lib-extra" "\
-Interactively install and load a module that isn't enabled in \"modules.el\".
-When called with the universal argument, it prompts for obsolete modules also." t)
+Interactively install and load MODULES that aren't enabled in \"modules.el\".
+When called with the universal argument, it prompts for obsolete modules also.
+
+(fn &rest MODULES)" t)
 (autoload '+file-mime-type "me-lib-extra" "\
 Get MIME type for FILE based on magic codes provided by the \"file\" command.
 Return a symbol of the MIME type, ex: `text/x-lisp', `text/plain',
@@ -414,7 +417,7 @@ Show the list of declared external dependencies." t)
 
 ;;; Generated autoloads from me-vars.el
 
-(register-definition-prefixes "me-vars" '("+env-" "+load" "emacs/features" "ematrix-" "os/" "sys/arch"))
+(register-definition-prefixes "me-vars" '("+env-" "+load" "ema" "os/" "sys/arch"))
 
 
 ;;; Generated autoloads from ../modules/extras/me-writing-mode.el
@@ -431,7 +434,7 @@ mode if ARG is nil, omitted, or is a positive number.  Disable the mode
 if ARG is a negative number.
 
 To check whether the minor mode is enabled in the current buffer,
-evaluate `+writing-mode'.
+evaluate the variable `+writing-mode'.
 
 The mode's hook is called both when the mode is enabled and when it is
 disabled.
@@ -464,11 +467,6 @@ See `+writing-mode' for more information on +Writing mode.
 (register-definition-prefixes "../modules/extras/me-writing-mode" '("+turn-on-writing-mode" "+writing-"))
 
 
-;;; Generated autoloads from ematrix-lazy.el
-
-(register-definition-prefixes "ematrix-lazy" '("ematrix--lazy-"))
-
-
 ;;; Generated autoloads from ../elisp/valgrind.el
 
 (autoload 'valgrind "../elisp/valgrind" "\
@@ -490,7 +488,7 @@ move to the source code that caused it.
 ;; no-byte-compile: t
 ;; no-update-autoloads: t
 ;; no-native-compile: t
-;; coding: utf-8
+;; coding: utf-8-emacs-unix
 ;; End:
 
 ;;; me-loaddefs.el ends here

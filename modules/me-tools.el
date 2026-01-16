@@ -108,19 +108,20 @@
   (logview-additional-submodes '(("RDK-CCSP" (format . "TIMESTAMP [mod=NAME, lvl=LEVEL] [tid=THREAD]") (levels . "RDK-CCSP"))))
   (logview-additional-level-mappings '(("RDK-CCSP" (error "ERROR") (warning "WARN") (information "INFO") (debug "DEBUG") (trace "NOTICE")))))
 
-(use-package with-editor
-  :straight t
-  :hook ((shell-mode eshell-mode term-exec vterm-mode) . +with-editor-export-all)
-  :init
-  ;; `julia-repl' seems to start on `term-mode', so let's check for it before exporting the editor
-  (defvar +with-editor-ignore-matching-buffers '("\\*julia\\*"))
-  (defun +with-editor-export-all ()
-    (unless (seq-some (+apply-partially-right #'string-match-p (buffer-name)) +with-editor-ignore-matching-buffers)
-      (with-editor-export-editor)
-      (with-editor-export-hg-editor)
-      (with-editor-export-git-editor)))
-  :bind (("<remap> <async-shell-command>" . with-editor-async-shell-command)
-         ("<remap> <shell-command>" . with-editor-shell-command)))
+;; 暂时不用
+;; (use-package with-editor
+;;   :straight t
+;;   :hook ((shell-mode eshell-mode term-exec vterm-mode) . +with-editor-export-all)
+;;   :init
+;;   ;; `julia-repl' seems to start on `term-mode', so let's check for it before exporting the editor
+;;   (defvar +with-editor-ignore-matching-buffers '("\\*julia\\*"))
+;;   (defun +with-editor-export-all ()
+;;     (unless (seq-some (+apply-partially-right #'string-match-p (buffer-name)) +with-editor-ignore-matching-buffers)
+;;       (with-editor-export-editor)
+;;       (with-editor-export-hg-editor)
+;;       (with-editor-export-git-editor)))
+;;   :bind (("<remap> <async-shell-command>" . with-editor-async-shell-command)
+;;          ("<remap> <shell-command>" . with-editor-shell-command)))
 
 (use-package app-launcher
   :straight (:host github :repo "SebastienWae/app-launcher")
