@@ -98,6 +98,15 @@
   :straight t
   :hook (evil-mode . global-evil-surround-mode))
 
+(use-package evil-escape
+  :straight t
+  :unless (+package-disabled-p 'evil 'me-evil)
+  :hook (evil-mode . evil-escape-mode)
+  :custom
+  (evil-escape-key-sequence "kj")
+  (evil-escape-delay 0.2)
+  (evil-escape-unordered-key-sequence nil))
+
 (use-package evil-numbers
   :straight t
   :unless (+package-disabled-p 'evil 'me-evil)
@@ -172,6 +181,10 @@
     "u"    '(universal-argument :wk "C-u")
     "C"    #'universal-coding-system-argument
     "O"    #'other-window-prefix
+
+    ;; ====== AI functions ======
+    "a"    '(nil :wk "AI")
+    "ai"    #'ai-code-menu
 
     ;; ====== Quit/Session ======
     "q"    '(nil :wk "quit/session")
@@ -704,9 +717,13 @@
 (+map! :package consult-dir :module me-completion
   "ed" #'consult-dir)
 
-(+map! :package embark :module me-completion
-  "a" #'embark-act
-  "A" #'embark-collect)
+;; 注释掉embark 不会用
+;; (+map! :package embark :module me-completion
+;;   "a" #'embark-act
+;;   "A" #'embark-collect)
+
+
+
 
 
 

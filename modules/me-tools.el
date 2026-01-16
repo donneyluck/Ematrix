@@ -43,23 +43,23 @@
   :custom
   (tldr-enabled-categories '("common" "linux" "osx")))
 
-;; (use-package vterm
-;;   :straight t
-;;   :when (and (not os/win) (+emacs-features-p 'modules))
-;;   :hook (ematrix-build-functions . vterm-module-compile)
-;;   :hook (vterm-mode . compilation-shell-minor-mode)
-;;   :bind (:map vterm-mode-map ([return] . vterm-send-return))
-;;   :init
-;;   ;; Hide vterm install window
-;;   (add-to-list 'display-buffer-alist
-;;                `(" \\*Install vterm\\*"
-;;                  (display-buffer-no-window)
-;;                  (allow-no-window . t)))
-;;   (+def-dedicated-tab! vterm :exit-hook vterm-exit-functions)
-;;   :custom
-;;   (vterm-always-compile-module t)
-;;   (vterm-max-scrollback 5000)
-;;   (vterm-tramp-shells '(("docker" "/bin/bash"))))
+(use-package vterm
+  :straight t
+  :when (and (not os/win) (+emacs-features-p 'modules))
+  :hook (ematrix-build-functions . vterm-module-compile)
+  :hook (vterm-mode . compilation-shell-minor-mode)
+  :bind (:map vterm-mode-map ([return] . vterm-send-return))
+  :init
+  ;; Hide vterm install window
+  (add-to-list 'display-buffer-alist
+               `(" \\*Install vterm\\*"
+                 (display-buffer-no-window)
+                 (allow-no-window . t)))
+  (+def-dedicated-tab! vterm :exit-hook vterm-exit-functions)
+  :custom
+  (vterm-always-compile-module t)
+  (vterm-max-scrollback 5000)
+  (vterm-tramp-shells '(("docker" "/bin/bash"))))
 
 ;; (use-package multi-vterm
 ;;   :straight t
