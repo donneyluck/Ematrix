@@ -23,7 +23,7 @@
   :type '(repeat symbol))
 
 (defcustom ematrix-modules
-  '(;; me-ai
+  '(me-ai
     ;; me-biblio
     ;; me-calendar
     ;; me-checkers
