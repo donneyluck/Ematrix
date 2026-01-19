@@ -274,6 +274,7 @@
     ;; ====== Search ======
     "s"    '(nil :wk "search")
     "sw"   '+webjump
+    "st"   '(reverso-translate :wk "translate")
 
     ;; ======  Mode specific a.k.a. "local leader" ======
     "m"    '(nil :wk "mode-specific")
@@ -509,14 +510,15 @@
   "sc" #'org-babel-switch-to-session-with-code
   "ss" #'org-babel-switch-to-session
   "sp" #'org-babel-pop-to-session
-  "sP" #'org-babel-pop-to-session-maybe
-  "sl" #'org-babel-load-in-session
+  "sP" #'org-babel-pop-to-session-maybe)
+
+"sl" #'org-babel-load-in-session
   "sL" #'org-babel-load-in-session-maybe
   "si" #'org-babel-initiate-session
   "b"  '(nil :wk "babel")
   "bt" #'org-babel-tangle
   "bd" #'org-babel-detangle
-  "bf" #'org-babel-tangle-file)
+  "bf" #'org-babel-tangle-file
 
 (+map-local! :package org
   :keymaps 'org-src-mode-map
@@ -688,7 +690,7 @@
   "sf"  (if (executable-find "fd") #'consult-fd #'consult-find)
   "sF"  (if (executable-find "fd") #'consult-find #'consult-fd)
   "sM"  #'consult-man
-  "st"  #'consult-locate
+  ;; "st"  #'consult-locate
   "sh"  #'consult-history
   "sa"  #'consult-org-agenda
   "sl"  #'consult-locate
