@@ -8,7 +8,7 @@
 
 ;;; Code:
 (use-package ai-code
-  :straight (:host github :repo "donneyluck/ai-code-interface.el")
+  :straight (:host github :repo "tnanja/ai-code-interface.el")
   :config
   ;; use codex as backend, other options are 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'claude-code-ide, 'claude-code, 'cursor
   (ai-code-set-backend 'cursor)
