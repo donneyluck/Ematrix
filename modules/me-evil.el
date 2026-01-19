@@ -183,8 +183,10 @@
     "O"    #'other-window-prefix
 
     ;; ====== AI functions ======
-    "a"    '(nil :wk "AI")
-    "ai"    #'ai-code-menu
+    "a"    '(nil :wk "ai menu")
+    "aI"    #'ai-code-menu
+    "aq"    '(ai-code-ask-question :wk "Ask question")
+    "ai"    '(ai-code-implement-todo :wk "Implement TODO")
 
     ;; ====== Quit/Session ======
     "q"    '(nil :wk "quit/session")
