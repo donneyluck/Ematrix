@@ -241,10 +241,10 @@
 
 (use-package embark
   :straight t
-  :bind (([remap describe-bindings] . embark-bindings)
-         ("C-²" . embark-act) ; In a French AZERTY keyboard, the ² key is right above TAB
-         ("M-²" . embark-collect)
-         ("C-&" . embark-dwim))
+  :bind (([remap describe-bindings] . embark-bindings))
+         ;; ("C-²" . embark-act) ; In a French AZERTY keyboard, the ² key is right above TAB
+         ;; ("M-²" . embark-collect)
+         ;; ("C-&" . embark-dwim))
   :init
   ;; Use Embark to show bindings in a key prefix with `C-h`
   (setq prefix-help-command #'embark-prefix-help-command))
