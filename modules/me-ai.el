@@ -7,20 +7,36 @@
 ;;; Commentary:
 
 ;;; Code:
-(use-package ai-code
-  :straight (:host github :repo "tninja/ai-code-interface.el")
+
+;; websocket: dependency of me-claude-ide
+(use-package websocket
+  :straight (:type git :host github :repo "ahyatt/emacs-websocket"))
+
+;; me-claude-ide: impersonate a VS Code-style IDE so the Claude Code CLI
+;; `/ide` command auto-discovers this Emacs and auto-injects the selection.
+(use-package me-claude-ide
+  :after websocket
   :config
-  ;; use codex as backend, other options are 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'claude-code-ide, 'claude-code, 'cursor
-  (ai-code-set-backend 'cursor)
-  ;; Enable global keybinding for the main menu
-  ;; (global-set-key (kbd "C-c a") #'ai-code-menu) ;; Optional: Use eat if you prefer, by default it is vterm
-  ;; (setq ai-code-backends-infra-terminal-backend 'eat) ;; for openai codex, github copilot cli, opencode, grok; for claude-code-ide.el, you can check their config
-  ;; Optional: Turn on auto-revert buffer, so that the AI code change automatically appears in the buffer
+  (claude-ide-bridge-mode 1)
+  ;; Auto-revert so Claude's file edits show up in buffers automatically.
   (global-auto-revert-mode 1)
-  (setq auto-revert-interval 1) ;; set to 1 second for faster update
-  ;; Optional: Set up Magit integration for AI commands in Magit popups
-  (with-eval-after-load 'magit
-    (ai-code-magit-setup-transients)))
+  (setq auto-revert-interval 1))
+
+;; 以前的 AI 配置，改用 claude-code-ide，注释掉备用
+;; (use-package ai-code
+;;   :straight (:host github :repo "tninja/ai-code-interface.el")
+;;   :config
+;;   ;; use codex as backend, other options are 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'claude-code-ide, 'claude-code, 'cursor
+;;   (ai-code-set-backend 'cursor)
+;;   ;; Enable global keybinding for the main menu
+;;   ;; (global-set-key (kbd "C-c a") #'ai-code-menu) ;; Optional: Use eat if you prefer, by default it is vterm
+;;   ;; (setq ai-code-backends-infra-terminal-backend 'eat) ;; for openai codex, github copilot cli, opencode, grok; for claude-code-ide.el, you can check their config
+;;   ;; Optional: Turn on auto-revert buffer, so that the AI code change automatically appears in the buffer
+;;   (global-auto-revert-mode 1)
+;;   (setq auto-revert-interval 1) ;; set to 1 second for faster update
+;;   ;; Optional: Set up Magit integration for AI commands in Magit popups
+;;   (with-eval-after-load 'magit
+;;     (ai-code-magit-setup-transients)))
 
 
 ;; (use-package aider
