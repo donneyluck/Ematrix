@@ -10,6 +10,7 @@
 
 (require 'cl-lib)
 (require 'json)
+(require 'websocket nil t)
 
 (defgroup claude-ide nil
   "Claude Code /ide bridge."
@@ -101,7 +102,7 @@
   "Convert Emacs position POS to a (LINE . CHARACTER) cons, both 0-based."
   (save-excursion
     (goto-char pos)
-    (cons (1- (line-number-at-pos pos)) (current-column))))
+    (list (1- (line-number-at-pos pos)) (current-column))))
 
 ;; ── JSON-RPC: response builders ────────────────────────────────
 
@@ -239,6 +240,127 @@
                                  (text . ,(json-encode (+claude-ide--diagnostics))))]))))
              (t (when id (+claude-ide--make-error id -32601 (format "Unknown tool: %s" name)))))))
          (t (when id (+claude-ide--make-error id -32601 (format "Unknown method: %s" method)))))))))
+
+;; ── WebSocket server ───────────────────────────────────────────
+
+(defvar +claude-ide--server nil
+  "The websocket server process, or nil.")
+
+(defvar +claude-ide--conn nil
+  "The current client websocket (bridge supports one CLI at a time).")
+
+(defvar +claude-ide--debounce-timer nil
+  "Debounce timer for selection pushes.")
+
+(defvar +claude-ide--last-selection-key nil
+  "Stringified (file . beg . end) of the last pushed selection.")
+
+(defun +claude-ide--send (txt)
+  "Send TXT as a WS text frame to the connected CLI, if any."
+  (when (and +claude-ide--conn (fboundp 'websocket-send-text))
+    (condition-case nil
+        (websocket-send-text +claude-ide--conn txt)
+      (error nil))))
+
+(defun +claude-ide--push-selection (sel)
+  "Push a selection_changed notification built from SEL alist."
+  ;; No +claude-ide--conn guard here — +claude-ide--send checks it.
+  ;; This lets tests stub +claude-ide--send without needing a live conn.
+  (let* ((file (alist-get 'filePath sel))
+         (start (alist-get 'start (alist-get 'selection sel)))
+         (end (alist-get 'end (alist-get 'selection sel)))
+         (text (alist-get 'text sel))
+         (notif `((jsonrpc . "2.0")
+                  (method . "selection_changed")
+                  (params . ((text . ,text)
+                             (filePath . ,file)
+                             (fileUrl . ,(and file (concat "file://" file)))
+                             (selection . ((start . ,start)
+                                           (end . ,end)
+                                           (isEmpty . ,(if (string-empty-p text)
+                                                           t :json-false)))))))))
+    (+claude-ide--send (json-encode notif))))
+
+(defun +claude-ide--maybe-push-selection ()
+  "Debounced: push the current selection if it changed."
+  (when (timerp +claude-ide--debounce-timer)
+    (cancel-timer +claude-ide--debounce-timer))
+  (setq +claude-ide--debounce-timer
+        (run-with-idle-timer 0.2 nil #'+claude-ide--do-push-selection)))
+
+(defun +claude-ide--do-push-selection ()
+  "Actual push, run after debounce."
+  (when (region-active-p)
+    (let* ((beg (region-beginning))
+           (end (region-end))
+           (file (buffer-file-name))
+           (key (format "%S:%d:%d" file beg end)))
+      (unless (equal key +claude-ide--last-selection-key)
+        (setq +claude-ide--last-selection-key key)
+        (let ((sel (+claude-ide--current-selection)))
+          (setq +claude-ide--latest-selection sel)
+          (+claude-ide--push-selection sel))))))
+
+(defun +claude-ide--on-open (ws)
+  "Called when the CLI connects."
+  (setq +claude-ide--conn ws))
+
+(defun +claude-ide--on-message (_ws frame)
+  "Called when the CLI sends a JSON-RPC message."
+  (let* ((txt (websocket-frame-text frame))
+         (resp (+claude-ide--handle-message txt)))
+    (when resp (+claude-ide--send resp))))
+
+(defun +claude-ide--on-close (_ws)
+  "Called when the CLI disconnects."
+  (setq +claude-ide--conn nil))
+
+(defun +claude-ide--on-error (_ws _type _err)
+  "Log, don't crash."
+  (message "claude-ide: websocket error"))
+
+(defun +claude-ide--start ()
+  "Start the bridge: pick port, start WS server, write lock file."
+  (unless (fboundp 'websocket-server)
+    (user-error "websocket.el not installed; install ahyatt/emacs-websocket"))
+  (unless +claude-ide--server
+    (setq +claude-ide--lock-dir (expand-file-name "ide" (+claude-ide--config-dir)))
+    (make-directory +claude-ide--lock-dir t)
+    (set-file-modes +claude-ide--lock-dir #o700)
+    (setq +claude-ide--port (+claude-ide--pick-port)
+          +claude-ide--auth-token (+claude-ide--gen-token))
+    (setq +claude-ide--server
+          (websocket-server
+           +claude-ide--port
+           :host "127.0.0.1"
+           :on-open #'+claude-ide--on-open
+           :on-message #'+claude-ide--on-message
+           :on-close #'+claude-ide--on-close
+           :on-error #'+claude-ide--on-error))
+    (+claude-ide--write-lock-file)
+    (add-hook 'post-command-hook #'+claude-ide--maybe-push-selection)
+    (message "claude-ide: bridge on port %d" +claude-ide--port)))
+
+(defun +claude-ide--stop ()
+  "Stop the bridge, delete the lock file."
+  (when (timerp +claude-ide--debounce-timer)
+    (cancel-timer +claude-ide--debounce-timer))
+  (remove-hook 'post-command-hook #'+claude-ide--maybe-push-selection)
+  (when +claude-ide--server
+    (when (fboundp 'websocket-server-close)
+      (websocket-server-close +claude-ide--server))
+    (setq +claude-ide--server nil))
+  (setq +claude-ide--conn nil)
+  (+claude-ide--delete-lock-file))
+
+;;;###autoload
+(define-minor-mode claude-ide-bridge-mode
+  "Toggle the Claude Code /ide bridge."
+  :global t
+  :group 'claude-ide
+  (if claude-ide-bridge-mode
+      (+claude-ide--start)
+    (+claude-ide--stop)))
 
 (provide 'me-claude-ide)
 ;;; me-claude-ide.el ends here

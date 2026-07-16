@@ -43,14 +43,14 @@
     (insert "abc\ndef\nghi")
     ;; point at beginning = line 1 col 1 -> 0,0
     (goto-char (point-min))
-    (should (equal (+claude-ide--point->pos (point)) (cons 0 0)))
+    (should (equal (+claude-ide--point->pos (point)) (list 0 0)))
     ;; second line first char
     (forward-line 1)
-    (should (equal (+claude-ide--point->pos (point)) (cons 1 0)))
+    (should (equal (+claude-ide--point->pos (point)) (list 1 0)))
     ;; third line third char (i)
     (forward-line 1)
     (forward-char 2)
-    (should (equal (+claude-ide--point->pos (point)) (cons 2 2)))))
+    (should (equal (+claude-ide--point->pos (point)) (list 2 2)))))
 
 (ert-deftest +claude-ide-test/handle-tools-list ()
   "tools/list returns the five read-only tool names."
@@ -99,6 +99,34 @@
                (json-encode
                 '((jsonrpc . "2.0") (method . "someUnknownMethod"))))))
     (should (null resp))))
+
+(ert-deftest +claude-ide-test/selection-pushes-notification ()
+  "A region change sends a selection_changed JSON-RPC notification."
+  (let ((received nil)
+        (+claude-ide--conn nil)
+        (+claude-ide--last-selection-key nil))
+    ;; stub the sender to capture instead of sending over a socket
+    (let ((orig-sender (symbol-function '+claude-ide--send)))
+      (unwind-protect
+          (progn
+            (fset '+claude-ide--send
+                  (lambda (txt) (push txt received)))
+            (with-temp-buffer
+              (insert "hello world")
+              (transient-mark-mode 1)
+              (push-mark (point-min) t t)
+              (goto-char (+ (point-min) 5))  ; select "hello"
+              ;; Call do-push directly: idle timers don't fire in batch ert.
+              (+claude-ide--do-push-selection))
+            (should received)
+            (let* ((msg (json-read-from-string (car (last received))))
+                   (method (alist-get 'method msg)))
+              (should (equal method "selection_changed"))
+              (should-not (alist-get 'id msg)) ; notification has no id
+              (let* ((params (alist-get 'params msg))
+                     (text (alist-get 'text params)))
+                (should (equal text "hello")))))
+        (when (fboundp 'orig-sender) (fset '+claude-ide--send orig-sender))))))
 
 (provide 'me-claude-ide-test)
 ;;; me-claude-ide-test.el ends here
