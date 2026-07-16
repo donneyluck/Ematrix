@@ -95,5 +95,150 @@
     (when (and path (file-exists-p path))
       (delete-file path))))
 
+;; ── JSON-RPC: offset conversion ────────────────────────────────
+
+(defun +claude-ide--point->pos (pos)
+  "Convert Emacs position POS to a (LINE . CHARACTER) cons, both 0-based."
+  (save-excursion
+    (goto-char pos)
+    (cons (1- (line-number-at-pos pos)) (current-column))))
+
+;; ── JSON-RPC: response builders ────────────────────────────────
+
+(defun +claude-ide--make-response (id result)
+  "Build a JSON-RPC success response string for ID with RESULT alist."
+  (json-encode `((jsonrpc . "2.0") (id . ,id) (result . ,result))))
+
+(defun +claude-ide--make-error (id code message)
+  "Build a JSON-RPC error response string."
+  (json-encode
+   `((jsonrpc . "2.0") (id . ,id)
+     (error . ((code . ,code) (message . ,message))))))
+
+;; ── Tool schemas ───────────────────────────────────────────────
+
+(defun +claude-ide--tools ()
+  "Return the list of tool schema alists."
+  (let ((names-descs
+         '(("getCurrentSelection" . "Return the active editor selection, or empty if none.")
+           ("getLatestSelection" . "Return the most recently recorded selection.")
+           ("getOpenEditors" . "Return open file-backed buffers.")
+           ("getWorkspaceFolders" . "Return workspace root paths.")
+           ("getDiagnostics" . "Return flymake diagnostics for the active buffer."))))
+    (mapcar (lambda (nd)
+              `((name . ,(car nd))
+                (description . ,(cdr nd))
+                (inputSchema . ((type . "object") (properties . nil) (required . nil)))))
+            names-descs)))
+
+;; ── Shared state ───────────────────────────────────────────────
+
+(defvar +claude-ide--latest-selection nil
+  "Last pushed selection alist, for pull.")
+
+;; ── Tool implementations ───────────────────────────────────────
+
+(defun +claude-ide--current-selection ()
+  "Return an alist describing the current region (or empty)."
+  (if (region-active-p)
+      (let* ((beg (region-beginning))
+             (end (region-end))
+             (buf (current-buffer))
+             (file (buffer-file-name buf)))
+        `((success . t)
+          (text . ,(buffer-substring-no-properties beg end))
+          (filePath . ,(and file (expand-file-name file)))
+          (selection . ((start . ,(append (+claude-ide--point->pos beg) nil))
+                        (end . ,(append (+claude-ide--point->pos end) nil))
+                        (isEmpty . :json-false)))))
+    '((success . :json-false))))
+
+(defun +claude-ide--open-editors ()
+  "Return open file-backed buffers as a tabs alist."
+  (let (tabs)
+    (dolist (buf (buffer-list))
+      (let ((file (buffer-file-name buf)))
+        (when file
+          (push `((uri . ,(concat "file://" (expand-file-name file)))
+                  (isActive . ,(eq buf (current-buffer)))
+                  (label . ,(file-name-nondirectory file))
+                  (languageId . ,(symbol-name (buffer-local-value 'major-mode buf)))
+                  (isDirty . ,(buffer-modified-p buf)))
+                tabs))))
+    `((tabs . ,(vconcat tabs)))))
+
+(defun +claude-ide--workspace-folders-result ()
+  "Return workspace folders result alist."
+  (let ((root (car (+claude-ide--workspace-folders))))
+    `((success . t)
+      (rootPath . ,root)
+      (folders . [((name . ,(file-name-nondirectory (directory-file-name root)))
+                   (uri . ,(concat "file://" root))
+                   (path . ,root))]))))
+
+(defun +claude-ide--diagnostics ()
+  "Return flymake diagnostics for the current buffer as an alist."
+  (require 'flymake nil t)
+  (let ((file (buffer-file-name))
+        (diags (condition-case nil (flymake-diagnostics) (error nil))))
+    `[(,(if file (concat "file://" (expand-file-name file)) "")
+       .
+       ,(vconcat
+         (mapcar (lambda (d)
+                   `((message . ,(flymake--diag-text d))
+                     (severity . ,(symbol-name (or (flymake--diag-type d) 'warning)))
+                     (range . ((start . ,(append (+claude-ide--point->pos
+                                                  (flymake--diag-beg d)) nil))
+                               (end . ,(append (+claude-ide--point->pos
+                                                (flymake--diag-end d)) nil))))))
+                 (or diags nil))))]))
+
+;; ── JSON-RPC dispatch ──────────────────────────────────────────
+
+(defun +claude-ide--handle-message (json-str)
+  "Dispatch a JSON-RPC message JSON-STR. Return a response JSON string or nil."
+  (let* ((msg (condition-case nil (json-read-from-string json-str)
+                (error nil))))
+    (when msg
+      (let ((method (alist-get 'method msg))
+            (id (alist-get 'id msg)))
+        (cond
+         ((equal method "initialize")
+          (+claude-ide--make-response
+           id `((protocolVersion . "2025-03-26")
+                (capabilities . ((tools . nil)))
+                (serverInfo . ((name . "Emacs") (version . "0.1"))))))
+         ((equal method "initialized") nil) ; notification, no response
+         ((equal method "tools/list")
+          (+claude-ide--make-response
+           id `((tools . ,(+claude-ide--tools)))))
+         ((equal method "tools/call")
+          (let ((name (alist-get 'name (alist-get 'params msg))))
+            (cond
+             ((equal name "getCurrentSelection")
+              (+claude-ide--make-response
+               id `((content . [((type . "text")
+                                 (text . ,(json-encode (+claude-ide--current-selection))))]))))
+             ((equal name "getLatestSelection")
+              (+claude-ide--make-response
+               id `((content . [((type . "text")
+                                 (text . ,(json-encode
+                                           (or +claude-ide--latest-selection
+                                               '((success . :json-false))))))]))))
+             ((equal name "getOpenEditors")
+              (+claude-ide--make-response
+               id `((content . [((type . "text")
+                                 (text . ,(json-encode (+claude-ide--open-editors))))]))))
+             ((equal name "getWorkspaceFolders")
+              (+claude-ide--make-response
+               id `((content . [((type . "text")
+                                 (text . ,(json-encode (+claude-ide--workspace-folders-result))))]))))
+             ((equal name "getDiagnostics")
+              (+claude-ide--make-response
+               id `((content . [((type . "text")
+                                 (text . ,(json-encode (+claude-ide--diagnostics))))]))))
+             (t (when id (+claude-ide--make-error id -32601 (format "Unknown tool: %s" name)))))))
+         (t (when id (+claude-ide--make-error id -32601 (format "Unknown method: %s" method)))))))))
+
 (provide 'me-claude-ide)
 ;;; me-claude-ide.el ends here
