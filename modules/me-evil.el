@@ -182,12 +182,6 @@
     "C"    #'universal-coding-system-argument
     "O"    #'other-window-prefix
 
-    ;; ====== AI functions ======
-    "a"    '(nil :wk "ai menu")
-    "aI"    #'ai-code-menu
-    "aq"    '(ai-code-ask-question :wk "Ask question")
-    "ai"    '(ai-code-implement-todo :wk "Implement TODO")
-
     ;; ====== Quit/Session ======
     "q"    '(nil :wk "quit/session")
     "qq"   #'save-buffers-kill-terminal

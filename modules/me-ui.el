@@ -105,6 +105,18 @@
   :straight t
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 
+;; FiraCode Nerd Font 连字效果
+(use-package ligature
+  :straight t
+  :demand t
+  :config
+  (ligature-set-ligatures 'prog-mode '("->" "=>" "::" "!=" "==" ">=" "<="
+                                        ">>" "<<" "||" "&&" "--" "---"
+                                        "++" "**" ".." "..." "//" "/*"
+                                        "*/" "<-" "<--" "<->"
+                                        "=>>" "<=<" ">=>" "|>" "<|"))
+  (global-ligature-mode t))
+
 ;; NOT USE
 ;; (use-package casual-lib
 ;;   :straight (:host github :repo "kickingvegas/casual-lib"))
