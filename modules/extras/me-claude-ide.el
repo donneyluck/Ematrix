@@ -62,8 +62,12 @@
                                             :host "127.0.0.1"
                                             :service t
                                             :family 'ipv4))
-          (setq port (cadr (process-contact server :local)))
-          (when (or (not port) (< port 10000))
+          ;; `process-contact' returns [HOST ... PORT] as a vector on
+          ;; Emacs 27+; the port is the last element regardless of shape.
+          (setq port (let ((local (process-contact server :local)))
+                       (if (vectorp local) (aref local (1- (length local)))
+                         (car (last local)))))
+          (when (or (not port) (< port 10000) (> port 65535))
             (setq port (+ 10000 (random 55536))))
           port)
       (when server (delete-process server)))))
