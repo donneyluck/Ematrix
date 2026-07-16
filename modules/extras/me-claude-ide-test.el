@@ -38,19 +38,19 @@
       (when (file-exists-p tmpdir) (delete-directory tmpdir t)))))
 
 (ert-deftest +claude-ide-test/point->pos-0-based ()
-  "Emacs 1-based positions become 0-based line/character."
+  "Emacs 1-based positions become 0-based {line,character} objects."
   (with-temp-buffer
     (insert "abc\ndef\nghi")
-    ;; point at beginning = line 1 col 1 -> 0,0
+    ;; point at beginning = line 1 col 1 -> {line:0,character:0}
     (goto-char (point-min))
-    (should (equal (+claude-ide--point->pos (point)) (list 0 0)))
+    (should (equal (+claude-ide--point->pos (point)) '((line . 0) (character . 0))))
     ;; second line first char
     (forward-line 1)
-    (should (equal (+claude-ide--point->pos (point)) (list 1 0)))
+    (should (equal (+claude-ide--point->pos (point)) '((line . 1) (character . 0))))
     ;; third line third char (i)
     (forward-line 1)
     (forward-char 2)
-    (should (equal (+claude-ide--point->pos (point)) (list 2 2)))))
+    (should (equal (+claude-ide--point->pos (point)) '((line . 2) (character . 2))))))
 
 (ert-deftest +claude-ide-test/handle-tools-list ()
   "tools/list returns the five read-only tool names."

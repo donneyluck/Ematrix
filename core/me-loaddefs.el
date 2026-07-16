@@ -23,6 +23,37 @@ Unmount eCryptfs' private directory." t)
 (register-definition-prefixes "ematrix-lazy" '("ematrix--lazy-"))
 
 
+;;; Generated autoloads from ../modules/extras/me-claude-ide.el
+
+(defvar claude-ide-bridge-mode nil "\
+Non-nil if Claude-Ide-Bridge mode is enabled.
+See the `claude-ide-bridge-mode' command
+for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `claude-ide-bridge-mode'.")
+(custom-autoload 'claude-ide-bridge-mode "../modules/extras/me-claude-ide" nil)
+(autoload 'claude-ide-bridge-mode "../modules/extras/me-claude-ide" "\
+Toggle the Claude Code /ide bridge.
+
+This is a global minor mode.  If called interactively, toggle the
+`Claude-Ide-Bridge mode' mode.  If the prefix argument is positive,
+enable the mode, and if it is zero or negative, disable the mode.
+
+If called from Lisp, toggle the mode if ARG is `toggle'.  Enable the
+mode if ARG is nil, omitted, or is a positive number.  Disable the mode
+if ARG is a negative number.
+
+To check whether the minor mode is enabled in the current buffer,
+evaluate `(default-value \\='claude-ide-bridge-mode)'.
+
+The mode's hook is called both when the mode is enabled and when it is
+disabled.
+
+(fn &optional ARG)" t)
+(register-definition-prefixes "../modules/extras/me-claude-ide" '("+claude-ide--" "claude-ide-bridge-enable"))
+
+
 ;;; Generated autoloads from ../modules/extras/me-cocogitto.el
 
 (autoload '+cocogitto-bump "../modules/extras/me-cocogitto" "\

@@ -103,10 +103,13 @@
 ;; ── JSON-RPC: offset conversion ────────────────────────────────
 
 (defun +claude-ide--point->pos (pos)
-  "Convert Emacs position POS to a (LINE . CHARACTER) cons, both 0-based."
+  "Convert Emacs position POS to an alist ((line . N) (character . N)), 0-based.
+Returns a JSON object {\"line\":N,\"character\":N}, not an array — the
+Claude Code IDE bridge expects selection start/end as objects."
   (save-excursion
     (goto-char pos)
-    (list (1- (line-number-at-pos pos)) (current-column))))
+    `((line . ,(1- (line-number-at-pos pos)))
+      (character . ,(current-column)))))
 
 ;; ── JSON-RPC: response builders ────────────────────────────────
 
@@ -153,8 +156,8 @@
         `((success . t)
           (text . ,(buffer-substring-no-properties beg end))
           (filePath . ,(and file (expand-file-name file)))
-          (selection . ((start . ,(append (+claude-ide--point->pos beg) nil))
-                        (end . ,(append (+claude-ide--point->pos end) nil))
+          (selection . ((start . ,(+claude-ide--point->pos beg))
+                        (end . ,(+claude-ide--point->pos end))
                         (isEmpty . :json-false)))))
     '((success . :json-false))))
 
@@ -192,11 +195,10 @@
          (mapcar (lambda (d)
                    `((message . ,(flymake--diag-text d))
                      (severity . ,(symbol-name (or (flymake--diag-type d) 'warning)))
-                     (range . ((start . ,(append (+claude-ide--point->pos
-                                                  (flymake--diag-beg d)) nil))
-                               (end . ,(append (+claude-ide--point->pos
-                                                (flymake--diag-end d)) nil))))))
-                 (or diags nil))))]))
+                     (range . ((start . ,(+claude-ide--point->pos
+                                          (flymake--diag-beg d)))
+                               (end . ,(+claude-ide--point->pos
+                                        (flymake--diag-end d)))))))                 (or diags nil))))]))
 
 ;; ── JSON-RPC dispatch ──────────────────────────────────────────
 
@@ -209,10 +211,19 @@
             (id (alist-get 'id msg)))
         (cond
          ((equal method "initialize")
-          (+claude-ide--make-response
-           id `((protocolVersion . "2025-03-26")
-                (capabilities . ((tools . nil)))
-                (serverInfo . ((name . "Emacs") (version . "0.1"))))))
+          ;; Echo the client's protocolVersion (MCP: server should return the
+          ;; version it will use, closest to the client's). claude-code sends
+          ;; 2025-11-25; echoing it avoids a version-mismatch rejection.
+          (let* ((params (alist-get 'params msg))
+                 (client-pv (alist-get 'protocolVersion params))
+                 (pv (if (stringp client-pv) client-pv "2025-11-25")))
+            (+claude-ide--make-response
+             id `((protocolVersion . ,pv)
+                  ;; capabilities.tools MUST serialize as an object, not null —
+                  ;; claude's MCP client rejects the connection on null. An
+                  ;; empty hash-table encodes to {}.
+                  (capabilities . ((tools . ,(make-hash-table))))
+                  (serverInfo . ((name . "Emacs") (version . "0.1")))))))
          ((equal method "initialized") nil) ; notification, no response
          ((equal method "tools/list")
           (+claude-ide--make-response
@@ -267,22 +278,27 @@
       (error nil))))
 
 (defun +claude-ide--push-selection (sel)
-  "Push a selection_changed notification built from SEL alist."
-  ;; No +claude-ide--conn guard here — +claude-ide--send checks it.
-  ;; This lets tests stub +claude-ide--send without needing a live conn.
+  "Push a selection_changed notification built from SEL alist.
+
+SEL's `selection' field is either an alist with `start'/`end' (an active
+region) or :json-false (region cleared). In the cleared case we emit
+selection:null (json-encode turns the symbol nil into null) so the CLI
+falls back to the active-file chip."
   (let* ((file (alist-get 'filePath sel))
-         (start (alist-get 'start (alist-get 'selection sel)))
-         (end (alist-get 'end (alist-get 'selection sel)))
+         (sel-field (alist-get 'selection sel))
          (text (alist-get 'text sel))
          (notif `((jsonrpc . "2.0")
                   (method . "selection_changed")
                   (params . ((text . ,text)
                              (filePath . ,file)
                              (fileUrl . ,(and file (concat "file://" file)))
-                             (selection . ((start . ,start)
-                                           (end . ,end)
-                                           (isEmpty . ,(if (string-empty-p text)
-                                                           t :json-false)))))))))
+                             (selection .
+                              ,(if (eq sel-field :json-false)
+                                   nil
+                                 `((start . ,(alist-get 'start sel-field))
+                                   (end . ,(alist-get 'end sel-field))
+                                   (isEmpty . ,(if (string-empty-p text)
+                                                   t :json-false))))))))))
     (+claude-ide--send (json-encode notif))))
 
 (defun +claude-ide--maybe-push-selection ()
@@ -293,17 +309,37 @@
         (run-with-idle-timer 0.2 nil #'+claude-ide--do-push-selection)))
 
 (defun +claude-ide--do-push-selection ()
-  "Actual push, run after debounce."
-  (when (region-active-p)
-    (let* ((beg (region-beginning))
-           (end (region-end))
-           (file (buffer-file-name))
-           (key (format "%S:%d:%d" file beg end)))
-      (unless (equal key +claude-ide--last-selection-key)
-        (setq +claude-ide--last-selection-key key)
-        (let ((sel (+claude-ide--current-selection)))
-          (setq +claude-ide--latest-selection sel)
-          (+claude-ide--push-selection sel))))))
+  "Actual push, run after debounce.
+
+Mirrors the VS Code extension: when a region is active, push the selection;
+when the region is cleared, push an empty selection (filePath = current
+buffer, selection = null) so the CLI's status chip falls back to showing
+the active file instead of the stale selection."
+  (if (region-active-p)
+      (let* ((beg (region-beginning))
+             (end (region-end))
+             (file (buffer-file-name))
+             (key (format "%S:%d:%d" file beg end)))
+        (unless (equal key +claude-ide--last-selection-key)
+          (setq +claude-ide--last-selection-key key)
+          (let ((sel (+claude-ide--current-selection)))
+            (setq +claude-ide--latest-selection sel)
+            (+claude-ide--push-selection sel))))
+    ;; Region cleared: push an empty selection so the CLI drops the chip
+    ;; back to the current file. VS Code sends a selection_changed with an
+    ;; empty-text, cursor-position selection (start==end, isEmpty true)
+    ;; rather than selection:null — the CLI's chip logic falls back to
+    ;; "In <file>" only when it has a non-null selection with a filePath.
+    (unless (equal +claude-ide--last-selection-key "empty")
+      (setq +claude-ide--last-selection-key "empty")
+      (let* ((file (buffer-file-name))
+             (pos (if (point-min) (+claude-ide--point->pos (point)) nil)))
+        (+claude-ide--push-selection
+         `((text . "")
+           (filePath . ,(and file (expand-file-name file)))
+           (selection . ((start . ,pos)
+                         (end . ,pos)
+                         (isEmpty . t)))))))))
 
 (defun +claude-ide--on-open (ws)
   "Called when the CLI connects."
