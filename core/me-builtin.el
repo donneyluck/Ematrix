@@ -302,16 +302,20 @@ or file path may exist now."
   :commands project-remember-projects-under
   :hook (kill-emacs . +project-forget-zombie-projects)
   :custom
-  (project-vc-extra-root-markers
-   '(".projectile.el" ".project.el" ".project" ; Emacs
-     ".repo" ; Repo workspaces
-     "autogen.sh" ; Autotools
-     "*.csproj" "*.vbproj" "*.vcxproj" "*.vdproj" ".code-workspace" ; Visual Studio
-     "requirements.txt" ; Python
-     "package.json" ; Node.js
-     "pom.xml" ; Apache Maven (Java/Kotlin)
-     "client" "tools" "configs" ;future
-     "Cargo.toml")) ; Cargo (Rust)
+  ;; 自用:项目只按 .git 仓库划分,不要用 csproj/package.json 这些额外标记
+  ;; 不然 okeygame/server/Hotfix/ 因为有 DotNet.Hotfix.csproj 被当成独立项目
+  (project-vc-extra-root-markers nil)
+  ;; 原来的额外标记,留着备查;需要时取消注释即可
+  ;; (project-vc-extra-root-markers
+  ;;  '(".projectile.el" ".project.el" ".project" ; Emacs
+  ;;    ".repo" ; Repo workspaces
+  ;;    "autogen.sh" ; Autotools
+  ;;    "*.csproj" "*.vbproj" "*.vcxproj" "*.vdproj" ".code-workspace" ; Visual Studio
+  ;;    "requirements.txt" ; Python
+  ;;    "package.json" ; Node.js
+  ;;    "pom.xml" ; Apache Maven (Java/Kotlin)
+  ;;    "client" "tools" "configs" ;future
+  ;;    "Cargo.toml")) ; Cargo (Rust)
   :bind (("C-x p a" . +project-add-project))
   :config
   (add-to-list 'project-switch-commands '(project-shell "Shell") t))
