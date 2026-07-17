@@ -105,7 +105,7 @@
   :straight t
   :hook (ibuffer-mode . nerd-icons-ibuffer-mode))
 
-;; FiraCode Nerd Font 连字效果
+;; Fira Code 连字效果 (matches Ghostty)
 (use-package ligature
   :straight t
   :demand t

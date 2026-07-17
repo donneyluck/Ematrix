@@ -93,10 +93,9 @@ environment variable \"$EMATRIX_IGNORE_USER_CONFIG\".")
 (defconst ematrix-cache-dir (concat ematrix-local-dir "cache/"))
 (defconst ematrix-loaddefs-file (concat ematrix-core-dir "me-loaddefs.el"))
 (defconst ematrix-extra-packages-dir (concat ematrix-local-dir "extra-packages/"))
-(defconst ematrix-config-dir (file-name-as-directory
-                               (or (getenv "EMATRIX_DIR") (getenv "EMATRIXDIR")
-                                   (if (file-directory-p "~/.ematrix.d/") "~/.ematrix.d/" (concat ematrix-root-dir "user-config/"))))
-  "Ematrix user customization directory.")
+;; ponytail: 配置就放仓库里,不读 env、不读 ~/.ematrix.d —— 自用,不分发。
+(defconst ematrix-config-dir (concat ematrix-root-dir "user-config/")
+  "Ematrix user customization directory (lives inside the repo).")
 (defconst ematrix-blog-dir (concat ematrix-root-dir "blog/"))
 
 (defconst ematrix-started-with-extra-args-p (and (cdr command-line-args) t) "Has Emacs been started with extras arguments? like a file name or so.")
