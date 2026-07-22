@@ -16,11 +16,12 @@
 ;; 用 project-vc-ignores 传 exclude pathspec 给 git,排除 Unity .meta
 (setq project-vc-ignores '("*.meta"))
 
-;; consult-ripgrep 不吃 grep-find-ignored-files,给它加 -g '!*.meta'
+;; consult-ripgrep 不吃 project-vc-ignores,给它加 -g !*.meta
+;; 注意:consult 不走 shell,直接拆 argv,所以 ! 不用引号保护
+;; (单引号会被 split-string-and-unquote 当字面字符,导致 rg glob 非法报错)
 (with-eval-after-load 'consult
   (setq consult-ripgrep-args
-        (string-trim
-         (concat consult-ripgrep-args " -g '!*.meta'"))))
+        (concat consult-ripgrep-args " -g !*.meta")))
 
 ;; WebSocket for IDE integration (emacs-websocket)
 (use-package websocket

@@ -13,14 +13,21 @@
   :straight (:type git :host github :repo "ahyatt/emacs-websocket"))
 
 ;; me-claude-ide: impersonate a VS Code-style IDE so the Claude Code CLI
-;; `/ide` command auto-discovers this Emacs and auto-injects the selection.
+;; `/ide` command auto-disovers this Emacs and auto-injects the selection.
 (use-package me-claude-ide
   :after websocket
+  :demand t
   :config
   (claude-ide-bridge-mode 1)
   ;; Auto-revert so Claude's file edits show up in buffers automatically.
   (global-auto-revert-mode 1)
-  (setq auto-revert-interval 1))
+  (setq auto-revert-interval 1)
+  ;; 关 emacs 时停 bridge 并删掉 ide lock 文件,
+  ;; 否则 claude /ide 还能看到僵尸的 Emacs 连接
+  (add-hook 'kill-emacs-hook
+            (lambda ()
+              (when (bound-and-true-p claude-ide-bridge-mode)
+                (claude-ide-bridge-mode -1))))))
 
 ;; 以前的 AI 配置，改用 claude-code-ide，注释掉备用
 ;; (use-package ai-code
