@@ -13,7 +13,7 @@
   :straight (:type git :host github :repo "ahyatt/emacs-websocket"))
 
 ;; me-claude-ide: impersonate a VS Code-style IDE so the Claude Code CLI
-;; `/ide` command auto-disovers this Emacs and auto-injects the selection.
+;; `/ide` command auto-discovers this Emacs and auto-injects the selection.
 (use-package me-claude-ide
   :after websocket
   :demand t
